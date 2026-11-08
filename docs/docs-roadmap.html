@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Roteiro | Ragna Tale</title>
+<meta name="description" content="Roteiro: documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-roadmap.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-roadmap.html">
+<meta property="og:title" content="Roteiro | Ragna Tale">
+<meta property="og:description" content="Roteiro: documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Roteiro | Ragna Tale">
+<meta name="twitter:description" content="Roteiro: documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Projeto (docs/)</p><p class="note">Fonte: <code>docs/ROADMAP.md</code></p><h2>Roteiro</h2>
+<h3>Etapa 1 — Protótipo jogável (esta entrega)</h3>
+<p>Escopo: campo pequeno com caminho, árvores, pedras e ruína ao fundo; navegação por clique contornando obstáculos; câmera isométrica com zoom limitado; clique em inimigo para perseguir/atacar, clique no chão cancela; golpe básico com intervalo e feedback; uma habilidade (tecla 1) com recarga visível; um tipo de inimigo com várias instâncias (perceber, perseguir, atacar, morrer, reaparecer); vida, dano, morte e renascimento; XP e subida de nível; HUD; controles no jogo. Estado detalhado em <code>STATUS.md</code>.</p>
+<h3>Diretriz (2026-11-07): online-first, sem hospedagem paga no desenvolvimento</h3>
+<p>Ragna Tale é 100% online (<code>DECISIONS.md</code>). A arquitetura é cliente/servidor desde já (<code>docs/architecture/adr-0001-online-architecture.md</code>, ADR-0001): a <code>GameSim</code> roda num servidor headless autoritativo; o cliente envia <code>request_*</code> e apresenta. Durante o desenvolvimento o servidor roda <strong>no PC do criador</strong> (servidor + clientes bot); hospedagem paga só antes do beta fechado e com o "sim" do criador.</p>
+<h3>Etapa 2 — Base online (antes de mais conteúdo)</h3>
+<ol><li>Spike de rede (2 semanas): servidor headless + 2 bots, medição de tique e banda.</li><li>Fronteira de rede: allowlist de <code>request_*</code>, métodos só do servidor (SEC-001 a SEC-005).</li><li>Tique fixo de 20 Hz e espelho de estado no cliente (jogo local via loopback).</li><li>Movimento autoritativo com previsão e reconciliação.</li><li>Rede real (ENet), snapshots, eventos por área/dono, interpolação.</li><li>Persistência por evento (arquivo local no dev) e contas de desenvolvimento.</li><li>Instâncias (mapa, canal de cidade, calabouço de grupo) e interesse por área; limite de taxa.</li><li>Compensação de latência para ação; teste sob 150 ms / 2% de perda.</li><li>Teste de carga com bots → custo por jogador medido.</li></ol>
+<h3>Etapa 3 — Conteúdo do MVP sobre a base online (níveis 1–50, <code>mvp-scope.md</code>)</h3>
+<p>Vila segura e NPCs, drops/inventário/equipamentos (já na sim), calabouços de grupo, quests, telemetria coletada no servidor, Arena PvP por faixa (<code>pvp.md</code>) sobre <code>DuelSim</code>.</p>
+<h3>Etapa 4 — Pré-beta (exige decisões do criador)</h3>
+<p>Região e provedor, teto de gasto, login Steam, Postgres + serviço de persistência, DTLS, proteção DDoS, export Linux do servidor, termos/privacidade revisados por advogado.</p>
+<p>Mercado entre jogadores (<code>market-trade.md</code>) e painel ao vivo antifraude (<code>live-ops-panel.md</code>) entram no MVP online; fora do MVP: Guerra do Castelo e mundo sem costura entre servidores.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

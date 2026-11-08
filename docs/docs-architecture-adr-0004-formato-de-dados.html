@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ADR-0004: Formato de dados, ids estáveis e versionamento | Ragna Tale</title>
+<meta name="description" content="ADR-0004: Formato de dados, ids estáveis e versionamento: documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0004-formato-de-dados.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0004-formato-de-dados.html">
+<meta property="og:title" content="ADR-0004: Formato de dados, ids estáveis e versionamento | Ragna Tale">
+<meta property="og:description" content="ADR-0004: Formato de dados, ids estáveis e versionamento: documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ADR-0004: Formato de dados, ids estáveis e versionamento | Ragna Tale">
+<meta name="twitter:description" content="ADR-0004: Formato de dados, ids estáveis e versionamento: documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Arquitetura e ADRs</p><p class="note">Fonte: <code>docs/architecture/adr-0004-formato-de-dados.md</code></p><h2>ADR-0004: Formato de dados, ids estáveis e versionamento</h2>
+<h3>Status</h3>
+<p>Accepted (2026-11-08) — confirmação explícita do criador, dada por ele mesmo no chat: "1 - aprovado", em resposta ao pedido "aceito as ADRs 0002 a 0008".</p>
+<h3>Date</h3>
+<p>2026-11-07</p>
+<h3>Last Verified</h3>
+<p>2026-11-07 (contra <code>scripts/data/*.gd</code>, <code>data/</code> e <code>docs/engine-reference/godot/current-best-practices.md</code> seção Resources)</p>
+<h3>Decision Makers</h3>
+<p>technical-director (proposta), lead-programmer</p>
+<h3>Summary</h3>
+<p>Conteúdo (classes, monstros, itens, habilidades, quests) é definido hoje por Resources <code>.tres</code> com id igual ao nome do arquivo e lido por <code>DataDB</code>. Com o jogo online e o conteúdo crescendo (166 NPCs, 23 mapas, centenas de itens), é preciso fixar regras de id, versionamento e carga para que servidor, cliente e personagens salvos concordem.</p>
+<h3>Engine Compatibility</h3>
+<div class="tablewrap"><table><tr><th>Item</th><th>Situação</th></tr><tr><td>Engine</td><td>Godot 4.7.2</td></tr><tr><td>APIs</td><td><code>Resource</code>, <code>ResourceLoader</code>, <code>.tres</code> texto, <code>duplicate_deep()</code> (4.5+)</td></tr><tr><td>Risco</td><td>Médio: <code>duplicate()</code> aninhado mudou para <code>duplicate_deep()</code> (deprecated-apis.md); seção Resources de <code>current-best-practices.md</code> deve ser relida antes de codificar</td></tr><tr><td>Post-cutoff</td><td><code>duplicate_deep</code> (4.5)</td></tr></table></div>
+<h3>ADR Dependencies</h3>
+<ul><li>Depends On: ADR-0001 (servidor e cliente carregam o mesmo conteúdo)</li><li>Enables: ADR-0002, ADR-0005</li><li>Blocks: conteúdo da Etapa 3 do ROADMAP</li><li>Ordering Note: primeira das ADRs novas</li></ul>
+<h3>Context</h3>
+<h4>Problem Statement</h4>
+<p><code>CLAUDE.md</code> fixa "id estável = nome do arquivo", mas não há regras para renomear, aposentar, versionar nem validar. Registros salvos e telemetria dependem desses ids (TR-anticheat-007: todo <code>def_id</code> precisa existir em <code>DataDB</code>).</p>
+<h4>Requirements</h4>
+<p>TR-monsters-001, TR-items-001, TR-classes-001, TR-balance-001, TR-quests-001, TR-skills-001</p>
+<h3>Decision</h3>
+<ol><li>Definição de conteúdo = <code>Resource</code> tipado em <code>data/&lt;tipo&gt;/&lt;id&gt;.tres</code>; <strong>id = nome do arquivo, snake_case, imutável após publicado</strong>. Renomear = criar novo id e marcar o antigo <code>retired</code> com <code>replaced_by</code>.</li><li>Todo <code>Def</code> tem <code>schema_version</code>. <code>DataDB</code> valida na carga (campos obrigatórios, faixas, referências cruzadas) e falha alto no servidor; o teste unitário valida o conteúdo inteiro.</li><li><strong>Hash de conteúdo</strong> (<code>content_hash</code>) calculado na carga e enviado no <code>Hello</code> do protocolo; cliente com hash diferente é recusado.</li><li>Balanceamento global continua em <code>scripts/sim/balance.gd</code> (constantes), valores por entidade em <code>.tres</code>; nenhum valor de jogo no código de regra.</li><li><code>ItemInstance</code> e estado de personagem referenciam apenas ids, nunca Resources embutidos (ver ADR-0002).</li><li>Clonagem de Defs em runtime usa <code>duplicate_deep()</code>; Defs são tratados como somente leitura em runtime.</li><li>Dados grandes (bestiário, NPCs) permanecem em <code>.tres</code>; geração por script a partir de tabelas só gera <code>.tres</code> (nunca lido direto em runtime).</li></ol>
+<h3>Alternatives Considered</h3>
+<div class="tablewrap"><table><tr><th>Alternativa</th><th>Por que não</th></tr><tr><td>JSON/CSV lidos em runtime</td><td>perde tipagem e a validação do editor</td></tr><tr><td>Banco de conteúdo no servidor</td><td>cliente precisa do mesmo conteúdo; complexidade sem ganho no MVP</td></tr><tr><td>Ids numéricos</td><td>ilegíveis em logs e em telemetria</td></tr></table></div>
+<h3>Consequences</h3>
+<p>Positivas: sem divergência cliente-servidor, conteúdo revisável por diff. Negativas: aposentar id exige disciplina; carga de milhares de <code>.tres</code> pode alongar o início do servidor.</p>
+<h3>Performance Implications</h3>
+<ul><li>Carga de <code>DataDB</code> no início do servidor: meta menor que 2 s para o conteúdo do MVP (a medir).</li><li>Memória do conteúdo no cliente dentro do teto de 2048 MB (<code>project.yaml</code>).</li></ul>
+<h3>Validation Criteria</h3>
+<ul><li>Teste que percorre todos os <code>.tres</code> e valida esquema, faixas e referências.</li><li>Teste de handshake com <code>content_hash</code> diferente recusado.</li></ul>
+<h3>GDD Requirements Addressed</h3>
+<div class="tablewrap"><table><tr><th>GDD</th><th>Requisito</th><th>Como</th></tr><tr><td><code>monsters.md</code> 3.1/3.5, <code>items.md</code> 3.1, <code>classes.md</code>, <code>quests-mvp.md</code></td><td>modelos de dados</td><td>itens 1-4</td></tr><tr><td><code>anti-cheat.md</code> 3.12</td><td><code>def_id</code> existe em <code>DataDB</code></td><td>item 2</td></tr></table></div>
+<h3>Open Questions</h3>
+<ul><li>Política de <code>retired</code> para itens já nas mãos de jogadores.</li></ul></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

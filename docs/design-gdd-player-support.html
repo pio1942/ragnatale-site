@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Suporte ao jogador | Ragna Tale</title>
+<meta name="description" content="Suporte ao jogador: documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-gdd-player-support.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-gdd-player-support.html">
+<meta property="og:title" content="Suporte ao jogador | Ragna Tale">
+<meta property="og:description" content="Suporte ao jogador: documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Suporte ao jogador | Ragna Tale">
+<meta name="twitter:description" content="Suporte ao jogador: documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/gdd/player-support.md</code></p><h2>Suporte ao jogador</h2>
+<blockquote><strong>Status</strong>: Rascunho de proposta (criador autorizou a criação em 2026-11-07); nada confirmado<br><strong>Autor</strong>: community-manager (proposta). Prazos e ferramentas são entrada para producer decidir; textos legais passam por advogado<br><strong>Relacionado</strong>: <code>docs/DECISIONS.md</code> (2026-11-07, "Frente de segurança, punições, privacidade e suporte"), <code>design/gdd/sanctions-moderation.md</code>, <code>design/gdd/drop-feedback.md</code><br><strong>Aviso</strong>: as regras da Steam citadas abaixo devem ser <strong>conferidas na política vigente da Valve antes de publicar</strong>; aqui estão como ponto de partida.</blockquote>
+<h3>1. Visão geral</h3>
+<p>Como o jogador pede ajuda e como a equipe responde: canais, categorias, prioridades, prazos, perguntas frequentes, respostas-padrão, recuperação de conta, restauração de itens, reembolso de cosméticos, moderação da comunidade e métricas. Vale para o futuro online; nada disso existe ainda.</p>
+<h3>2. Fantasia do jogador</h3>
+<p>"Alguém de verdade me ouviu, entendeu o meu problema e resolveu sem me tratar como suspeito." Público brasileiro: atendimento em português, tom próximo e respeitoso, sem robô frio.</p>
+<h3>3. Regras detalhadas</h3>
+<h4>3.1 Canais</h4>
+<div class="tablewrap"><table><tr><th>Canal</th><th>Uso</th><th>Observação</th></tr><tr><td>Site (central de ajuda + FAQ + status)</td><td>autoatendimento, status do servidor</td><td>primeiro destino; página de status atualizada em incidentes</td></tr><tr><td>Ticket no jogo</td><td>problemas com conta, item, bug, denúncia, apelação</td><td>anexa automaticamente conta, versão, logs recentes; canal preferido</td></tr><tr><td>E-mail de suporte</td><td>quem não consegue entrar no jogo, recuperação de conta</td><td>gera ticket; responde só ao e-mail cadastrado</td></tr><tr><td>Discord</td><td>comunidade, dúvidas rápidas, avisos</td><td><strong>não</strong> trata dados de conta, itens perdidos ou sanções; direciona para ticket</td></tr><tr><td>Fóruns da Steam</td><td>dúvidas gerais e feedback</td><td>monitorado; casos pessoais vão para ticket</td></tr></table></div>
+<p>Regra: nunca pedir senha, nunca resolver caso pessoal em canal público.</p>
+<h4>3.2 Categorias e prioridades</h4>
+<div class="tablewrap"><table><tr><th>Prioridade</th><th>Categorias</th><th>Exemplos</th></tr><tr><td>P0 Crítica</td><td>segurança de menor, vazamento de dados, servidor fora do ar, duplicação em andamento</td><td>aliciamento, falha que expõe dados</td></tr><tr><td>P1 Alta</td><td>conta invadida, perda de item/ouro, cobrança duplicada, ameaça/assédio</td><td>"roubaram minha conta"</td></tr><tr><td>P2 Média</td><td>bug que impede progresso, apelação de sanção, reembolso</td><td>personagem preso, missão travada</td></tr><tr><td>P3 Baixa</td><td>dúvidas, sugestões, bug cosmético, feedback</td><td>"como mudo de faixa de PvP?"</td></tr></table></div>
+<h4>3.3 Tempos de resposta-alvo (SLA, proposta)</h4>
+<div class="tablewrap"><table><tr><th>Prioridade</th><th>Primeira resposta</th><th>Resolução-alvo</th></tr><tr><td>P0</td><td>1 h (24 h por dia)</td><td>contenção em 4 h</td></tr><tr><td>P1</td><td>8 h</td><td>3 dias</td></tr><tr><td>P2</td><td>24 h</td><td>7 dias</td></tr><tr><td>P3</td><td>72 h</td><td>melhor esforço</td></tr></table></div>
+<p>Em lançamento ou incidente, publicar aviso de atraso no site/Discord em vez de silêncio. Metas valem em dias úteis, exceto P0.</p>
+<h4>3.4 FAQ inicial (a ser ampliada)</h4>
+<ol><li>Como crio a conta e vinculo à Steam?</li><li>Esqueci o acesso / mudei de e-mail: como recupero?</li><li>Não consigo conectar: onde vejo o status dos servidores?</li><li>O que acontece se eu perder a conexão no meio de um combate ou de uma troca?</li><li>Como denuncio um jogador ou bot?</li><li>Fui silenciado/suspenso/banido: por quê e como apelo?</li><li>Perdi um item ou ouro: o que faço?</li><li>O jogo vende vantagem? (Não: só cosméticos, sem pay-to-win.)</li><li>Como peço reembolso de um cosmético?</li><li>Como funciona a faixa de nível no PvP?</li><li>Como funcionam os drops, raridades e cartas? (link para a wiki de drops)</li><li>Como ativo o filtro de loot e as opções de acessibilidade?</li><li>Qual a idade mínima e como funciona para menores? (a confirmar com o advogado)</li><li>Onde vejo meus dados e como peço exclusão (LGPD)?</li></ol>
+<h4>3.5 Macros de resposta</h4>
+<p>Todas começam com saudação pelo nome, em português, sem jargão, terminam com próximo passo e prazo. Exemplos (rascunhos):</p>
+<ul><li><strong>Recebido:</strong> "Oi, [nome]! Recebemos seu pedido (#[número]). Um de nós vai responder em até [prazo]. Se tiver prints ou o horário aproximado do problema, pode responder aqui."</li><li><strong>Pedir informação:</strong> "Para ajudar, precisamos de: nome do personagem, horário aproximado, o que aconteceu e o que você esperava. Nunca peça ou envie sua senha."</li><li><strong>Sanção mantida:</strong> "Revisamos o seu caso com outra pessoa da equipe. A regra infringida foi [regra]. A decisão foi mantida. Se surgir fato novo, pode apelar de novo com ele."</li><li><strong>Sanção revertida:</strong> "Revisamos e reconhecemos o erro. A sanção foi removida e [itens/ranking] restaurados. Desculpe o transtorno."</li><li><strong>Item restaurado / negado:</strong> com o motivo e o que foi conferido nos logs.</li><li><strong>Bug conhecido:</strong> "Já conhecemos esse problema e estamos trabalhando nele. Vamos avisar no [canal] quando for corrigido." (só se houver bug registrado)</li><li><strong>Fora do escopo:</strong> orientar para o canal correto, com cordialidade.</li></ul>
+<p>Proibido: prometer prazo de correção ou item novo sem aval do producer; afirmar correção sem confirmação do qa-lead.</p>
+<h4>3.6 Recuperação de conta</h4>
+<ol><li>Pedido por e-mail cadastrado ou ticket (se o e-mail foi perdido, ver passo 4).</li><li>Verificação de propriedade: e-mail cadastrado, conta Steam vinculada, nome do personagem, últimas atividades que só o dono sabe (data de criação, classe, cidade). <strong>Nunca</strong> pedir senha nem códigos.</li><li>Conta invadida: bloqueio imediato (cautelar), troca de senha forçada, encerramento de sessões, revisão dos logs; reversão de trocas feitas pelo invasor.</li><li>Sem acesso ao e-mail: verificação reforçada (prova da Steam, comprovante de compra de cosmético) e espera de segurança de 72 h antes de trocar o e-mail.</li><li>Recomendar autenticação em dois fatores (quando existir).</li><li>O invasor que vendeu itens: restaurar conforme 3.7; punir só quem agiu de má-fé.</li></ol>
+<h4>3.7 Restauração de itens perdidos</h4>
+<p>Pode restaurar: perda por erro do jogo (bug, queda de servidor, falha de entrega de drop), invasão comprovada, rollback de duplicação em que o jogador foi lesado. Não restaura: perda por descuido do jogador (vender, jogar fora, trocar por vontade própria), golpe entre jogadores com consentimento na troca (orientação e denúncia, mas sem reposição), item perdido por morte se a regra do jogo prevê. Processo: abrir ticket "Item perdido" → apuração nos logs por id de item → restauração com cópia de segurança do mesmo id (nunca criar item duplicado) → registro do caso. Limite: pedidos em até <strong>30 dias</strong> (proposta); uso excessivo (3 pedidos em 90 dias) vai para revisão.</p>
+<h4>3.8 Reembolso de cosméticos (Steam)</h4>
+<ul><li>A venda é feita via Steam; <strong>o reembolso de compras no jogo segue a política da Steam</strong>, que processa o pedido. Ponto de partida (conferir sempre): para itens dentro do jogo, a Steam costuma aceitar pedido em até <strong>48 horas</strong>, desde que o item <strong>não tenha sido consumido, usado ou transferido</strong>; para jogos, 14 dias e menos de 2 horas jogadas.</li><li>O suporte do Ragna Tale <strong>não paga reembolso por fora</strong>; orienta o jogador a pedir pelo próprio sistema da Steam e, se um erro nosso causou o problema (cosmético não entregue, cobrança em dobro), ajuda a resolver ou entrega o item/compensação.</li><li>Cosmético entregue com defeito: substituir ou compensar.</li><li>Não reembolsar por sanção (ver <code>sanctions-moderation.md</code>) nem por mudança de gosto após uso. Compra de menor sem autorização do responsável: encaminhar à Steam e orientar o responsável.</li><li>Cosméticos não dão vantagem: nada de reembolso "porque não ficou forte".</li></ul>
+<h4>3.9 Moderação da comunidade (Discord, fóruns, in-game)</h4>
+<ul><li>Código de conduta publicado e fixado; regras claras: respeito, sem assédio, sem divulgação de RMT, sem spoilers fora dos canais, sem conteúdo adulto.</li><li>Equipe de moderadores voluntários e funcionários com papéis separados; ação registrada.</li><li>Mesma escala de <code>sanctions-moderation.md</code> (aviso, silêncio, suspensão, banimento).</li><li>Canais de feedback organizados (sugestões, bugs, wiki). Resumo semanal para a equipe (ver community-manager).</li><li>Respostas públicas honestas, sem promessas de data; crise segue o template de incidentes.</li></ul>
+<h4>3.10 Métricas de suporte</h4>
+<div class="tablewrap"><table><tr><th>Métrica</th><th>Meta (proposta)</th></tr><tr><td>Tempo até a primeira resposta (por prioridade)</td><td>dentro do SLA em 90% dos casos</td></tr><tr><td>Tempo até a resolução</td><td>dentro da meta em 80%</td></tr><tr><td>Satisfação (nota 1-5 ao fechar)</td><td>média 4,2 ou mais</td></tr><tr><td>Reaberturas</td><td>menos de 10%</td></tr><tr><td>Volume por categoria</td><td>acompanhar semanalmente</td></tr><tr><td>Apelações revertidas</td><td>acompanhar (alta indica erro de moderação)</td></tr><tr><td>Contatos por 1.000 jogadores ativos</td><td>acompanhar tendência</td></tr><tr><td>Itens e contas restaurados</td><td>acompanhar por mês</td></tr></table></div>
+<h3>4. Fórmulas</h3>
+<p><code>SLA_cumprido = casos_respondidos_no_prazo / casos_totais_do_período</code> <code>taxa_reabertura = casos_reabertos / casos_fechados</code> <code>revertida_apelação = apelações_revertidas / apelações_decididas</code> Não há outras fórmulas numéricas.</p>
+<h3>5. Casos de borda</h3>
+<ul><li><strong>Pedido repetido em vários canais:</strong> juntar em um único ticket, avisar o jogador.</li><li><strong>Pessoa que não é dona da conta pede ajuda:</strong> não revelar nada além do necessário, pedir verificação.</li><li><strong>Jogador ameaçando se ferir ou terceiros:</strong> tratar como P0, orientar a buscar ajuda (CVV, 188) e escalar conforme a lei.</li><li><strong>Pedido de exclusão de dados (LGPD):</strong> direcionar ao procedimento de <code>docs/legal/</code>; mantém só o que a lei exige.</li><li><strong>Fora de horário / feriado:</strong> resposta automática com prazo honesto; P0 tem plantão.</li><li><strong>Spam de tickets:</strong> limite de abertura por dia e consolidação.</li><li><strong>Idioma:</strong> português primeiro; outros idiomas só depois de decisão do producer.</li></ul>
+<h3>6. Dependências</h3>
+<p><code>sanctions-moderation.md</code> (apelação, sanções), servidor (logs e ids de itens), integração com a Steam (compras), site e wiki (<code>site/</code>), <code>docs/legal/</code> (termos e privacidade), producer (prazos e compensações), qa-lead (status de bugs), live-ops-designer (eventos e incidentes).</p>
+<h3>7. Parâmetros ajustáveis</h3>
+<p>SLA por prioridade, janela de pedido de restauração (14-60 dias), limite de tickets por dia, espera de segurança na troca de e-mail (24-96 h), metas de satisfação.</p>
+<h3>8. Critérios de aceite</h3>
+<ul><li>Todo canal da tabela 3.1 tem destino claro (autoatendimento, ticket ou comunidade).</li><li>Um ticket aberto no jogo chega à fila com conta, versão e prioridade preenchidas.</li><li>Recuperação de conta nunca pede senha e exige verificação documentada.</li><li>Item restaurado mantém o mesmo id; a auditoria mostra uma única instância.</li><li>Respostas de reembolso citam a política da Steam vigente e foram conferidas antes da publicação.</li><li>As métricas de 3.10 saem em relatório mensal.</li></ul>
+<h3>9. Decisões para o criador</h3>
+<ol><li>Qual ferramenta de tickets (própria ou externa)? Hoje, nenhuma existe.</li><li>Horário de atendimento e plantão de P0.</li><li>Quem paga compensações e qual o teto sem aprovação do producer?</li><li>Limite de 30 dias para restauração de item é aceitável?</li><li>Apoio de voluntários na moderação do Discord?</li></ol></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

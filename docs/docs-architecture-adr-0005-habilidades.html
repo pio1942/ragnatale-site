@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ADR-0005: Habilidades, dados e resolução na GameSim | Ragna Tale</title>
+<meta name="description" content="ADR-0005: Habilidades, dados e resolução na GameSim: documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0005-habilidades.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0005-habilidades.html">
+<meta property="og:title" content="ADR-0005: Habilidades, dados e resolução na GameSim | Ragna Tale">
+<meta property="og:description" content="ADR-0005: Habilidades, dados e resolução na GameSim: documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ADR-0005: Habilidades, dados e resolução na GameSim | Ragna Tale">
+<meta name="twitter:description" content="ADR-0005: Habilidades, dados e resolução na GameSim: documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Arquitetura e ADRs</p><p class="note">Fonte: <code>docs/architecture/adr-0005-habilidades.md</code></p><h2>ADR-0005: Habilidades, dados e resolução na GameSim</h2>
+<h3>Status</h3>
+<p>Accepted (2026-11-08) — confirmação explícita do criador, dada por ele mesmo no chat: "1 - aprovado", em resposta ao pedido "aceito as ADRs 0002 a 0008".</p>
+<h3>Date</h3>
+<p>2026-11-07</p>
+<h3>Last Verified</h3>
+<p>2026-11-07 (contra <code>skills.md</code> 3, 8 e <code>scripts/data/skill_def.gd</code>)</p>
+<h3>Decision Makers</h3>
+<p>technical-director (proposta), gameplay-programmer, game-designer</p>
+<h3>Summary</h3>
+<p>Há cerca de 12 linhas x várias formas de habilidades por tribo, com ativas, passivas e ultimates. Proposta: um <code>SkillDef</code> com efeitos compostos por uma lista de <code>SkillEffect</code> tipados, resolvidos só pela <code>GameSim</code> no fim do <em>windup</em>, e estado de pontos por personagem validado na carga.</p>
+<h3>Engine Compatibility</h3>
+<div class="tablewrap"><table><tr><th>Item</th><th>Situação</th></tr><tr><td>Engine</td><td>Godot 4.7.2</td></tr><tr><td>APIs</td><td><code>Resource</code>, GDScript tipado, sinais; nenhuma API de rede ou física nova</td></tr><tr><td>Risco</td><td>Baixo. <strong>NOT SOURCEABLE</strong>: comportamento de <code>Area3D</code>/consultas de física em servidor headless com Jolt a 20 Hz (ver ADR-0001 6.3)</td></tr><tr><td>Post-cutoff</td><td>Jolt como padrão (4.6)</td></tr></table></div>
+<h3>ADR Dependencies</h3>
+<ul><li>Depends On: ADR-0001 (2.5, 2.7), ADR-0004, ADR-0003 (efeitos de grupo)</li><li>Enables: Etapa 7.8 do ROADMAP (habilidades em código)</li><li>Ordering Note: depois de 0004 e 0003</li></ul>
+<h3>Context</h3>
+<h4>Problem Statement</h4>
+<p><code>skills.md</code> define campos novos (<code>skill_type</code>, passivas, ultimate, escala por ponto) e papéis de grupo; ADR-0001 define o momento de resolução (fim do <em>windup</em>, sem rebobinar em área). Falta o contrato de dados e de execução, e quanto cabe nos 25 ms de tique.</p>
+<h4>Requirements</h4>
+<p>TR-skills-001, TR-skills-002, TR-skills-003, TR-resources-001, TR-elements-001</p>
+<h3>Decision</h3>
+<ol><li><code>SkillDef</code> contém campos escalares (cooldown, windup, recovery, radius, multiplicador, custos, elemento, <code>skill_type</code>) e <code>effects: Array[SkillEffect]</code> (dano, cura, buff, deslocamento, invocação). <code>SkillEffect</code> é um <code>Resource</code> tipado; <strong>efeito novo = classe nova com teste</strong>, não script livre.</li><li><code>GameSim.request_skill</code> valida (estado, recarga, custo, alcance), inicia o <em>windup</em> e resolve efeitos no fim dele, com as posições atuais do servidor (ADR-0001 2.7).</li><li>Passivas são recalculadas em <code>_recalc_stats</code>, nunca aplicadas por tique.</li><li>Pontos e árvore por personagem: lista de <code>(skill_id, nível)</code>; validada na carga contra <code>ClassDef</code> (ADR-0002).</li><li>Limites por habilidade de área: máximo de alvos e de invocações por entidade (knobs em <code>balance.gd</code>) para proteger o orçamento de tique.</li><li>Cliente só inicia animação; cancela se o servidor recusar.</li></ol>
+<h3>Alternatives Considered</h3>
+<div class="tablewrap"><table><tr><th>Alternativa</th><th>Por que não</th></tr><tr><td>Habilidades como scripts GDScript por habilidade</td><td>difícil de testar, validar e balancear em massa</td></tr><tr><td>Linguagem de scripting de dados própria</td><td>custo alto para um dev</td></tr><tr><td>Resolver no cliente com validação posterior</td><td>contradiz a autoridade (ADR-0001)</td></tr></table></div>
+<h3>Consequences</h3>
+<p>Positivas: dados revisáveis, testes por efeito, orçamento controlável. Negativas: catálogo de efeitos limita a criatividade até crescer; <code>SkillDef</code> atual precisa de migração.</p>
+<h3>Performance Implications</h3>
+<ul><li>Custo de habilidades dentro do p95 menor que 25 ms por tique; limite de alvos por efeito (meta inicial: 12, a medir na Etapa 3b).</li><li>Sem alocação por tique em passivas.</li></ul>
+<h3>Validation Criteria</h3>
+<ul><li>Teste por <code>SkillEffect</code> e por habilidade do MVP (dano esperado vs <code>balance-curve.md</code>).</li><li>Bancada com 80 bots usando habilidades de área mantém p95 menor que 25 ms.</li></ul>
+<h3>GDD Requirements Addressed</h3>
+<div class="tablewrap"><table><tr><th>GDD</th><th>Requisito</th><th>Como</th></tr><tr><td><code>skills.md</code> 3, 8</td><td>campos de <code>SkillDef</code>, windup/recovery</td><td>itens 1-2</td></tr><tr><td><code>skills-*.md</code></td><td>habilidades por tribo</td><td>item 1 (efeitos)</td></tr><tr><td><code>resources-potions.md</code></td><td>custos</td><td>item 2</td></tr></table></div>
+<h3>Open Questions</h3>
+<ul><li>Catálogo mínimo de <code>SkillEffect</code> para o MVP (precisa do game-designer).</li></ul></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Plano de adoção (Claude Code Game Studios) | Ragna Tale</title>
+<meta name="description" content="Plano de adoção (Claude Code Game Studios): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-adoption-plan-2026-11-06.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-adoption-plan-2026-11-06.html">
+<meta property="og:title" content="Plano de adoção (Claude Code Game Studios) | Ragna Tale">
+<meta property="og:description" content="Plano de adoção (Claude Code Game Studios): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Plano de adoção (Claude Code Game Studios) | Ragna Tale">
+<meta name="twitter:description" content="Plano de adoção (Claude Code Game Studios): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Projeto (docs/)</p><p class="note">Fonte: <code>docs/adoption-plan-2026-11-06.md</code></p><h2>Plano de adoção (Claude Code Game Studios)</h2>
+<blockquote><strong>Gerado em</strong>: 2026-11-06 (execução manual da skill <code>/adopt</code>, modo <code>full</code>)<br><strong>Fase do projeto</strong>: não registrada (<code>project.stage</code> ausente). Heurística: o volume de<br>código (28 <code>.gd</code> em <code>scripts/</code>) apontaria <em>Production</em>, mas não há brief nem conceito no<br>formato do template; na prática é um protótipo técnico (Etapa 1) entrando em design.<br><strong>Engine</strong>: Godot 4.7.2-stable / GDScript — <strong>não configurada no template</strong><br>(<code>project.yaml</code> sem <code>engine.*</code>; <code>technical-preferences.md</code> todo <code>[TO BE CONFIGURED]</code>)<br><strong>Versão do template</strong>: v1.2.0 (<code>framework.version</code> em <code>project.yaml</code>)<br><strong>Configuração efetiva</strong>: <code>modes.rigor</code> não escrito → padrão <code>minimal</code> → <code>workflow: minimal</code>,<br><code>review_mode: solo</code>; <code>automation: collaborative</code> (padrão).</blockquote>
+<p>Siga os passos em ordem e marque cada item ao concluir. Rode <code>/adopt</code> de novo quando quiser conferir o que falta. As regras do Ragna Tale em <code>CLAUDE.md</code> têm prioridade sobre as do template.</p>
+<h3>Resumo da auditoria</h3>
+<div class="tablewrap"><table><tr><th>Item</th><th>Resultado</th></tr><tr><td>Tier de workflow</td><td><code>minimal</code>: o único documento de design esperado é <code>design/game-brief.md</code></td></tr><tr><td>GDDs / ADRs / histórias</td><td>0 / 0 / 0 (nada a auditar no formato do template)</td></tr><tr><td><code>design/game-brief.md</code></td><td><strong>ausente</strong></td></tr><tr><td>Docs próprios do projeto</td><td><code>docs/GAME_DESIGN.md</code>, <code>ROADMAP.md</code>, <code>STATUS.md</code>, <code>DECISIONS.md</code>, <code>ASSETS.md</code>: têm conteúdo real, mas não seguem os títulos que as skills leem</td></tr><tr><td>Referência da engine</td><td><code>docs/engine-reference/godot/VERSION.md</code> presente (Godot 4.7); "Installed at pin time" = NOT DETERMINED</td></tr><tr><td>Migração v1.0 (2g)</td><td>não se aplica: <code>project.yaml</code> existe e não há <code>production/stage.txt</code> nem <code>review-mode.txt</code></td></tr><tr><td>Plano anterior</td><td>nenhum</td></tr></table></div>
+<p>Contagem de lacunas: <strong>BLOQUEANTE 2 · ALTA 2 · MÉDIA 4 · BAIXA 2</strong></p>
+<p><strong>Verificações feitas à mão (Python não instalado):</strong> o <code>resolve_config</code> do <code>yaml-helper.sh</code> não rodou. Os modos foram resolvidos lendo <code>project.yaml</code>, <code>project.local.yaml</code> (só <code>updates.check: false</code>) e <code>.claude/docs/config-resolution.md</code>. O <code>migrate-v1-config.sh --dry-run</code> não foi necessário (não é projeto v1.0). O <code>gdd-structure-check.sh</code> não se aplica (não há GDDs).</p>
+<hr>
+<h3>Passo 1: Corrigir lacunas bloqueantes</h3>
+<h4>1.1 Raiz de código do template não bate com <code>scripts/</code></h4>
+<p><strong>Problema:</strong> o template amarra Godot a <code>src/</code> (<code>resolve_code_root()</code> em <code>.claude/hooks/yaml-helper.sh</code> e <code>.claude/docs/code-root-resolution.md</code>) e não oferece chave de configuração para mudar isso. O código do Ragna Tale está em <code>scripts/</code> (regra do projeto). Hoje, sem engine configurada e sem <code>src/</code>, a raiz fica "não resolvida", e as varreduras de código dão NOT ASSESSED. Depois do <code>/setup-engine</code>, todo hook e toda skill que varre código (<code>detect-gaps.sh</code>, <code>session-start.sh</code>, <code>validate-commit.sh</code>, <code>project-state.sh</code>, auditorias de conteúdo/segurança/localização) vai procurar em <code>src/</code>, não vai achar nada e <strong>vai relatar "limpo" em silêncio</strong>. Os testes têm o mesmo problema: o template espera <code>tests/unit/</code> e <code>tests/integration/</code>, e o projeto usa <code>tests/run_unit_tests.gd</code> e <code>tests/playtest.tscn</code>. <strong>Opções (decisão do criador):</strong></p>
+<ul><li>(a) manter <code>scripts/</code> e adaptar o template localmente: mudar a linha <code>godot) root="src"</code> em <code>resolve_code_root()</code> e a tabela em <code>directory-structure.md</code>/<code>code-root-resolution.md</code> para <code>scripts</code>, e registrar isso como customização local (vai conflitar em upgrades do template);</li><li>(b) mover <code>scripts/</code> para <code>src/</code>: contraria <code>CLAUDE.md</code>, quebra caminhos <code>res://</code> em cenas, <code>.tres</code> e testes, e não é recomendado;</li><li>(c) não mudar nada e lembrar sempre que "nenhum achado" em varredura de código não quer dizer nada (frágil).</li></ul>
+<p><strong>Recomendação:</strong> (a), feita <strong>antes</strong> ou <strong>junto</strong> do <code>/setup-engine</code>. <strong>Tempo:</strong> 30 min</p>
+<ul><li>[ ] Decisão do criador registrada em <code>docs/DECISIONS.md</code></li><li>[ ] Raiz de código resolvendo para <code>scripts</code> (conferir com <code>bash -c '. .claude/hooks/yaml-helper.sh; resolve_code_root'</code>, que <strong>precisa de Python</strong> no passo do <code>engine.name</code>)</li></ul>
+<h4>1.2 Python ausente: leitura de configuração do template não funciona</h4>
+<p><strong>Problema:</strong> <code>yaml-helper.sh</code> (<code>get_yaml_key</code>, <code>resolve_config</code>, <code>resolve_code_root</code>) usa Python, e só existe o atalho da Microsoft Store (<code>WindowsApps/python</code>), que não é um interpretador. Sem Python, os hooks e skills não conseguem ler <code>project.yaml</code> e caem nos padrões em silêncio: mesmo depois do <code>/setup-engine</code> e do <code>/start</code>, os valores configurados podem ser ignorados. O <code>validate-commit.sh</code> também pula a checagem de seções de GDD e bloqueia commits de dados JSON em <code>assets/<strong>/data/</code>. </strong>Correção:<strong> o criador instala Python 3 (python.org, marcar "Add to PATH") e desativa os "aliases de execução de aplicativo" do Python nas Configurações do Windows. Depois, confirme com <code>bash .claude/hooks/yaml-helper.sh resolve_config --keys review_mode,automation,workflow</code>. </strong>Tempo:** 15 min</p>
+<ul><li>[ ] Python 3 instalado e <code>resolve_config</code> imprimindo valores</li></ul>
+<hr>
+<h3>Passo 2: Corrigir lacunas de alta prioridade</h3>
+<h4>2.1 Engine não configurada no template</h4>
+<p><strong>Problema:</strong> <code>project.yaml</code> não tem <code>engine.name/version/language/rendering/physics</code>, e <code>technical-preferences.md</code> está todo <code>[TO BE CONFIGURED]</code>. Sem isso as skills não escolhem o especialista Godot e a raiz de código fica sem resolver. <strong>Correção:</strong> <code>/setup-engine godot 4.7.2</code>, com os valores reais do projeto: GDScript tipado; renderizador <strong>GL Compatibility</strong> (<code>project.godot</code>); física 3D padrão do 4.7 (conferir se é Jolt); plataforma PC Windows, teclado e mouse, sem gamepad e sem toque por enquanto. Ele também deve preencher "Installed at pin time" em <code>docs/engine-reference/godot/VERSION.md</code> com 4.7.2 (<code>[removido]</code>). Faça depois do 1.2 (o <code>/setup-engine</code> grava via yaml-helper) e junto do 1.1. <strong>Tempo:</strong> 30 min</p>
+<ul><li>[ ] <code>engine.*</code> em <code>project.yaml</code></li><li>[ ] Especialistas Godot e roteamento por extensão (<code>.gd</code>, <code>.gdshader</code>, <code>.tscn</code>, <code>.tres</code>)</li></ul>
+<h4>2.2 <code>design/game-brief.md</code> ausente (único documento de design do tier <code>minimal</code>)</h4>
+<p><strong>Problema:</strong> no workflow <code>minimal</code>, o brief de uma página substitui conceito, índice de sistemas e GDDs. Sem ele, <code>/create-stories</code> e as checagens de critério de aceite não têm de onde partir. O conteúdo já existe, espalhado em <code>docs/GAME_DESIGN.md</code> (visão, experiência central, regras, direção artística) e <code>docs/ROADMAP.md</code> (etapas = ordem de construção; "fora do escopo inicial" = fora de escopo). <strong>Correção:</strong> escrever <code>design/game-brief.md</code> a partir de <code>.claude/docs/templates/game-brief.md</code> (pitch, ciclo central, objetivo/condição de falha, MVP, fora de escopo, ordem de construção), condensando os docs existentes e linkando <code>docs/GAME_DESIGN.md</code> como detalhe. <strong>Não mover nem reescrever</strong> <code>GAME_DESIGN.md</code>. Pode ser à mão ou com <code>/reverse-document design scripts</code> (gera rascunho a partir do código; revisar). O brainstorm pendente (número de classes no lançamento, o que prendia em Priston Tale, regras de personalização) fica marcado como pergunta aberta no brief. <strong>Tempo:</strong> 1 sessão (com o criador)</p>
+<ul><li>[ ] <code>design/game-brief.md</code> aprovado pelo criador</li></ul>
+<hr>
+<h3>Passo 3: Infraestrutura</h3>
+<p>Fora do caminho <code>minimal</code>: a ordem de construção do brief é o plano (sem <code>tr-registry</code>, manifest de controle, <code>sprint-status.yaml</code> nem <code>/gate-check</code>). Próximo: <code>/create-stories</code> (ou <code>/dev-story</code> quando já houver histórias).</p>
+<hr>
+<h3>Passo 4: Lacunas de prioridade média</h3>
+<h4>4.1 Rigor/automação não gravados (<code>/start</code> não rodou)</h4>
+<p><strong>Problema:</strong> <code>project.yaml</code> não tem bloco <code>modes:</code>; os valores efetivos vêm dos padrões (<code>rigor: minimal</code>, <code>automation: collaborative</code>). Funciona, mas não é uma decisão registrada. O <code>DECISIONS.md</code> pede "rigor baixo para código e documentos completos só para classes, progressão, itens e bíblia de arte", o que corresponde a <code>modes.rigor: minimal</code> mais <code>system_overrides</code> com <code>full</code> para esses sistemas (ver <code>.claude/docs/workflow-modes.md</code>), além do <code>/art-bible</code>. <strong>Correção:</strong> <code>/settings modes.rigor=minimal</code> e <code>/settings modes.automation=collaborative</code> (ou <code>/start</code>). <strong>Não</strong> gravar <code>modes.review_mode</code>, <code>modes.workflow</code>, <code>docs.density</code>, <code>qa.level</code>, <code>modes.story_granularity</code> nem <code>team.size</code>. Os overrides por sistema entram quando cada sistema ganhar documento. <strong>Tempo:</strong> 5 min</p>
+<ul><li>[ ] <code>modes.rigor</code> e <code>modes.automation</code> gravados</li></ul>
+<h4>4.2 Convenções de nome não configuradas</h4>
+<p><strong>Problema:</strong> <code>naming.*</code> está vazio. O código já segue um padrão: arquivos <code>snake_case.gd</code>, <code>class_name</code> em PascalCase, identificadores em inglês, id de dado = nome do arquivo <code>.tres</code>, texto de interface em pt-BR. <strong>Correção:</strong> no <code>/setup-engine</code> (2.1), aceitar os padrões Godot <strong>conferindo contra o código existente</strong>, sem renomear nada. <strong>Tempo:</strong> 5 min</p>
+<ul><li>[ ] <code>naming.*</code> coerente com <code>scripts/</code></li></ul>
+<h4>4.3 Orçamentos de desempenho não configurados</h4>
+<p><strong>Problema:</strong> <code>performance.*</code> está vazio, e o FPS na máquina real (RTX 3060) ainda não foi medido (<code>docs/STATUS.md</code>). <strong>Correção:</strong> medir com F3 / <code>--soak=300</code> e então definir FPS-alvo e orçamento de quadro (<code>/setup-engine</code> ou <code>/settings</code>). <strong>Tempo:</strong> 30 min</p>
+<ul><li>[ ] FPS medido e orçamento gravado</li></ul>
+<h4>4.4 Framework de testes do template vs. runner próprio</h4>
+<p><strong>Problema:</strong> <code>testing.framework</code> não está configurado, e skills de QA/test-setup esperam um framework (ex.: GdUnit4) em <code>tests/unit/</code>/<code>tests/integration/</code>. O projeto tem runner próprio, com códigos de saída 0/1/2, e as regras de <code>CLAUDE.md</code> mandam atualizar <code>tests/run_unit_tests.gd</code> e <code>tests/playtest_driver.gd</code>. <strong>Correção:</strong> registrar o runner próprio como framework e os comandos de <code>CLAUDE.md</code> como comando de teste. <strong>Não</strong> rodar <code>/test-setup</code> de forma que instale outro framework sem decisão do criador. <strong>Tempo:</strong> 15 min</p>
+<ul><li>[ ] Framework de teste registrado</li></ul>
+<hr>
+<h3>Passo 5: Melhorias opcionais</h3>
+<h4>5.1 Padrões proibidos e bibliotecas permitidas vazios</h4>
+<p><strong>Problema:</strong> <code>technical-preferences.md</code> ainda não lista as fronteiras que o projeto já decidiu. <strong>Correção (manual, em <code>technical-preferences.md</code>):</strong> registrar como proibido: nós visuais em <code>scripts/sim/</code>; regras fora da <code>GameSim</code>; cliques de mundo fora de <code>_unhandled_input</code>; chamadas diretas a APIs de loja (Steam etc.) fora da interface <code>Platform</code>; DRM ou conta obrigatória; servidores/infra online nesta fase. Bibliotecas: nenhuma por enquanto, e qualquer asset externo vai para <code>docs/ASSETS.md</code>. <strong>Tempo:</strong> 15 min</p>
+<ul><li>[ ] Listas preenchidas</li></ul>
+<h4>5.2 Fase do projeto não registrada</h4>
+<p><strong>Problema:</strong> sem <code>project.stage</code>, a detecção automática de fase é ambígua (pelo volume de código daria "Production"). No <code>minimal</code> isso não é lacuna, só informação. <strong>Correção:</strong> opcional, <code>/settings project.stage=&lt;fase&gt;</code> depois do brief. Sugestão: <code>concept</code> enquanto o design é feito com o criador. <strong>Tempo:</strong> 5 min</p>
+<ul><li>[ ] Fase definida (opcional)</li></ul>
+<hr>
+<h3>O que esperar de histórias existentes</h3>
+<p>Não há histórias no formato do template. As que forem criadas a partir do brief seguem o formato atual. Se um dia houver histórias antigas, elas continuam funcionando: as checagens novas (TR-ID, versão do manifest) passam automaticamente quando os campos não existem.</p>
+<h3>Modo de revisão</h3>
+<p>O modo de revisão resolve para <code>solo</code> porque vem de <code>modes.rigor</code> (padrão <code>minimal</code>) e nada o fixa. Para mudar a profundidade, altere <code>modes.rigor</code>; para fixar de propósito, use <code>/settings --local modes.review_mode=&lt;full|lean|solo&gt;</code>.</p>
+<h3>Fora do escopo deste plano</h3>
+<p>A reestruturação já reconhecida em <code>docs/DECISIONS.md</code> (mundo, personagens e HUD feitos por código → cenas <code>.tscn</code> editáveis) é trabalho de jogo, não de adoção do template. Ela entra como história depois do brief.</p>
+<h3>Reexecutar</h3>
+<p>Rode <code>/adopt</code> de novo depois dos Passos 1 e 2 para confirmar que não sobrou lacuna bloqueante nem alta.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

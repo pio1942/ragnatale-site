@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ADR-0003 Emenda 3: formato do estado de instância suspensa (InstanceSnapshot) | Ragna Tale</title>
+<meta name="description" content="ADR-0003 Emenda 3: formato do estado de instância suspensa (InstanceSnapshot): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0003-emenda-3-estado-de-instancia-suspensa.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0003-emenda-3-estado-de-instancia-suspensa.html">
+<meta property="og:title" content="ADR-0003 Emenda 3: formato do estado de instância suspensa (InstanceSnapshot) | Ragna Tale">
+<meta property="og:description" content="ADR-0003 Emenda 3: formato do estado de instância suspensa (InstanceSnapshot): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ADR-0003 Emenda 3: formato do estado de instância suspensa (InstanceSnapshot) | Ragna Tale">
+<meta name="twitter:description" content="ADR-0003 Emenda 3: formato do estado de instância suspensa (InstanceSnapshot): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Arquitetura e ADRs</p><p class="note">Fonte: <code>docs/architecture/adr-0003-emenda-3-estado-de-instancia-suspensa.md</code></p><h2>ADR-0003 Emenda 3: formato do estado de instância suspensa (<code>InstanceSnapshot</code>)</h2>
+<h3>Status</h3>
+<p>Accepted (2026-11-08) — confirmação explícita do criador, dada por ele mesmo no chat: "Vou seguir a sua recomendação", sobre as 5 emendas propostas (X-01 a X-05) com a recomendação registrada neste documento. Define o <code>InstanceSnapshot</code> do item 4 da ADR-0003; incorporada à ADR-0003. Item 4 (monstros vivos reiniciam) confirmado.</p>
+<h3>Date</h3>
+<p>2026-11-08</p>
+<h3>Last Verified</h3>
+<p>2026-11-08 (contra ADR-0002 itens 1-4, 7-8; ADR-0003 itens 1, 4; ADR-0004 itens 5-6; ADR-0001 2.8; <code>party.md</code> 3.12.4; <code>architecture-review-2026-11-08.md</code> X-05)</p>
+<h3>Decision Makers</h3>
+<p>technical-director (proposta, redigida por Claude); criador (aceite; item 4 tem uma escolha de design a confirmar)</p>
+<h3>Summary</h3>
+<p>O calabouço vazio dura 15 min com progresso, mortes e loot do monte preservados (<code>party.md</code> 3.12.4), mas o processo é suspenso para não ficar ocioso (ADR-0003 item 4). A ADR-0002 só define o registro de personagem. Esta emenda define o <code>InstanceSnapshot</code>: o que entra, o que <strong>não</strong> entra, como timers são guardados, quem grava e quando é apagado.</p>
+<h3>Engine Compatibility</h3>
+<div class="tablewrap"><table><tr><th>Item</th><th>Situação</th></tr><tr><td>Engine</td><td>Godot 4.7.2</td></tr><tr><td>APIs</td><td>as da ADR-0002 (<code>FileAccess</code>, <code>JSON</code>, rename atômico); <code>duplicate_deep()</code> (ADR-0004 item 6) para exportar</td></tr><tr><td>NOT SOURCEABLE</td><td>herdado: rename atômico no Windows; RAM por processo (R12) decide se suspender compensa</td></tr><tr><td>Risco</td><td>Baixo</td></tr></table></div>
+<h3>ADR Dependencies</h3>
+<ul><li>Depends On: ADR-0002 (itens 1-4, 7-8) e ADR-0002 Emenda 1 (gravação atômica e idempotente), ADR-0002 Emenda 2 (escritor único), ADR-0003 (itens 1, 4), ADR-0003 Emenda 2 (montes de loot), ADR-0004 (ids de dados, migração)</li><li>Enables: party 005 (calabouço de grupo)</li><li>Ordering Note: depois das Emendas 1 e 2 da ADR-0002</li></ul>
+<h3>Context</h3>
+<h4>Problem Statement</h4>
+<p>X-05: monstros, itens no chão, barracas e timers não têm formato. Sem regra, o snapshot tende a copiar o estado inteiro da <code>GameSim</code> (nós, IA, física), o que a ADR-0002 item 2 proíbe e que não sobrevive a uma versão nova do jogo.</p>
+<h4>Requirements</h4>
+<p>TR-party-002, TR-anticheat-007</p>
+<h3>Decision</h3>
+<ol><li><strong>Registro <code>instance/&lt;instance_id&gt;</code></strong>, gravado pelo mesmo <code>CharacterStore</code> (operações <code>save_instance_snapshot</code>, <code>load_instance_snapshot</code>, <code>delete_instance_snapshot</code>, com <code>row_version</code>, escrita atômica, migração <code>migrate_vN_to_vN+1</code> e quarentena da ADR-0002 itens 2-4). Escritor único: o host daquela instância (ADR-0002 Emenda 2 item 1).</li><li><strong>Conteúdo (versão 1)</strong>, só ids de <code>DataDB</code> e dados simples (nada de nós, Resources ou <code>var_to_bytes_with_objects</code>):</li><li>cabeçalho: <code>version</code>, <code>instance_id</code>, <code>kind</code>, <code>map_id</code>, <code>party_id</code>, <code>build</code>, <code>created_at</code>, <code>suspended_at</code>, <code>ttl_expires_at</code> (absoluto, relógio do servidor), <code>row_version</code>;</li><li><code>spawns</code>: por ponto de spawn do mapa (<code>spawn_id</code> estável do layout), <code>def_id</code>, estado <code>alive | dead | cleared</code>, <code>respawn_in_ms</code> se morto;</li><li><code>bosses</code>: por chefe, <code>def_id</code>, <code>dead</code>, <code>respawn_in_ms</code> (<code>balance-curve.md</code> 3.7);</li><li><code>ground_items</code>: <code>ground_uid</code>, <code>ItemInstance</code> completo (com <code>uid</code> quando já emitido), posição quantizada, <code>loot_lock</code> (dono e <code>remaining_ms</code>), e o monte congelado da ADR-0003 Emenda 2 (<code>policy_version</code>, <code>loot_mode</code>, <code>leader</code>, elegíveis);</li><li><code>progress</code>: portas, alavancas e gatilhos do calabouço por id, e o crédito de quest do mapa se houver;</li><li>limite: <strong>256 KB</strong> por snapshot; acima disso é bug (alerta), não corte.</li><li><strong>O que não entra:</strong></li><li>personagens (cada um já fez checkpoint ao sair, ADR-0002 item 5; o snapshot nunca escreve registro de personagem);</li><li>barracas (registro próprio, ADR-0002 Emenda 2 item 4);</li><li>estado de IA, caminhos, física, projéteis, efeitos e buffs em monstros;</li><li>estado do RNG: ao reidratar, a semente é nova (<code>Crypto.generate_random_bytes</code>, ADR-0001 2.8), para que o snapshot não revele nem repita rolagens.</li><li><strong>Monstros vivos são reiniciados</strong> ao suspender: voltam ao ponto de spawn com vida cheia (regra usual de "desistir da luta"). Isso evita guardar IA e combate pela metade. <em>Escolha de design a confirmar pelo criador;</em> a alternativa (guardar vida atual) é só um campo <code>hp</code> a mais por spawn.</li><li><strong>Timers congelam.</strong> <code>respawn_in_ms</code>, <code>loot_lock.remaining_ms</code> e similares são guardados como <strong>tempo restante</strong> e não correm enquanto suspenso. Só <code>ttl_expires_at</code> é absoluto. Assim sair e voltar não acelera o respawn de chefe nem encurta o <code>loot_lock</code>.</li><li><strong>Pendências resolvidas antes de suspender:</strong> a instância só suspende vazia; antes de gravar, rolagens abertas terminam pela regra do GDD (quem não respondeu = Passar, <code>party.md</code> 3.6), transações de valor em voo são resolvidas (ADR-0002 Emenda 2) e o snapshot nunca contém rolagem nem transação aberta.</li><li><strong>Ciclo:</strong></li><li>vazia → host chama <code>sim.export_instance_state()</code> (dados puros, cópia) → grava o snapshot → avisa o <code>InstanceDirectory</code> → <strong>o processo termina</strong>;</li><li>grupo volta antes de <code>ttl_expires_at</code> → o <code>InstanceDirectory</code> cria um processo novo, que carrega o snapshot e chama <code>sim.import_instance_state(dict)</code> com a mesma validação da carga de personagem (ids existem, <code>uid</code> únicos, faixas); inválido = quarentena e calabouço novo, nunca crash;</li><li><code>ttl_expires_at</code> passou → o <code>InstanceDirectory</code> apaga o snapshot; itens no chão com <code>uid</code> já registrado no log de valor recebem <code>item_destroy</code> (motivo <code>instance_expired</code>) pela gravação atômica da Emenda 1.</li><li><strong>Versão do jogo mudou</strong> entre suspender e voltar: o snapshot passa por migração; se o <code>map_id</code> ou o layout não existir mais, o grupo recebe calabouço novo e os itens com <code>uid</code> no chão seguem o item 7 (destruição registrada).</li></ol>
+<h3>Alternatives Considered</h3>
+<div class="tablewrap"><table><tr><th>Alternativa</th><th>Por que não</th></tr><tr><td>Manter o processo vivo 15 min</td><td>é o que a ADR-0003 item 4 quis evitar; depende da RAM medida (R12)</td></tr><tr><td>Serializar a <code>GameSim</code> inteira</td><td>nós e Resources proibidos pela ADR-0002 item 2; quebra a cada versão</td></tr><tr><td>Timers em relógio absoluto</td><td>sair e voltar aceleraria respawn e venceria <code>loot_lock</code> sem ninguém presente</td></tr><tr><td>Guardar RNG</td><td>permitiria prever rolagens a quem lê o arquivo</td></tr><tr><td>Snapshot no <code>PartyService</code></td><td>o serviço não conhece monstros nem itens; o calabouço é estado da instância</td></tr></table></div>
+<h3>Consequences</h3>
+<p>Positivas: X-05 fechado; snapshot pequeno, versionado e testável; reidratar não depende de IA nem física. Negativas: <code>export_instance_state</code>/<code>import_instance_state</code> são código novo na <code>GameSim</code> (dados puros, mas novos); monstros reiniciados mudam a sensação de "voltar no meio da luta" (item 4); mais um tipo de registro para migrar.</p>
+<h3>Performance Implications</h3>
+<ul><li>Suspender e reidratar acontecem com a instância vazia: fora de qualquer tique com jogadores.</li><li>Reidratar = subir processo + carregar até 256 KB; meta &lt; 2 s até aceitar o grupo, medir com R12.</li></ul>
+<h3>Validation Criteria</h3>
+<ul><li>Ida e volta: exportar, gravar, carregar e importar reproduz spawns, chefes, itens no chão e progresso.</li><li>Timer congelado: suspender com chefe a 5 min de respawn e voltar 10 min depois encontra 5 min restantes.</li><li>Snapshot adulterado (<code>uid</code> duplicado, <code>def_id</code> inexistente) vai para quarentena e o grupo recebe calabouço novo.</li><li>TTL vencido apaga o snapshot e registra <code>item_destroy</code> dos itens com <code>uid</code> no chão.</li><li>O snapshot não contém registro de personagem, barraca nem estado de RNG (teste de esquema).</li><li>Teste multiprocesso da ADR-0003 (20 calabouços) inclui suspender e reidratar sem vazamento de processo.</li></ul>
+<h3>GDD Requirements Addressed</h3>
+<div class="tablewrap"><table><tr><th>GDD</th><th>Requisito</th><th>Como</th></tr><tr><td><code>party.md</code> 3.12.4</td><td>15 min vazia com progresso, mortes e loot do monte preservados</td><td>itens 2, 5-7</td></tr><tr><td><code>anti-cheat.md</code> 3.12</td><td>persistência versionada, validada, quarentena</td><td>itens 1, 7-8</td></tr></table></div>
+<h3>Impacto nas histórias (<code>production/epics</code>)</h3>
+<div class="tablewrap"><table><tr><th>História</th><th>Impacto</th></tr><tr><td>party 005 (calabouço de grupo, Blocked)</td><td>ganha o formato; segue Blocked por net-instances 006 e party 001; acrescentar os critérios de ida e volta, timer congelado e TTL</td></tr><tr><td>net-instances 006 (<code>InstanceHost</code>, Blocked)</td><td>o host precisa do ciclo suspender/terminar/reidratar com o <code>InstanceDirectory</code></td></tr><tr><td>persistence (nova story ou extensão de persistence 006)</td><td>operações <code>*_instance_snapshot</code>, migração e quarentena do novo registro</td></tr><tr><td>combat-sim / ai</td><td>nenhuma mudança: monstros reiniciam ao spawn (item 4)</td></tr></table></div>
+<h3>Decisões das perguntas abertas (recomendação do Claude registrada na proposta, aceita pelo criador em 2026-11-08: "Vou seguir a sua recomendação")</h3>
+<ul><li><strong>Monstros de masmorra suspensa:</strong> <strong>reiniciam</strong> no ponto de spawn com vida cheia (item 4 confirmado); guardar a vida atual fica descartado.</li><li>Teto de processos e se a suspensão compensa: depende da RAM medida na Etapa 3b (R12), ainda sem aprovação do technical-director.</li></ul></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

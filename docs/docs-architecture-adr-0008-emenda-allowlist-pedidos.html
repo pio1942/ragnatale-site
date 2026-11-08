@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ADR-0008: Emenda 1 à allowlist de pedidos (troca, mercado, grupo, quests, chat, habilidades) | Ragna Tale</title>
+<meta name="description" content="ADR-0008: Emenda 1 à allowlist de pedidos (troca, mercado, grupo, quests, chat, habilidades): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0008-emenda-allowlist-pedidos.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0008-emenda-allowlist-pedidos.html">
+<meta property="og:title" content="ADR-0008: Emenda 1 à allowlist de pedidos (troca, mercado, grupo, quests, chat, habilidades) | Ragna Tale">
+<meta property="og:description" content="ADR-0008: Emenda 1 à allowlist de pedidos (troca, mercado, grupo, quests, chat, habilidades): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ADR-0008: Emenda 1 à allowlist de pedidos (troca, mercado, grupo, quests, chat, habilidades) | Ragna Tale">
+<meta name="twitter:description" content="ADR-0008: Emenda 1 à allowlist de pedidos (troca, mercado, grupo, quests, chat, habilidades): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Arquitetura e ADRs</p><p class="note">Fonte: <code>docs/architecture/adr-0008-emenda-allowlist-pedidos.md</code></p><h2>ADR-0008: Emenda 1 à allowlist de pedidos (troca, mercado, grupo, quests, chat, habilidades)</h2>
+<h3>Status</h3>
+<p>Accepted (2026-11-08) — confirmação explícita do criador, dada por ele mesmo no chat: "1 - aprovado", em resposta ao pedido "aceito as ADRs 0002 a 0008".</p>
+<h3>Date</h3>
+<p>2026-11-07</p>
+<h3>Last Verified</h3>
+<p>2026-11-07 (contra ADR-0001 2.3/3.1/3.2, ADR-0003, <code>market-trade.md</code> 3.5, <code>party.md</code> 3.9/seção 6, <code>quests-mvp.md</code>, <code>skills.md</code> 3.5-3.7, <code>anti-cheat.md</code> 3.4 e tabela de taxas, <code>telemetry-spec.md</code> 3.3)</p>
+<h3>Decision Makers</h3>
+<p>technical-director (proposta), network-programmer, security-engineer; criador (aceite)</p>
+<h3>Summary</h3>
+<p>ADR-0001 §3.2 admite 15 pedidos e diz que todo <code>request_*</code> novo fica fora da lista por padrão. Os GDDs já exigem pedidos de troca, mercado, grupo, quests, chat e habilidades. Esta ADR fixa o <strong>processo de emenda</strong> e admite o primeiro lote, cada pedido com dono, argumentos, taxa e nível de save.</p>
+<h3>Engine Compatibility</h3>
+<div class="tablewrap"><table><tr><th>Item</th><th>Situação</th></tr><tr><td>Engine</td><td>Godot 4.7.2</td></tr><tr><td>APIs</td><td>nenhuma nova: os pedidos usam o protocolo binário próprio de ADR-0001 2.3 (<code>StreamPeerBuffer</code>)</td></tr><tr><td>Risco</td><td>Baixo</td></tr><tr><td>NOT SOURCEABLE</td><td>nenhum novo; o fuzz dos pedidos entra na bancada da Etapa 1 e o custo de roteamento aos serviços na <strong>Etapa 3b</strong> (ADR-0001 6.3)</td></tr></table></div>
+<h3>ADR Dependencies</h3>
+<ul><li>Depends On: ADR-0001 (2.3, 3.2), ADR-0003 (serviços donos), ADR-0002 (níveis de save)</li><li>Enables: epics <code>items-market</code>, <code>party</code>, <code>quests</code>, <code>skills</code> (stories 002 e 006), <code>telemetry</code> (<code>quality.*</code>)</li><li>Ordering Note: depois da ADR-0003; ADR-0005 cobre a regra das habilidades, esta cobre o pedido</li></ul>
+<h3>Context</h3>
+<h4>Problem Statement</h4>
+<p>Conflito C-05 da revisão de arquitetura: <code>NET_ALLOWED_REQUESTS</code> não lista pedidos que os GDDs exigem, e não existe processo para acrescentá-los. Além disso, ADR-0001 2.3 diz "depois chama a <code>GameSim</code>", mas grupo, chat e mercado têm dono fora da <code>GameSim</code> (ADR-0003).</p>
+<h4>Requirements</h4>
+<p>TR-market-001, TR-market-002, TR-party-001, TR-party-005, TR-quests-001, TR-skills-003, TR-anticheat-006, TR-telemetry-001</p>
+<h3>Decision</h3>
+<h4>1. Emenda de ADR-0001 §2.3 (roteamento)</h4>
+<p><code>Cmd</code> continua 1:1 com um <code>request_*</code> da lista. Depois do checklist de <code>anti-cheat.md</code> 3.4, o gateway chama <strong>o dono do pedido</strong>: a <code>GameSim</code> da instância ou o serviço dono (ADR-0003) pelo canal interno. O <code>entity_id</code>/conta continua vindo da sessão, nunca do cliente; alvos (outro jogador, membro) são <code>entity_id</code> validados como visíveis ou do mesmo grupo.</p>
+<h4>2. Processo de emenda (vale para toda admissão futura)</h4>
+<p>Um pedido só entra na lista com: (a) GDD dono e seção; (b) argumentos tipados com faixa; (c) balde de fichas; (d) checagem de estado e de contexto de mundo; (e) códigos de <code>Result</code>; (f) nível de save (ADR-0002 item 5); (g) teste de fuzz (tipos, NaN, aridade, faixa) e de recusa sem efeito. A admissão é uma emenda numerada a esta ADR (ou ADR nova), aceita pelo technical-director com o criador. Sem isso, o dispatcher recusa (ADR-0001 3.2 segue valendo).</p>
+<h4>3. Lote 1 admitido</h4>
+<div class="tablewrap"><table><tr><th>Grupo</th><th>Pedidos</th><th>Dono</th><th>Taxa (balde)</th><th>Save</th></tr><tr><td>Troca (<code>market-trade.md</code> 3.5)</td><td><code>request_trade_invite</code>, <code>request_trade_set_offer</code>, <code>request_trade_confirm(step)</code>, <code>request_trade_cancel</code></td><td><code>GameSim</code> da instância (os dois jogadores próximos)</td><td>1/s</td><td>confirmação final: imediato, transação dos dois lados</td></tr><tr><td>Barraca (<code>market-trade.md</code> 3.5)</td><td><code>request_stall_open</code>, <code>request_stall_list_item</code>, <code>request_stall_delist</code>, <code>request_stall_buy</code>, <code>request_stall_close</code>, <code>request_stall_collect</code></td><td><code>GameSim</code> da instância (barraca é entidade do mapa)</td><td>listagem 1/s, compra 3/s</td><td>compra e coleta: imediato</td></tr><tr><td>Mercado (<code>market-trade.md</code> 3.5)</td><td><code>request_market_search</code>, <code>request_market_list</code>, <code>request_market_buy</code>, <code>request_market_cancel</code>, <code>request_market_claim</code></td><td><code>MarketService</code> (custódia, ADR-0003 item 2)</td><td>busca 2/s, listagem 1/s, compra 3/s</td><td>listar, comprar, cancelar, coletar: imediato</td></tr><tr><td>Grupo (<code>party.md</code> seção 6)</td><td><code>request_party_invite</code>, <code>request_party_accept</code>, <code>request_party_decline</code>, <code>request_party_leave</code>, <code>request_party_kick</code>, <code>request_party_set_leader</code>, <code>request_party_set_loot_mode</code>, <code>request_party_roll</code>, <code>request_party_loot_assign</code>, <code>request_party_ping</code>, <code>request_party_mark</code></td><td><code>PartyService</code>; <code>roll</code> e <code>loot_assign</code> executam na <code>GameSim</code> da instância do drop</td><td>2/s (ping e marca: 1/s)</td><td>rolagem e entrega de item: imediato se camada 4+, senão rápido</td></tr><tr><td>Quests (<code>quests-mvp.md</code>, <code>party.md</code> 3.7)</td><td><code>request_quest_accept(quest_id, npc_entity)</code>, <code>request_quest_turn_in(quest_id, npc_entity)</code>, <code>request_quest_abandon(quest_id)</code>, <code>request_quest_share(quest_id, alvo)</code></td><td><code>GameSim</code> da instância (NPC a ≤ 4 m, como SEC-004)</td><td>2/s</td><td>entrega com recompensa: rápido; recompensa de camada 4+: imediato</td></tr><tr><td>Chat (<code>party.md</code> 3.9, <code>anti-cheat.md</code> tabela de taxas)</td><td><code>request_chat_send(channel, text)</code>, <code>request_chat_ignore(alvo)</code>, <code>request_chat_report(alvo, msg_ref)</code></td><td><code>ChatService</code></td><td>1 msg/s, 10 msg/10 s (<code>CHAT_BURST</code> 5); texto ≤ <code>CHAT_MAX_CHARS</code></td><td>nenhum (log de moderação 30 d)</td></tr><tr><td>Habilidades (<code>skills.md</code> 3.5-3.7)</td><td><code>request_learn_skill(skill_id)</code>, <code>request_set_skill_bar_slot(slot, skill_id)</code>, <code>request_reset_skills</code>, <code>request_rebranch(branch_id)</code></td><td><code>GameSim</code> (regras da ADR-0005)</td><td>2/s</td><td>rápido; redistribuir/trocar de ramo com ouro: imediato</td></tr><tr><td>Itens das stories prontas (<code>items.md</code> 3.x, AC-I25)</td><td><code>request_pickup(ground_uid)</code>, <code>request_discard(item_uid)</code>, <code>request_refine(item_uid)</code>, <code>request_reroll_affixes(item_uid)</code></td><td><code>GameSim</code></td><td>pegar 5/s, demais 2/s</td><td>pegar comum e descartar: rápido; pegar camada 4+, refino e reroll: imediato</td></tr><tr><td>Qualidade (<code>telemetry-spec.md</code> 3.3)</td><td><code>request_report_client_quality(kind, payload)</code></td><td><code>TelemetryEmitter</code> (ADR-0007)</td><td>1 por 60 s</td><td>nenhum</td></tr></table></div>
+<ul><li><code>channel</code> é enum (<code>party</code>, <code>tribe</code>, <code>trade</code>, <code>whisper</code>); canal fora do enum é recusado. Chat de troca bloqueia link/URL (<code>market-trade.md</code> 3.5).</li><li><code>request_party_rejoin</code> <strong>não</strong> entra: a reentrada é feita pelo servidor na reconexão (<code>party.md</code> 3.10).</li></ul>
+<h4>4. Reservados (fora da lista até nova emenda)</h4>
+<p><code>request_market_bid</code> (leilão com lance fora do lançamento, DECISIONS 2026-11-07); PvP (<code>request_queue_duel</code>, <code>request_accept_match</code>, <code>request_forfeit</code>) até a fase de PvP; demais pedidos de itens (<code>request_repair</code>, <code>request_chest_deposit/withdraw</code>, <code>request_set_locked</code>, <code>request_socket_card</code>/<code>request_open_card_slot</code>, <code>request_upgrade_grade</code>, <code>request_apply_endow</code>, <code>request_inspect</code>) entram na Emenda 2, junto das stories de itens.</p>
+<ul><li><strong>Nomes canônicos:</strong> valem os nomes do GDD. <code>request_drop</code> (story items-001) = <code>request_discard</code>; <code>request_reroll_affix</code> (story items-005) = <code>request_reroll_affixes</code>. <code>request_insert_card</code> (já admitido em ADR-0001 3.2) e <code>request_socket_card</code> (<code>items.md</code>) são o mesmo pedido: vale <code>request_insert_card</code> até a Emenda 2.</li></ul>
+<h3>Alternatives Considered</h3>
+<div class="tablewrap"><table><tr><th>Alternativa</th><th>Por que não</th></tr><tr><td>Admitir tudo que aparece nos GDDs de uma vez</td><td>pedidos sem contrato completo viram superfície de ataque</td></tr><tr><td>Canal de "comando genérico" com nome em texto</td><td>contradiz o <code>cmd_id</code> enumerado e o fuzz por pedido</td></tr><tr><td>Cliente falar direto com os serviços</td><td>expõe o canal interno (ADR-0003 item 2)</td></tr></table></div>
+<h3>Consequences</h3>
+<p>Positivas: C-05 fechado para o MVP; regra clara para cada pedido futuro; stories de habilidades, grupo, quests e mercado têm o pedido definido. Negativas: cada pedido custa um teste de fuzz; nomes de quests e chat são novos e precisam entrar nos GDDs (<em>flag:</em> <code>quests-mvp.md</code> não tem seção de contrato de pedidos; <code>skills.md</code> deve citar <code>request_set_skill_bar_slot</code>; não editados aqui).</p>
+<h3>Performance Implications</h3>
+<ul><li>Pedidos de serviço não rodam no tique da instância além da checagem e do repasse.</li><li>Baldes de fichas por pedido limitam o custo por jogador.</li></ul>
+<h3>Validation Criteria</h3>
+<ul><li>AC-S01/AC-S02 estendidos: fuzz em todos os pedidos do lote 1; pedido reservado é recusado.</li><li>Pedido de serviço com o serviço fora do ar devolve <code>Result</code> genérico de indisponível, sem efeito.</li><li><code>request_quest_accept</code> longe do NPC é recusado (mesma regra de SEC-004).</li></ul>
+<h3>GDD Requirements Addressed</h3>
+<div class="tablewrap"><table><tr><th>GDD</th><th>Requisito</th><th>Como</th></tr><tr><td><code>market-trade.md</code> 3.5</td><td>contratos de troca, barraca e mercado com baldes</td><td>seção 3</td></tr><tr><td><code>party.md</code> 3.9, seção 6</td><td>pedidos de grupo e chat com balde</td><td>seção 3</td></tr><tr><td><code>quests-mvp.md</code></td><td>quests executadas no servidor</td><td>seção 3</td></tr><tr><td><code>skills.md</code> 3.5-3.7</td><td>aprender, barra, reversão, ramo</td><td>seção 3</td></tr><tr><td><code>anti-cheat.md</code> 3.4</td><td>checklist em todo pedido</td><td>seções 1-2</td></tr></table></div>
+<h3>Open Questions</h3>
+<ul><li>Emenda 2 (itens) com as stories do epic <code>items-market</code>.</li><li>Voto de expulsão em calabouço (<code>party.md</code> 3.1): pedido próprio ou <code>request_party_kick</code> com voto.</li></ul></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

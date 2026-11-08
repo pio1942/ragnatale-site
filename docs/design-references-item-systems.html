@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Referência: estrutura de sistemas de itens (Priston Tale, Ragnarok, Diablo IV) | Ragna Tale</title>
+<meta name="description" content="Referência: estrutura de sistemas de itens (Priston Tale, Ragnarok, Diablo IV): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-references-item-systems.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-references-item-systems.html">
+<meta property="og:title" content="Referência: estrutura de sistemas de itens (Priston Tale, Ragnarok, Diablo IV) | Ragna Tale">
+<meta property="og:description" content="Referência: estrutura de sistemas de itens (Priston Tale, Ragnarok, Diablo IV): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Referência: estrutura de sistemas de itens (Priston Tale, Ragnarok, Diablo IV) | Ragna Tale">
+<meta name="twitter:description" content="Referência: estrutura de sistemas de itens (Priston Tale, Ragnarok, Diablo IV): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/references/item-systems.md</code></p><h2>Referência: estrutura de sistemas de itens (Priston Tale, Ragnarok, Diablo IV)</h2>
+<blockquote>Pesquisa de 2026-11-06 para o GDD de Itens (rigor <code>full</code>). Registra <strong>só a estrutura</strong>,<br>sem nomes, números ou textos copiados (regra de referências em <code>docs/DECISIONS.md</code>).<br>Fontes: wiki.priston.com.br (Guia dos Itens; Guia Avançado), browiki.org (Itens,<br>Refinamento, Grau, Slot, Bônus aleatórios), wowhead.com/diablo-4/pt/items (só filtros).<br>Partes de Slot, Bônus Aleatórios e Guia Avançado foram lidas por resumo, não pelo texto<br>literal. O resumo do Guia Avançado contradisse a tabela lida, então desconfie desse<br>trecho e confirme na fonte antes de usar.</blockquote>
+<h3>Priston Tale</h3>
+<ul><li><strong>Categorias:</strong> armas (11 tipos); defesas (armadura, roupão, escudo, orbital, luva, bracelete, bota); acessórios (4).</li><li><strong>Requisitos:</strong> atributos (força, inteligência, talento) e nível. Cada classe tem um ajuste percentual de requisito por especialização.</li><li><strong>Especialização:</strong> o bônus do item só vale para a classe dele.</li><li><strong>Mix:</strong> combinação fixa de pedras por tipo de item. A falha perde ouro e pedras, e um item mixado não pode ser mixado de novo.</li><li><strong>Aging:</strong> cada etapa sobe o requisito de nível.</li><li><strong>Soquetes e runas:</strong> criar soquete, inserir runas, remover runas e remover soquetes. Só os títulos foram confirmados; os detalhes não.</li><li><strong>Craft:</strong> cristais → runas → forja.</li><li><strong>Respec de item:</strong> troca a especialização e os atributos com pedras. O resultado é aleatório.</li><li>Não encontrado: raridade, visual por tier, conjuntos, fontes de drop.</li></ul>
+<h3>Ragnarok</h3>
+<ul><li><strong>Slots:</strong> 10 (3 de elmo, armadura, arma, escudo, capa, calçado, 2 acessórios), mais uma aba separada de equipamentos especiais. Os visuais aparecem na cabeça e na capa.</li><li><strong>Nível de arma (1–4):</strong> afeta o dano e a dificuldade de refino. A eficácia varia com o tamanho do alvo. Há restrição por classe.</li><li><strong>Bônus aleatórios:</strong> até 5 por item, contados no nome. Ficam em duas colunas com tabelas próprias, com reroll por consumível.</li><li><strong>Slots de carta:</strong> a contagem aparece no nome. Abrir um slot pode falhar e perder refino, encantos e cartas.</li><li><strong>Refino:</strong> há um limite seguro por nível de arma. Acima dele, a falha destrói o item ou rebaixa o refino, conforme o material. Um consumível evita a perda.</li><li><strong>Grau (D→A):</strong> aparece como prefixo no nome e troca o ícone. Exige refino mínimo e, ao subir, zera o refino. O processo seguro custa mais material.</li><li><strong>Quebra em batalha:</strong> o item quebrado só volta a ser usado depois de um conserto pago.</li><li><strong>Conjuntos:</strong> efeito destacado, e o mesmo efeito não acumula.</li><li><strong>Drops:</strong> principalmente de monstros, com prioridade para quem causou mais dano. Também vêm de NPC, de loja e de tesouro diário.</li></ul>
+<h3>Diablo IV</h3>
+<ul><li><strong>Raridade:</strong> comum → mágico → raro → lendário → único → único mítico. Há engaste e restrição de classe (8 classes).</li><li>A página não explica afixos, refino, conjuntos ou drops.</li></ul>
+<h3>O que funcionou e vale aplicar no Ragna Tale</h3>
+<ul><li>Grau visível no nome <strong>e</strong> no visual do item (prefixo + ícone/modelo novo).</li><li>Limite seguro de refino, e acima dele um processo seguro pago com <strong>material do jogo</strong> (nunca dinheiro real).</li><li>Falha que <strong>rebaixa</strong> o refino em vez de destruir o item, para reduzir a frustração.</li><li>Afixos aleatórios em grupos separados, com reroll por consumível ganho jogando.</li><li>Contagem de afixos e slots de carta no nome, para leitura rápida.</li><li>Conjuntos com regra explícita de não acumular o mesmo efeito.</li><li>Requisito por classe ou especialização, além do nível.</li><li>Raridade em escada ao estilo Diablo, para o drop de 0,01% ter nome e cor próprios.</li></ul>
+<h3>Decisões do criador sobre equipamento (2026-11-06)</h3>
+<ul><li>Armadura inteira = visual novo; poucas peças por conjunto; tiers + ~3 raridades por modelo (status e brilho).</li><li>Aging (+5 em diante) muda cor e brilho do item por faixa, como no Priston (neon, brilho).</li><li>Conceito 2D da armadura deve refletir o 3D final.</li><li>Raridade em 4 níveis com cor: comum, incomum, raro, ultra raro (dourado avermelhado). MVPs dropam os melhores.</li><li>Mercado: lojinhas de jogadores em áreas das cidades, com loja aberta offline; ofícios com habilidades de mercado.</li></ul>
+<h3>Famílias de armas (relato do criador sobre a wiki do Priston, 2026-11-06; wiki bloqueada por verificação anti-robô na hora)</h3>
+<p>Adagas, arcos, cajados, varinhas, espadas, foices, garras, lanças, machados, martelos, punhos (≈11, bate com o "11 tipos de armas" do Guia dos Itens). Útil como <strong>taxonomia</strong>: cada família liga a uma ou mais linhas de classe. MVP: só espada (+ escudo). Cada família nova = 1 conjunto de animações de ataque + modelos por tier/raridade.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Game Brief: Ragna Tale | Ragna Tale</title>
+<meta name="description" content="Game Brief: Ragna Tale: documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-game-brief.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-game-brief.html">
+<meta property="og:title" content="Game Brief: Ragna Tale | Ragna Tale">
+<meta property="og:description" content="Game Brief: Ragna Tale: documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Game Brief: Ragna Tale | Ragna Tale">
+<meta name="twitter:description" content="Game Brief: Ragna Tale: documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/game-brief.md</code></p><h2>Game Brief: Ragna Tale</h2>
+<blockquote><strong>Atualizado em 2026-11-07 (decisões do criador em <code>docs/DECISIONS.md</code>):</strong> o jogo é <strong>100% online</strong> (servidor autoritativo, sem modo solo nem co-op à parte); o <strong>MVP vai até o nível 50</strong> (23 mapas, 12 linhas em 3 tribos, evoluções 1/20/40/60/80/100/130 e prestígio no 150 como visão de lançamento); grupo, <strong>mercado entre jogadores (só com ouro do jogo)</strong>, anti-hack e PvP por faixa de nível fazem parte do jogo. Escopo detalhado em <code>design/gdd/mvp-scope.md</code>; pilares em <code>design/pillars.md</code>. As listas abaixo foram ajustadas a isso.</blockquote>
+<p><strong>One-sentence pitch:</strong> Um ARPG isométrico que une a identidade de classes e as cartas de Ragnarok à aventura e ao visual evolutivo de Priston Tale: explore mapas perigosos, cace o drop de 0,01% e veja seu herói ficar imponente a cada evolução de classe.</p>
+<h3>Core loop</h3>
+<ul><li>Sair da vila e caçar em mapas de perigo crescente.</li><li>Ganhar XP, itens com raridade e cartas, sempre com a chance de um drop raríssimo.</li><li>Voltar para refinar, encaixar cartas e equipar, com o visual mudando.</li><li>Evoluir a classe e alcançar regiões e chefes mais perigosos.</li></ul>
+<h3>Player goal &amp; fail state — what "working" looks like</h3>
+<ul><li><strong>Objetivo:</strong> ficar forte o bastante para derrotar os chefes (MVPs) dos mapas e conseguir o drop raríssimo (0,1% fixo; carta 0,01%), sozinho ou em grupo, e vender, trocar ou guardar o que cair. Uma sessão está completa quando o personagem sai mais forte do que entrou.</li><li><strong>Falha:</strong> morrer. O jogador renasce na vila; a penalidade será definida no GDD de progressão.</li></ul>
+<h3>MVP — what must exist to be the game</h3>
+<ol><li>Combate de impacto: clique, golpe, habilidades, <em>hitstop</em> e feedback, em servidor autoritativo (<code>GameSim</code> no servidor; o cliente só pede e apresenta).</li><li><strong>Níveis 1–50</strong> (MVP; máximo do jogo 150), 12 linhas de classe em 3 tribos, com a grande prova e a escolha entre <strong>2</strong> ramos no nível 20 e a evolução do nível 40; cada evolução muda o visual, as habilidades e o acesso a equipamentos.</li><li>Drops com tabela de raridade (comum → raríssimo 0,01%), inventário e equipamento em poucas peças de design completo, em tiers e raridades que mudam status e brilho, com cor de aging a partir do +5.</li><li>Cartas que caem dos monstros e encaixam em slots do equipamento, mais refino (+1…+N) com chance de falha.</li><li>Cidades e vilas seguras com NPCs marcantes (ferreiro/refino, loja, cura) e 23 mapas de perigo crescente (17 campos e 6 calabouços).</li><li>Chefes de mapa (MVPs) com reaparecimento temporizado e drop raríssimo.</li><li>Personalização: gênero (masculino/feminino) e 3 rostos pré-definidos por gênero por linha.</li><li><strong>Online desde o início:</strong> contas, grupo (até 6), mercado e troca entre jogadores, anti-hack em tempo real e painel de operação (<code>anti-cheat.md</code>, <code>market-trade.md</code>, <code>live-ops-panel.md</code>).</li></ol>
+<h3>Out of scope — not building this</h3>
+<ul><li>Níveis 51–150, as evoluções dos níveis 60/80/100/130 (prestígio no 150) e o "nível Deus" (visão de lançamento: máximo no nível 150).</li><li>Insígnias elementais pós-150 (fogo, água, terra, vento…), raids e lore profunda.</li><li><strong>Modo solo local:</strong> não existe. Guildas e Guerra do Castelo ficam depois do MVP. A ordem de execução é servidor local de desenvolvimento primeiro, sem contratar hospedagem. Venda de itens por dinheiro real: nunca.</li><li>Cadeias de quests: o jogo é exploração, não "tudo é quest".</li><li>Integração com lojas além da Steam e mais de 23 mapas no MVP.</li></ul>
+<h3>Build order</h3>
+<ol><li>Herói modular com troca de equipamento visível (maior risco: a arte é o gargalo).</li><li>Drops com raridade, inventário e equipamento.</li><li>Grande prova e evolução para as 2 subclasses no nível 20.</li><li>Cartas e refino.</li><li>MVP (chefe) e o drop raríssimo.</li><li>Vila, NPCs e o segundo mapa.</li><li>Gênero e rostos pré-definidos.</li></ol>
+<hr>
+<p><strong>Who it's for / what they feel:</strong> a nostalgia brasileira de Priston Tale/Ragnarok dos anos 2000: o frio na barriga do drop raro e o orgulho de um herói imponente.</p>
+<p><strong>Art &amp; audio direction:</strong> fantasia <strong>medieval</strong>, um pouco mais <strong>sombria</strong> no visual e na personalidade, em 3D estilizado, legível à distância, com magia em dourado e azul arcano; <strong>áudio de cidades e mapas é identidade</strong> (cada cidade e mapa com tema musical e ambiência marcantes, como nos jogos de referência).</p>
+<p><strong>Reference game:</strong> Ragnarok Online. O MVP mantém o ciclo de caçar, cartas, refino e chefes (MVPs) com drop raro, online, até o nível 50.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

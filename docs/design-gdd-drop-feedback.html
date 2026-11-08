@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Feedback de drops: ícones e raridade no chão | Ragna Tale</title>
+<meta name="description" content="Feedback de drops: ícones e raridade no chão: documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-gdd-drop-feedback.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-gdd-drop-feedback.html">
+<meta property="og:title" content="Feedback de drops: ícones e raridade no chão | Ragna Tale">
+<meta property="og:description" content="Feedback de drops: ícones e raridade no chão: documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Feedback de drops: ícones e raridade no chão | Ragna Tale">
+<meta name="twitter:description" content="Feedback de drops: ícones e raridade no chão: documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/gdd/drop-feedback.md</code></p><h2>Feedback de drops: ícones e raridade no chão</h2>
+<blockquote><strong>Status</strong>: Rascunho de proposta (criador autorizou a criação em 2026-11-07); nada confirmado<br><strong>Autor</strong>: narrative-director (proposta); valores numéricos e sons são entrada para game-designer, audio-director e art-director decidirem<br><strong>Referências</strong>: Priston Tale e Ragnarok Online (inspiração, sem cópia de sons, ícones ou efeitos)<br><strong>Relacionado</strong>: <code>docs/DECISIONS.md</code> (2026-11-07, "wiki de drops" e "sem hack and slash")</blockquote>
+<h3>1. Visão geral</h3>
+<p>Quando algo cai, o jogador deve <strong>sentir</strong> a raridade antes de ler o nome: cor, coluna de luz e som. O item raríssimo é um evento; o comum é discreto. Princípio: o feedback escala com a raridade, e a tela nunca vira uma árvore de Natal (sem hack and slash).</p>
+<h3>2. Ícone/foto de cada drop</h3>
+<ul><li><strong>Todo drop tem 1 imagem própria</strong> (1 imagem por item, nunca reaproveitada entre itens diferentes; variações só de cor com aval do art-director).</li><li>Ícone de inventário: <strong>128x128 px</strong> (arte-fonte 512x512, exportado em WebP/PNG com alfa). Na wiki: mesma arte em 256x256.</li><li><strong>Fundo transparente</strong> no jogo; na wiki, fundo escuro neutro da moldura da raridade. Silhueta legível a 32 px.</li><li><strong>Estilo igual à bíblia de arte</strong> (paleta, luz e traço do jogo; vista levemente de cima, item centralizado, luz de cima à esquerda, sem texto na imagem).</li><li>Moldura/borda colorida pela raridade (mesma cor da aura abaixo). <strong>Carta:</strong> formato retrato 3:4 próprio (192x256 fonte), arte do monstro no centro, para ser inconfundível no inventário.</li><li>Registrar origem de qualquer arte externa em <code>docs/ASSETS.md</code>.</li></ul>
+<h3>3. Camadas de raridade no chão</h3>
+<p>Taxas: carta <strong>0,01%</strong> e raríssimo de comum <strong>0,1%</strong> são <strong>fixas</strong> (DECISIONS 2026-11-07, iguais para qualquer monstro ou chefe); as demais (épico ~1%, que equivale às "peças marcantes ~1,5%" de <code>monsters.md</code>) seguem como proposta do game-designer. Distância audível em metros do mundo (a confirmar com a câmera).</p>
+<div class="tablewrap"><table><tr><th>Camada</th><th>Exemplo/taxa</th><th>Aura / coluna de luz</th><th>Efeito do item no chão</th><th>Som</th><th>Distância audível</th></tr><tr><td>0 Comum</td><td>sucata, poção comum</td><td>nenhuma</td><td>cai e fica parado; brilho fraco só ao passar o mouse</td><td>"toc" curto</td><td>6 m</td></tr><tr><td>1 Incomum</td><td>equipamento básico</td><td>halo branco no chão, sem coluna</td><td>pequeno cintilar a cada ~3 s</td><td>tilintar curto</td><td>8 m</td></tr><tr><td>2 Raro</td><td>equipamento bom</td><td>aura azul, coluna baixa (1 m)</td><td>flutua 10 cm, gira devagar</td><td>duas notas ascendentes</td><td>12 m</td></tr><tr><td>3 Épico</td><td>peça forte, ~1%</td><td>aura roxa, coluna média (3 m), fagulhas</td><td>flutua e pulsa, rastro de partículas</td><td>acorde curto de cordas + sino</td><td>18 m</td></tr><tr><td>4 Raríssimo de monstro comum (~0,1%)</td><td>peça de nível alto de monstro comum</td><td>aura dourada, coluna alta (6 m), anel no chão</td><td>flutua, brilho forte, onda de luz ao cair</td><td><strong>som de camada alta</strong>: sino grave + coro curto (~1,5 s)</td><td>24 m</td></tr><tr><td>5 Carta (~0,01%)</td><td>a carta do monstro</td><td><strong>aura exclusiva</strong>: coluna vertical de luz branco-prateada com borda rubi, que sobe até além da tela, e uma <strong>moldura de carta</strong> girando no ar</td><td>a carta cai girando, brilha em fio de luz e deixa um selo no chão por 60 s</td><td><strong>som exclusivo</strong>: assinatura própria (batida grave + frase de 4 notas + eco longo), nunca usada por outro item</td><td>40 m, ouvido por todo o grupo na tela</td></tr></table></div>
+<p>Regras de exclusividade: <strong>cor rubi/prata e a frase de 4 notas só existem para a carta.</strong> O dourado é do 0,1%. Nenhuma outra camada usa coluna acima de 6 m.</p>
+<h3>4. Regras anti-poluição (sem hack and slash)</h3>
+<ol><li><strong>Camadas 0 e 1 não têm coluna e não têm som de longe</strong>; só aparecem de perto ou com a tecla de destaque.</li><li><strong>Tecla de destaque</strong> (segurar) mostra o nome de todos os itens do chão; fora dela, só camadas 2+ mostram rótulo.</li><li><strong>Limite de efeitos simultâneos:</strong> no máximo 6 colunas de luz ativas por tela; as mais baixas viram halo quando passar disso. A camada 5 nunca é reduzida.</li><li><strong>Limite de sons:</strong> no máximo 1 som de drop de camada 2+ por 0,5 s; camada 4 e 5 interrompem os outros. Sons de comuns saem ao agrupar (um só "chuva de moedas" por morte em série).</li><li><strong>Fila de queda:</strong> drops de uma morte caem em leque, espaçados ~0,15 s, sem sobrepor rótulos.</li><li><strong>Filtro de loot</strong> do jogador (ocultar camadas 0-1 e itens "só venda" abaixo de um valor).</li><li><strong>Alcance do anúncio (decidido 2026-11-07, W-15):</strong> camada 5 (carta) é anunciada ao <strong>servidor inteiro</strong>; camada 4 (raríssimo) avisa o <strong>grupo</strong> com mensagem no chat e ícone no mapa; camadas menores não.</li><li>Duração no chão: efeito de aura some após 60 s (camada 5: 120 s); o item segue existindo conforme a regra de posse.</li></ol>
+<h3>5. Acessibilidade</h3>
+<ul><li><strong>Todo som tem indicador visual equivalente</strong>: coluna/aura, ícone de seta na borda da tela apontando para a camada 3+ fora da vista, e mensagem de texto ("Carta encontrada!").</li><li><strong>Não depender só de cor:</strong> cada camada tem também <strong>forma</strong> própria (halo, losango, estrela, coroa, moldura de carta) no ícone e no rótulo, para daltonismo.</li><li>Opção de <strong>legendas de sons</strong> ("[som de carta rara]") e de <strong>vibração do controle</strong> quando houver.</li><li>Volume dos sons de drop em canal separado nas opções; opção de reduzir flashes/partículas (a coluna fica estática, sem pulsar).</li></ul>
+<h3>6. Dependências</h3>
+<blockquote>Reciprocidade (W-6/W-8, 2026-11-07): <code>party.md</code> (quem vê nome e rolagem de camada 4+, modos de loot) e <code>market-trade.md</code> (itens trocáveis); <code>party.md</code> e <code>market-trade.md</code> existem.</blockquote>
+<p><code>GameSim</code> decide o drop e a camada (sinal ao apresentação); <code>scripts/visual</code> e áudio só reagem. Tabela de drops (game-designer), sons (audio-director), arte (art-director), wiki de monstros (<code>site/</code>).</p>
+<h3>7. Critérios de aceite</h3>
+<ul><li>Cada item da base tem imagem própria no tamanho especificado.</li><li>Uma carta caindo é identificável por som e aura exclusivos sem ver a tela, e há equivalente visual/texto.</li><li>Com 20 inimigos mortos em sequência, nunca mais de 6 colunas e nenhum atraso de quadro causado por efeitos de drop.</li></ul>
+<h3>8. Decisões para o criador</h3>
+<ol><li>Aprovar as 6 camadas e as cores (rubi/prata = carta; dourado = 0,1%)?</li><li>~~Alcance do anúncio~~ DECIDIDO: carta ao servidor inteiro; camada 4 ao grupo.</li><li>~~Taxas 0,1% e 0,01%~~ DECIDIDO (criador): fixas para qualquer monstro ou chefe.</li><li>Tecla de destaque e filtro de loot entram na primeira versão?</li><li>Tamanho final do ícone (128 px proposto) e se a carta é retrato 3:4.</li><li>Quem desenha os ícones: arte gerada (como as 110 imagens dos NPCs) ou outra via?</li></ol></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

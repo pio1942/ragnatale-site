@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ADR-0003 Emenda 2: dono único do loot de grupo (política no PartyService, drop e rolagem na instância) | Ragna Tale</title>
+<meta name="description" content="ADR-0003 Emenda 2: dono único do loot de grupo (política no PartyService, drop e rolagem na instância): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0003-emenda-2-loot-de-grupo.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0003-emenda-2-loot-de-grupo.html">
+<meta property="og:title" content="ADR-0003 Emenda 2: dono único do loot de grupo (política no PartyService, drop e rolagem na instância) | Ragna Tale">
+<meta property="og:description" content="ADR-0003 Emenda 2: dono único do loot de grupo (política no PartyService, drop e rolagem na instância): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ADR-0003 Emenda 2: dono único do loot de grupo (política no PartyService, drop e rolagem na instância) | Ragna Tale">
+<meta name="twitter:description" content="ADR-0003 Emenda 2: dono único do loot de grupo (política no PartyService, drop e rolagem na instância): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Arquitetura e ADRs</p><p class="note">Fonte: <code>docs/architecture/adr-0003-emenda-2-loot-de-grupo.md</code></p><h2>ADR-0003 Emenda 2: dono único do loot de grupo (política no <code>PartyService</code>, drop e rolagem na instância)</h2>
+<h3>Status</h3>
+<p>Accepted (2026-11-08) — confirmação explícita do criador, dada por ele mesmo no chat: "Vou seguir a sua recomendação", sobre as 5 emendas propostas (X-01 a X-05) com a recomendação registrada neste documento. Corrige o item 3 da ADR-0003 (a instância recebe a lista de membros, não a de elegíveis); incorporada à ADR-0003.</p>
+<h3>Date</h3>
+<p>2026-11-08</p>
+<h3>Last Verified</h3>
+<p>2026-11-08 (contra ADR-0001 2.8; ADR-0003 itens 2, 3, 5; ADR-0008 §1, §3; <code>party.md</code> 3.2.4, 3.4, 3.6, 3.7, 3.10.2, F-PT04, F-PT05; <code>architecture-review-2026-11-08.md</code> X-03)</p>
+<h3>Decision Makers</h3>
+<p>technical-director (proposta, redigida por Claude); criador (aceite)</p>
+<h3>Summary</h3>
+<p>A ADR-0003 item 3 põe o estado de grupo e o modo de loot no <code>PartyService</code>; a ADR-0008 manda <code>request_party_roll</code> e <code>request_party_loot_assign</code> executarem na <code>GameSim</code> da instância do drop. Esta emenda separa os dois sem dono duplo: <strong>o <code>PartyService</code> é dono da política</strong> (membros, líder, modo de loot) e <strong>a instância é dona do drop, da elegibilidade e da rolagem</strong>. A política chega à instância por mensagem versionada e é <strong>congelada em cada drop</strong>.</p>
+<h3>Engine Compatibility</h3>
+<div class="tablewrap"><table><tr><th>Item</th><th>Situação</th></tr><tr><td>Engine</td><td>Godot 4.7.2</td></tr><tr><td>APIs</td><td>nenhuma nova (mensagens internas tipadas da ADR-0003 item 2)</td></tr><tr><td>Risco</td><td>Baixo</td></tr></table></div>
+<h3>ADR Dependencies</h3>
+<ul><li>Depends On: ADR-0003 (itens 2, 3, 5), ADR-0008 (§1, §3), ADR-0001 2.8 (RNG do servidor), ADR-0002 Emenda 2 (entrega de camada 4+ pela porta de valor)</li><li>Enables: party 003 (modos de loot e rolagem), party 005, ADR-0003 Emenda 3 (monte congelado no snapshot)</li><li>Ordering Note: depois da ADR-0002 Emenda 2 para a parte de entrega; o resto é independente</li></ul>
+<h3>Context</h3>
+<h4>Problem Statement</h4>
+<p>X-03: dois donos aparentes para o loot de grupo e nenhuma regra de como o modo de loot e o resultado da rolagem circulam. Também há uma imprecisão: a ADR-0003 item 3 diz que a instância "recebe a lista de membros elegíveis", mas a elegibilidade (<code>party.md</code> 3.4: ação nos últimos 15 s e 3% de contribuição) depende de dano, cura e mitigação, que só a <code>GameSim</code> da instância conhece.</p>
+<h4>Requirements</h4>
+<p>TR-party-001, TR-party-003, TR-party-004, TR-party-005</p>
+<h3>Decision</h3>
+<ol><li><strong>Divisão de donos:</strong></li><li><code>PartyService</code> (dono da <strong>política</strong>): membros, líder, permissões, <code>loot_mode</code>, marcações. Recebe <code>request_party_set_loot_mode</code>, <code>request_party_set_leader</code> e os demais pedidos de grupo, exceto <code>roll</code> e <code>loot_assign</code>.</li><li><code>GameSim</code> da instância (dona do <strong>fato</strong>): quem é elegível em cada morte (<code>party.md</code> 3.4, F-PT05), o monte de itens, a rolagem (RNG do servidor), o <code>loot_lock</code> e a entrega.</li><li>Esclarece a ADR-0003 item 3: a instância recebe do <code>PartyService</code> <strong>a lista de membros</strong>, não a de elegíveis; a elegibilidade é calculada na <code>GameSim</code>.</li><li><strong><code>PartyLootPolicy</code> por mensagem.</strong> O <code>PartyService</code> envia a cada instância onde há membro do grupo a mensagem tipada <code>PartyLootPolicy {party_id, policy_version, members: [char_id], leader, loot_mode}</code>: ao formar o grupo, ao mudar qualquer campo, e quando um membro entra numa instância. A instância guarda a última versão recebida, como dado somente leitura; versão menor ou igual à guardada é ignorada.</li><li><strong>Congelamento no drop.</strong> Quando um monstro morre, a <code>GameSim</code> monta o monte (<code>n_elig</code> rolagens, <code>party.md</code> 3.6) e grava nele <code>policy_version</code>, <code>loot_mode</code>, <code>leader</code> e a lista de elegíveis <strong>daquele momento</strong>. Rolagem e atribuição daquele monte usam só esses dados, mesmo que a política mude depois. Assim o resultado é determinístico, auditável e não depende do <code>PartyService</code> estar no ar.</li><li>Mudança de modo só fora de combate (<code>party.md</code> 3.6) é checada no <code>PartyService</code> com o estado de combate informado pelas instâncias; mesmo que uma mudança chegue com um monte aberto, o monte segue o modo congelado.</li><li><strong>Pedidos na instância.</strong> <code>request_party_roll(ground_uid, choice)</code> e <code>request_party_loot_assign(ground_uid, alvo)</code> vão à <code>GameSim</code> da instância do drop (ADR-0008 §1). Validação: quem pede está na lista de elegíveis congelada; <code>loot_assign</code> só se <code>loot_mode == master</code> e quem pede é o <code>leader</code> congelado, e o alvo é elegível. Se o líder congelado desconecta ou perde a elegibilidade, o monte vai para rolagem (<code>party.md</code> 3.6).</li><li><strong>Resultado:</strong></li><li>entrega ao vencedor: item comum = save rápido; camada 4+ = transação de valor pela porta da ADR-0002 Emenda 2 (com entrada no log de valor, Emenda 1);</li><li>evento <code>party_roll</code> (rolagens e vencedor) para os membros na instância, por área/grupo (ADR-0001 2.3);</li><li>a instância envia ao <code>PartyService</code> um aviso <strong>não autoritativo</strong> <code>PartyLootResult</code> (para a mensagem de sistema no chat do grupo via <code>ChatService.post_system</code>, ADR-0003 Emenda 1, e para membros em outro mapa). O <code>PartyService</code> não guarda nem decide resultados.</li><li>rolagem e sementes ficam "servidor apenas" (ADR-0001 2.3) e no fluxo S.</li><li><strong>Falhas:</strong></li><li><code>PartyService</code> fora do ar: a instância usa a última política recebida; sem nenhuma (grupo formado e instância criada sem a mensagem), aplica o modo <strong>Individual</strong>, padrão seguro do GDD (<code>party.md</code> 3.6), e registra aviso no fluxo S;</li><li>membro desconectado com monte aberto: conta como Passar (<code>party.md</code> 3.6); ao voltar não recebe itens de rolagens perdidas (<code>party.md</code> 3.10.2).</li><li>monte aberto quando a instância suspende: resolvido antes (ADR-0003 Emenda 3 item 6).</li></ol>
+<h3>Alternatives Considered</h3>
+<div class="tablewrap"><table><tr><th>Alternativa</th><th>Por que não</th></tr><tr><td><code>PartyService</code> rola e decide o loot</td><td>precisaria do monte, dos itens e da contribuição, que vivem na instância; RNG e item sairiam do processo que os criou</td></tr><tr><td>Instância consulta o <code>PartyService</code> a cada drop</td><td>dependência síncrona no tique e falha do serviço travaria o loot</td></tr><tr><td>Usar a política atual, não a congelada, ao rolar</td><td>mudança de modo ou de líder no meio da rolagem abre brecha ("trocar para Mestre e atribuir a si")</td></tr><tr><td><code>PartyService</code> calcula a elegibilidade</td><td>não conhece dano nem cura; contradiz a fronteira da <code>GameSim</code></td></tr></table></div>
+<h3>Consequences</h3>
+<p>Positivas: X-03 fechado com um dono por dado; loot continua funcionando com o <code>PartyService</code> fora; resultado determinístico por monte. Negativas: uma mensagem nova (<code>PartyLootPolicy</code>) e um aviso (<code>PartyLootResult</code>); a instância guarda uma cópia da política por grupo presente; o texto da ADR-0003 item 3 ("lista de elegíveis") fica corrigido só por esta emenda.</p>
+<h3>Performance Implications</h3>
+<ul><li>Mensagem de política é rara (mudança de grupo); custo desprezível.</li><li>Congelar a política no monte = alguns campos por drop de grupo.</li></ul>
+<h3>Validation Criteria</h3>
+<ul><li>Mudar <code>loot_mode</code> com um monte aberto não altera o resultado daquele monte.</li><li><code>loot_assign</code> de quem não é o líder congelado, ou para alvo não elegível, é recusado sem efeito.</li><li>Com o <code>PartyService</code> derrubado, um drop novo usa a última política; sem política, usa Individual.</li><li>Membro inelegível nunca aparece nas rolagens nem recebe carta (<code>party.md</code> 3.7).</li><li>Rolagem de camada 4+ grava entrada no log de valor e só envia o <code>Ack</code> depois do commit.</li></ul>
+<h3>GDD Requirements Addressed</h3>
+<div class="tablewrap"><table><tr><th>GDD</th><th>Requisito</th><th>Como</th></tr><tr><td><code>party.md</code> 3.2.4, 3.6</td><td>modo escolhido pelo líder, persiste com troca de líder, só fora de combate</td><td>itens 1-3</td></tr><tr><td><code>party.md</code> 3.4, F-PT05</td><td>elegibilidade e participação de chefe</td><td>itens 1, 3</td></tr><tr><td><code>party.md</code> 3.6, 3.7, F-PT04</td><td>rolagem Preciso/Ganância/Passar, Mestre do saque, cartas</td><td>itens 3-5</td></tr><tr><td><code>party.md</code> 3.10.2</td><td>reconexão sem itens de rolagens perdidas</td><td>item 6</td></tr></table></div>
+<h3>Impacto nas histórias (<code>production/epics</code>)</h3>
+<div class="tablewrap"><table><tr><th>História</th><th>Impacto</th></tr><tr><td>party 003 (modos de loot e rolagem, Blocked)</td><td>ganha o desenho de dono; segue Blocked pelas decisões do criador em <code>party.md</code> §9 (itens 1, 4, 5) e pelo GDD em NEEDS REVISION; acrescentar critérios "política congelada" e "serviço fora do ar"</td></tr><tr><td>party 001 (formação, convite, líder)</td><td><code>PartyService</code> precisa emitir <code>PartyLootPolicy</code></td></tr><tr><td>party 002 (XP e ouro compartilhados)</td><td>elegibilidade calculada na <code>GameSim</code> (confirma o desenho; sem mudança de critério)</td></tr><tr><td>party 004 (reconexão, Blocked)</td><td>ao voltar, o membro recebe a política atual; montes antigos não</td></tr><tr><td>party 005 e ui 005</td><td>mensagens de sistema de rolagem passam pelo <code>ChatService</code> (ADR-0003 Emenda 1)</td></tr></table></div>
+<h3>Decisões das perguntas abertas</h3>
+<ul><li>Nenhuma de arquitetura. As pendências de loot são de design e já estão em <code>party.md</code> §9.</li></ul></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Etapa 0 (ADR-0001) — Resultados do spike de rede | Ragna Tale</title>
+<meta name="description" content="Etapa 0 (ADR-0001) — Resultados do spike de rede: documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-net-spike-results.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-net-spike-results.html">
+<meta property="og:title" content="Etapa 0 (ADR-0001) — Resultados do spike de rede | Ragna Tale">
+<meta property="og:description" content="Etapa 0 (ADR-0001) — Resultados do spike de rede: documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Etapa 0 (ADR-0001) — Resultados do spike de rede | Ragna Tale">
+<meta name="twitter:description" content="Etapa 0 (ADR-0001) — Resultados do spike de rede: documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Arquitetura e ADRs</p><p class="note">Fonte: <code>docs/architecture/net-spike-results.md</code></p><h2>Etapa 0 (ADR-0001) — Resultados do spike de rede</h2>
+<p>Data: 2026-11-07. Godot 4.7.2, Windows 11, tudo no mesmo PC (127.0.0.1). Código <strong>descartável</strong> em <code>scripts/net/spike/</code> e <code>tests/net/</code>; <code>scripts/sim/</code> não foi alterado.</p>
+<h3>O que foi montado</h3>
+<ul><li>Servidor headless: <code>GameSim</code> real (<code>auto_advance=false</code>, <code>advance(1/20)</code>), tique fixo de 20 Hz, <code>ENetMultiplayerPeer</code> cru (sem <code>SceneMultiplayer</code>/RPC), canal 0 confiável (Hello/Welcome/Cmd/Ack/Private) e canal 1 não confiável sequenciado (MoveIntent com 3 últimas entradas, Snapshot).</li><li>Snapshot: cabeçalho 11 B + 8 B/entidade (id u16 com bit de monstro, x/z u16 em cm, ângulo u8, hp u8), <strong>cheio</strong> (sem delta), interesse por grade de 32 m + raio de 48 m, 20 Hz para todos (sem tier distante).</li><li>Bot: envia MoveIntent a 20 Hz e <code>Cmd</code> por nome; interpola com atraso de 2 tiques (100 ms).</li><li>Movimento: direção × <code>move_speed_of</code> do servidor, preso à arena. <strong>Sem navmesh, física ou IA real.</strong></li><li>Medição: processos separados (servidor / bots), <code>tests/net/run_spike_bench.ps1</code>. 300 monstros vagando, arena 300 m × 300 m, medição de ~20 s após 5 s de aquecimento.</li></ul>
+<h3>Testes (verdes)</h3>
+<ul><li><code>godot --headless --path . -s res://tests/net/ac_s01_allowlist.gd</code> — AC-S01, 35 verificações: 17 métodos proibidos (<code>apply_damage</code>, <code>grant_xp/gold</code>, <code>give_item</code>, <code>set_entity_position</code>, <code>spawn_*</code>, <code>advance</code>, <code>request_spend_gold</code>, <code>request_player_respawn</code>, <code>set</code>, <code>free</code>…) recusados, logados (com limite de taxa por método), estado intacto; tipos/NaN/aridade/faixa recusados; request permitido executa.</li><li><code>godot --headless --path . -s res://tests/net/spike_smoke.gd</code> — 22 verificações: 2 bots se veem (erro de interpolação &lt; 0,3 m contra o histórico do servidor), velocidade presa a <code>move_speed_of</code>, XP do goblin só para o bot que matou (via <code>Private</code>), <code>grant_xp</code>/<code>apply_damage</code>/<code>set_entity_position</code> forjados recebem Ack 200, <code>seq</code> repetido descartado.</li><li><code>run_unit_tests.gd</code>: 0 falhas (a contagem subiu para 1283 por mudanças de outras tarefas na árvore).</li></ul>
+<h3>Medições (tique 20 Hz; tempos em ms por tique, banda por jogador)</h3>
+<div class="tablewrap"><table><tr><th>Bots</th><th>Arena</th><th>Tique p50</th><th>p95</th><th>p99</th><th>máx</th><th>Ocupação do laço*</th><th>Ent./snapshot</th><th>Saída (payload)</th><th>Saída (fio, estim.)</th><th>Entrada</th></tr><tr><td>2</td><td>300 m</td><td>2,07</td><td>3,51</td><td>4,72</td><td>10,2</td><td>5%</td><td>19,8</td><td>3,4 KB/s</td><td>4,4 KB/s</td><td>0,41 KB/s</td></tr><tr><td>50</td><td>300 m</td><td>4,08</td><td>6,35</td><td>7,67</td><td>9,1</td><td>11%</td><td>22,5</td><td>3,8 KB/s</td><td>4,8 KB/s</td><td>0,42 KB/s</td></tr><tr><td>100</td><td>300 m</td><td>6,97</td><td>11,33</td><td>16,87</td><td>49,2</td><td>19%</td><td>25,1</td><td>4,2 KB/s</td><td>5,2 KB/s</td><td>0,39 KB/s</td></tr><tr><td>200</td><td>300 m</td><td>26,10</td><td>54,20</td><td>65,74</td><td>110,7</td><td>65%</td><td>31,6</td><td>5,2 KB/s</td><td>6,2 KB/s</td><td>0,43 KB/s</td></tr><tr><td>100 (pior caso)</td><td>100 m</td><td>40,27</td><td>76,24</td><td>113,58</td><td>127,7</td><td>84%</td><td>168,7</td><td>25,1 KB/s</td><td>26,1 KB/s</td><td>0,41 KB/s</td></tr></table></div>
+<p>\* Fração do tempo de relógio gasta em <code>poll</code> + tique, thread única do servidor (proxy de CPU de 1 núcleo; a leitura de <code>TotalProcessorTime</code> pelo PowerShell devolveu 0 e não foi usada). Fio estimado = payload + 48 B por pacote (ENet 12 + UDP/IP 28 + cabeçalho do peer 8). Taxa de tique alcançada: 20,0 Hz até 100 bots, 19,7 Hz com 200 e 18,5 Hz no pior caso.</p>
+<h3>Leitura</h3>
+<ul><li><strong>Critério da ADR (p95 &lt; 25 ms com 100 jogadores): passa em densidade normal (11,3 ms)</strong> e <strong>falha com 200 jogadores (54 ms) e com 100 jogadores agrupados (76 ms)</strong>. O custo cresce de forma não linear.</li><li>Banda por jogador em densidade normal é pequena (4–6 KB/s); o pior caso agrupado (169 entidades) é 25 KB/s com snapshot cheio — delta, quantização adicional e tier de 10 Hz para distantes são obrigatórios.</li><li>O custo dominante é GDScript no laço de snapshots (montagem por jogador) e o envio por pacote; a ordem de grandeza sugere paralelizar por instância (1 processo/instância) em vez de tentar 200 num processo.</li></ul>
+<h3>Limites do spike (não extrapolar)</h3>
+<ul><li>Sem navmesh/física/IA/colisão reais, sem persistência, sem DTLS, sem <code>LagShim</code>/perda, sem compensação de latência.</li><li>Bots e servidor dividem o PC; a medição do servidor exclui o trabalho dos bots mas não a disputa de CPU.</li><li><code>ENetMultiplayerPeer</code> usado direto (sem <code>SceneMultiplayer</code>): a sobrecarga de <code>SceneMultiplayer</code>/<code>@rpc</code> e <code>SceneTree.set_multiplayer</code> com 3 multiplayers <strong>não foi validada</strong>.</li></ul></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

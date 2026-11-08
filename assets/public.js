@@ -3,7 +3,7 @@
   var lb = document.getElementById('lb');
   if (lb) {
     var stage, img, cap, scale = 1, last = null;
-    lb.innerHTML = '<div class="bar"><span id="lb-cap"></span><button type="button" id="lb-out" aria-label="Diminuir">&minus;</button>' +
+    lb.innerHTML = '<div class="lbbar"><span id="lb-cap"></span><a id="lb-orig" href="#" target="_blank" rel="noopener">Abrir original</a><button type="button" id="lb-out" aria-label="Diminuir">&minus;</button>' +
       '<button type="button" id="lb-in" aria-label="Aumentar">+</button><button type="button" id="lb-fit">Ajustar</button>' +
       '<button type="button" id="lb-x" aria-label="Fechar">Fechar</button></div><div class="stage" id="lb-stage"><img id="lb-img" alt=""></div>';
     stage = document.getElementById('lb-stage'); img = document.getElementById('lb-img'); cap = document.getElementById('lb-cap');
@@ -14,7 +14,7 @@
     var close = function () { lb.hidden = true; document.body.style.overflow = ''; if (last) last.focus(); };
     var open = function (a) {
       last = a; scale = 1; img.src = a.getAttribute('href'); img.alt = a.getAttribute('data-cap') || '';
-      cap.textContent = img.alt; lb.hidden = false; document.body.style.overflow = 'hidden'; apply();
+      cap.textContent = img.alt; var o = document.getElementById('lb-orig'); o.href = a.getAttribute('data-full') || a.getAttribute('href'); lb.hidden = false; document.body.style.overflow = 'hidden'; apply();
       document.getElementById('lb-x').focus();
     };
     document.addEventListener('click', function (e) {

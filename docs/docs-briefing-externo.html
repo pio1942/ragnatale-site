@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Briefing do projeto Ragna Tale (para consultoria externa) | Ragna Tale</title>
+<meta name="description" content="Briefing do projeto Ragna Tale (para consultoria externa): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-briefing-externo.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-briefing-externo.html">
+<meta property="og:title" content="Briefing do projeto Ragna Tale (para consultoria externa) | Ragna Tale">
+<meta property="og:description" content="Briefing do projeto Ragna Tale (para consultoria externa): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Briefing do projeto Ragna Tale (para consultoria externa) | Ragna Tale">
+<meta name="twitter:description" content="Briefing do projeto Ragna Tale (para consultoria externa): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Projeto (docs/)</p><p class="note">Fonte: <code>docs/BRIEFING_EXTERNO.md</code></p><h2>Briefing do projeto Ragna Tale (para consultoria externa)</h2>
+<h3>O que é</h3>
+<p>RPG de ação isométrico de fantasia medieval, original, feito por <strong>duas "pessoas": o criador e uma IA (Claude Code)</strong>. Sem contratações. Engine: <strong>Godot 4.7.2 (GDScript)</strong>. Hoje roda solo e local; a arquitetura (<code>GameSim</code> como fonte única de regras) já prepara uma futura versão online com servidor autoritativo. Online é meta (híbrido: local primeiro, servidor depois; hospedagem preferida em São Paulo).</p>
+<h3>Visão de jogo</h3>
+<ul><li>Mistura: <strong>Priston Tale</strong> (visual colorido e ornamentado, armadura = troca de visual do corpo inteiro, brilho de "aging" nas armas, marca de tier por família de classe), <strong>Ragnarok Online</strong> (árvores de classe, cartas, refino, MVPs com drops raros, lojas de jogadores, grind em grupo) e <strong>impacto de combate estilo Diablo</strong>.</li><li>Mundo claro, colorido, acolhedor com mistério (não sombrio). Heróis e itens ornamentados; armas são o destaque.</li><li>Classes: 8 linhas × 21 classes (evoluções em 15/25/50/80/100/150; ramos em 15 e 50), árvore de habilidades com pontos, 5 atributos, 8 personagens por conta, baú compartilhado.</li><li>Raridade em 4 níveis: comum, incomum, raro, ultra raro.</li><li><strong>Monetização: só cosméticos e conveniência, nunca pay-to-win.</strong> VIP só quando houver online.</li></ul>
+<h3>Estratégia</h3>
+<p>Terminar <strong>um personagem completo (guerreiro)</strong> de ponta a ponta e usá-lo de régua para o resto (itens, mapas, música, lore, chefes). MVP: guerreiro níveis 1–20, 2 subclasses no nível 15, drops/raridade/equipamento, cartas + refino, vila + 2 mapas, um chefe, personalização.</p>
+<h3>Pipeline de arte 3D (o ponto em decisão)</h3>
+<ol><li>Conceito 2D: OpenAI <code>gpt-image-2</code> (folhas de personagem em 3 vistas).</li><li>Imagem → 3D: <strong>Tripo API</strong> (H3.1, multiview) → decimate/bake (≤20k tris) → <strong>rig</strong> biped (spec mixamo) → GLB.</li><li>Avaliação e ajustes: <strong>Blender 5.2 headless</strong> (scripts Python), base humana MPFB (CC0).</li><li>Importação no <strong>Godot</strong>; animações via retarget do Tripo.</li><li>Traje do guerreiro = 1 malha com rig; espada e escudo = props separados; marca de tier estágio 1; cabelo como cosmético.</li><li>Custo por personagem completo ≈ US$1,5–3 (1 crédito = US$0,01). Orçamento de polígonos proposto: herói 10–15k, monstro comum 4–8k, chefe ≤30k, prop 0,5–3k. Teste de carga: RTX 3060 aguenta bem até ~50k tris/personagem com 400 personagens.</li><li>Aprendizados: ordem gerar → segmentar → retopologia → rig; segmentação falha em malha de quads; rig exige malha leve; URLs de modelo expiram em 5 min; plano grátis do Tripo Studio bloqueia export (usamos API paga).</li></ol>
+<h3>Perguntas em aberto (onde queremos opinião)</h3>
+<ol><li><strong>Tripo vs Rodin (Hyper3D)</strong> para personagem + armas com menos retrabalho. Fatos que verificamos: Tripo oferece segmentação, retopo, rig e retarget via API; Rodin lista quads só no plano Business, sem auto-rig encontrado, posse do resultado pouco clara. Não verificado: preço do Rodin via fal.ai (~US$0,40/geração?) e BlenderMCP. <strong>Outros candidatos sugeridos por IA do Google (NÃO verificados por nós):</strong> <strong>Meshy</strong> (remesh para quads, auto-rig e texturização via API) e <strong>Tencent Hunyuan3D 3.0</strong> (anatomia/dedos melhores, modo low-poly ~12k, hospedado por APIs de terceiros baratas; pode ter bleeding de textura em UV). Perguntas: licença comercial dos três, qualidade real em armadura ornamentada estilo colorido, auto-rig para biped compatível com Godot, preço por personagem completo. Nosso rig é <strong>automático via API</strong> (Tripo <code>animations/rig</code>), sem rigging manual no Blender; scripts bpy só avaliam/ajustam.</li><li>Existe caminho melhor/mais barato para <strong>personagem rigado + animações</strong> (ex.: Meshy, auto-rigging, Mixamo-like, animações de biblioteca CC0) mantendo licença comercial limpa?</li><li><strong>Risco de PI/legal</strong>: usar Priston/Ragnarok só como referência estrutural (sem nomes, textos, arte). Direitos de saída das ferramentas de IA (termos do Tripo para quem compra créditos de API), divulgação de IA na Steam, checagem de marca "Ragna Tale" (INPI) — ainda pendentes.</li><li>Estratégia para <strong>animação de combate com impacto</strong> (hit stop, câmera, efeitos) com poucos recursos.</li><li>Caminho para <strong>online</strong> barato (servidor autoritativo em Godot headless, hospedagem BR) quando chegar a hora.</li><li>Ordem recomendada depois do guerreiro: itens/tiers, mapa/vila, monstros/chefe, ou sistema de classes?</li></ol>
+<h3>Restrições</h3>
+<p>Só duas pessoas; custo baixo; sem pay-to-win; textos do jogo em português do Brasil; não copiar nomes/arte de terceiros; arte de IA só entra no jogo após conta paga e revisão de licença.</p>
+<h3>Estado atual (2026-11-06)</h3>
+<p>Simulação e testes unitários passando (51/51); GDD de classes completo; conceitos de estilo (guerreiro, vila, itens) gerados; pipeline Tripo validado; traje do guerreiro (estilo A) em geração/rig agora. Pendentes: espada/escudo, marca de tier, cabelo, animações, importação no Godot.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

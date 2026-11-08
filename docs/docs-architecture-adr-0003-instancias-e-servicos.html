@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ADR-0003: Instâncias, supervisor de processos e serviços de servidor | Ragna Tale</title>
+<meta name="description" content="ADR-0003: Instâncias, supervisor de processos e serviços de servidor: documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0003-instancias-e-servicos.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0003-instancias-e-servicos.html">
+<meta property="og:title" content="ADR-0003: Instâncias, supervisor de processos e serviços de servidor | Ragna Tale">
+<meta property="og:description" content="ADR-0003: Instâncias, supervisor de processos e serviços de servidor: documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ADR-0003: Instâncias, supervisor de processos e serviços de servidor | Ragna Tale">
+<meta name="twitter:description" content="ADR-0003: Instâncias, supervisor de processos e serviços de servidor: documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Arquitetura e ADRs</p><p class="note">Fonte: <code>docs/architecture/adr-0003-instancias-e-servicos.md</code></p><h2>ADR-0003: Instâncias, supervisor de processos e serviços de servidor</h2>
+<h3>Status</h3>
+<p>Accepted (2026-11-08) — confirmação explícita do criador, dada por ele mesmo no chat: "1 - aprovado", em resposta ao pedido "aceito as ADRs 0002 a 0008".</p>
+<h3>Date</h3>
+<p>2026-11-07</p>
+<h3>Last Verified</h3>
+<p>2026-11-07 (contra ADR-0001 2.1/2.6/R12, <code>party.md</code> 3.12, <code>pvp.md</code> 8)</p>
+<h3>Decision Makers</h3>
+<p>Criador (a decidir), technical-director (proposta)</p>
+<h3>Summary</h3>
+<p>ADR-0001 fixa um processo por instância, mas não define quem cria, mede e destrói esses processos, nem onde vive o estado que cruza instâncias (grupo, fila de PvP, mercado). Proposta: um <code>InstanceDirectory</code> pequeno, serviços de servidor separados da <code>GameSim</code> e estado de grupo com dono único.</p>
+<h3>Engine Compatibility</h3>
+<div class="tablewrap"><table><tr><th>Item</th><th>Situação</th></tr><tr><td>Engine</td><td>Godot 4.7.2</td></tr><tr><td>APIs</td><td><code>OS.create_process</code>, argumentos de linha de comando (<code>-- --role=server</code>), <code>ENetConnection</code> entre processos locais, export <code>dedicated_server</code></td></tr><tr><td>Risco</td><td>Médio. <strong>NOT SOURCEABLE</strong>: comportamento de <code>OS.create_process</code> e RAM por processo headless em 4.7.2 não estão em <code>docs/engine-reference/</code>; medir na Etapa 3b (R12)</td></tr><tr><td>Post-cutoff</td><td>nenhum específico</td></tr></table></div>
+<h3>ADR Dependencies</h3>
+<ul><li>Depends On: ADR-0001, ADR-0002</li><li>Enables: ADR-0005 (grupo e habilidades de grupo), PvP</li><li>Blocks: calabouços de grupo, canais de cidade, MatchService</li><li>Ordering Note: depois do ADR-0002</li></ul>
+<h3>Context</h3>
+<h4>Problem Statement</h4>
+<p>Conflito C-03: <code>party.md</code> mantém a instância vazia por 15 min; ADR-0001 considera processo de calabouço curto. Lacunas C-06/C-07: sem dono para estado de grupo e sem canal para dados de outro mapa.</p>
+<h4>Requirements</h4>
+<p>TR-party-001, TR-party-002, TR-party-003, TR-party-005, TR-pvp-001, TR-pvp-004</p>
+<h3>Decision</h3>
+<ol><li><strong><code>InstanceDirectory</code></strong> (um processo, sem <code>GameSim</code>): registra instâncias (<code>kind</code>, <code>map_id</code>, <code>canal</code>, vagas, p95 reportado), cria por <code>OS.create_process</code>, destrói por TTL e recusa novas entradas acima do teto (ADR-0001 2.6).</li><li><strong>Serviços de servidor</strong> (<code>PartyService</code>, <code>MatchService</code>, <code>LadderStore</code>, <code>MarketService</code>, <code>ChatService</code> — Emenda 1) rodam fora das instâncias, falam com elas por mensagens tipadas no mesmo protocolo, e <strong>não referenciam nós visuais nem a <code>GameSim</code></strong>, só pedem criação de instâncias.</li><li><strong>Estado de grupo</strong> pertence ao <code>PartyService</code> (persistido a cada 30 s, restauração com todos desconectados por 10 min). A instância recebe do <code>PartyService</code> a <strong>lista de membros</strong> (mensagem <code>PartyLootPolicy</code>, Emenda 2); a <strong>elegibilidade</strong> de XP/loot é calculada na <code>GameSim</code> da instância.</li><li><strong>TTL de calabouço vazio</strong>: 15 min mantidos, mas o processo é suspenso para uma foto do estado (serializada como <code>InstanceSnapshot</code>, Emenda 3) e reidratado se o grupo voltar, para não manter processo ocioso (a validar contra RAM medida em R12).</li><li><strong>Dados de grupo fora da instância</strong> (painel "outro mapa") chegam por mensagem <code>Private</code>/<code>Party</code> do <code>PartyService</code>, não pelo snapshot de área.</li><li><strong>DuelSim</strong>: criada de snapshot validado por ADR-0002; descartada no fim; rating só pelo <code>LadderStore</code>.</li><li>Dev: tudo em processos locais no PC do criador; nenhum serviço pago.</li></ol>
+<h3>Alternatives Considered</h3>
+<div class="tablewrap"><table><tr><th>Alternativa</th><th>Por que não</th></tr><tr><td>Várias instâncias no mesmo processo</td><td>custo não linear no spike (ADR-0001 2.1)</td></tr><tr><td>Estado de grupo dentro de cada <code>GameSim</code></td><td>grupo cruza mapas; duplica a verdade</td></tr><tr><td>Orquestrador gerenciado (Edgegap, Nakama) no MVP</td><td>dependência e custo antes de validar o jogo (ADR-0001 9)</td></tr></table></div>
+<h3>Consequences</h3>
+<p>Positivas: dono único para grupo/PvP, instância fina. Negativas: mais componentes e mais protocolo; reidratar instância é código novo; mais testes multiprocesso.</p>
+<h3>Performance Implications</h3>
+<ul><li>Cada instância continua com p95 de tique menor que 25 ms a 20 Hz (ADR-0001 8).</li><li>Diretório e serviços não podem rodar no laço de tique de nenhuma instância.</li><li>Teto de processos por máquina a definir pelo RAM medido (meta: registrar na Etapa 3b).</li></ul>
+<h3>Validation Criteria</h3>
+<ul><li>Teste multiprocesso: criar/destruir 20 calabouços sem vazamento de processo.</li><li>Queda do <code>PartyService</code> restaura grupos em menos de 10 s de dados perdidos de 30 s.</li><li>XP de grupo repartido só entre elegíveis (teste unitário <code>party</code>).</li></ul>
+<h3>GDD Requirements Addressed</h3>
+<div class="tablewrap"><table><tr><th>GDD</th><th>Requisito</th><th>Como</th></tr><tr><td><code>party.md</code> 3.11-3.12</td><td>grupo, instância privada, TTL</td><td>itens 3-4</td></tr><tr><td><code>pvp.md</code> 8</td><td>DuelSim, MatchService</td><td>itens 2, 6</td></tr><tr><td><code>party.md</code> 3.x</td><td>painel de grupo</td><td>item 5</td></tr></table></div>
+<h3>Open Questions</h3>
+<ul><li>Onde mora o <code>InstanceDirectory</code> no beta (mesma máquina ou outra).</li><li>Política de canais de cidade quando houver mais de uma máquina.</li></ul>
+<h3>Emendas aceitas (2026-11-08)</h3>
+<p>Aceitas pelo criador no chat em 2026-11-08: "Vou seguir a sua recomendação". Texto completo nos arquivos das emendas.</p>
+<h4>Emenda 1 — <code>ChatService</code> (<code>adr-0003-emenda-1-chatservice.md</code>, resolve X-01)</h4>
+<p>Serviço fora das instâncias (no dev, no mesmo processo do <code>PartyService</code>, interfaces separadas). Canais <code>party</code>, <code>tribe</code>, <code>trade</code>, <code>whisper</code>; validação no serviço (tamanho, balde de fichas, filtro, sem link em <code>trade</code>, silenciamento); entrega por mensagem S→C <code>Chat</code>; ignorados em <code>chat_prefs/&lt;acct_id&gt;</code>; log de moderação de 30 dias fora do log de valor e do fluxo P. <strong>Canal <code>trade</code> = só a instância de cidade atual.</strong> Serviço fora do ar = pedido de chat indisponível, o jogo segue.</p>
+<h4>Emenda 2 — dono do loot de grupo (<code>adr-0003-emenda-2-loot-de-grupo.md</code>, resolve X-03)</h4>
+<p><code>PartyService</code> é dono da <strong>política</strong> (membros, líder, <code>loot_mode</code>); a <code>GameSim</code> da instância é dona do <strong>fato</strong> (elegibilidade, monte, rolagem, entrega). A política chega por <code>PartyLootPolicy</code> versionada e é <strong>congelada em cada monte</strong> no drop. Sem <code>PartyService</code>: última política recebida, ou modo Individual. Camada 4+ entrega pela porta de valor (ADR-0002 Emenda 2).</p>
+<h4>Emenda 3 — <code>InstanceSnapshot</code> (<code>adr-0003-emenda-3-estado-de-instancia-suspensa.md</code>, resolve X-05)</h4>
+<p>Registro <code>instance/&lt;instance_id&gt;</code> (escritor único: o host), versão 1, máx. 256 KB: <code>spawns</code>, <code>bosses</code>, <code>ground_items</code> (com monte congelado), <code>progress</code>; sem personagens, barracas, IA nem RNG. <strong>Monstros vivos reiniciam</strong> ao suspender; timers guardados como tempo restante (só <code>ttl_expires_at</code> é absoluto); rolagens e transações abertas resolvidas antes de suspender; TTL vencido apaga o snapshot e registra <code>item_destroy</code> (<code>instance_expired</code>) dos itens com <code>uid</code>.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

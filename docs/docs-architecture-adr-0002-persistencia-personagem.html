@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ADR-0002: Persistência do personagem e transações de valor | Ragna Tale</title>
+<meta name="description" content="ADR-0002: Persistência do personagem e transações de valor: documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0002-persistencia-personagem.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0002-persistencia-personagem.html">
+<meta property="og:title" content="ADR-0002: Persistência do personagem e transações de valor | Ragna Tale">
+<meta property="og:description" content="ADR-0002: Persistência do personagem e transações de valor: documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ADR-0002: Persistência do personagem e transações de valor | Ragna Tale">
+<meta name="twitter:description" content="ADR-0002: Persistência do personagem e transações de valor: documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Arquitetura e ADRs</p><p class="note">Fonte: <code>docs/architecture/adr-0002-persistencia-personagem.md</code></p><h2>ADR-0002: Persistência do personagem e transações de valor</h2>
+<h3>Status</h3>
+<p>Accepted (2026-11-08) — confirmação explícita do criador, dada por ele mesmo no chat: "1 - aprovado", em resposta ao pedido "aceito as ADRs 0002 a 0008".</p>
+<h3>Date</h3>
+<p>2026-11-07</p>
+<h3>Last Verified</h3>
+<p>2026-11-07 (contra ADR-0001 2.8 e <code>anti-cheat.md</code> 3.12; engine não envolvida além de <code>FileAccess</code>/<code>HTTPRequest</code>)</p>
+<h3>Decision Makers</h3>
+<p>Criador (a decidir), technical-director (proposta)</p>
+<h3>Summary</h3>
+<p>O servidor precisa guardar personagens sem perder nem duplicar item ou ouro. Proposta: registro versionado com <code>row_version</code>, interface <code>CharacterStore</code> com <code>FileCharacterStore</code> no desenvolvimento e serviço de persistência HTTP interno no beta, com save por evento classificado em três níveis.</p>
+<h3>Engine Compatibility</h3>
+<div class="tablewrap"><table><tr><th>Item</th><th>Situação</th></tr><tr><td>Engine</td><td>Godot 4.7.2</td></tr><tr><td>APIs</td><td><code>FileAccess</code> (escrita em arquivo temporário e <code>DirAccess.rename</code>), <code>JSON</code>, <code>HTTPRequest</code>/<code>HTTPClient</code> (para o serviço), <code>Crypto</code></td></tr><tr><td>Risco de corte de conhecimento</td><td>Baixo para arquivo/JSON; <strong>NOT SOURCEABLE</strong> para rename atômico no Windows e HTTP headless em 4.7.2 (não está em <code>docs/engine-reference/</code>): validar em teste</td></tr><tr><td>Post-cutoff</td><td><code>FileAccess</code> teve mudanças de tipo de retorno em 4.4 (VERSION.md); conferir antes de codificar</td></tr></table></div>
+<h3>ADR Dependencies</h3>
+<ul><li>Depends On: ADR-0001 (2.8), ADR-0004 (formato de dados)</li><li>Enables: ADR-0003 (estado de grupo e mercado), ADR-0007 (log de valor)</li><li>Blocks: Etapa 5 do ROADMAP, mercado e troca (<code>market-trade.md</code>)</li><li>Ordering Note: aceitar depois do ADR-0004</li></ul>
+<h3>Context</h3>
+<h4>Problem Statement</h4>
+<p><code>anti-cheat.md</code> 3.12 e ADR-0001 2.8 pedem persistência versionada, atômica, validada, mas não definem o formato, as migrações nem a quarentena. O mercado e a troca (<code>market-trade.md</code>) mexem em dois personagens ao mesmo tempo.</p>
+<h4>Constraints</h4>
+<ul><li>Sem hospedagem paga no desenvolvimento; sem infraestrutura nova nesta fase.</li><li>Godot não tem driver Postgres nativo.</li><li>Queda do servidor: perde no máximo ~60 s de XP/posição, nunca item ou ouro de transação.</li></ul>
+<h4>Requirements</h4>
+<ul><li>TR-anticheat-007, TR-anticheat-008, TR-anticheat-005, TR-market-002, TR-support-001</li></ul>
+<h3>Decision</h3>
+<ol><li><strong>Interface <code>CharacterStore</code></strong> (carregar, <code>save_checkpoint</code>, <code>commit_transaction(ops, expected_row_versions, value_entries, tx_id)</code> — assinatura ampliada pela Emenda 1), implementada por <code>FileCharacterStore</code> (dev) e <code>HttpCharacterStore</code> (beta). A <code>GameSim</code> nunca fala com o armazenamento.</li><li><strong>Registro</strong>: <code>version</code>, <code>created_at</code>, <code>updated_at</code>, <code>row_version</code>, <code>char_id</code>, <code>acct_id</code>; conteúdo = ids de <code>DataDB</code> + <code>ItemInstance</code> com <code>uid</code>. Nada de nós, Resources ou <code>var_to_bytes_with_objects</code>.</li><li><strong>Migrações</strong> por função <code>migrate_vN_to_vN+1</code> com teste de ida e volta; backup antes de cada migração.</li><li><strong>Carga valida</strong> (faixas, <code>def_id</code> existe, <code>uid</code> único, recálculo de atributos). Registro inválido vai para quarentena e nunca é apagado.</li><li><strong>Níveis de save</strong>: imediato antes do <code>Ack</code> (troca, compra/venda, refino, carta, drop de camada 4+, baú); rápido (fila, até 1 s); checkpoint (60 s e ao trocar de instância).</li><li><strong>Transação multi-personagem</strong> (troca, mercado) é uma única operação do serviço com <code>row_version</code> de cada lado; falha = nada gravado.</li><li><code>item_uid</code> e <code>entity_id</code> vêm do armazenamento/servidor via <code>UidSource</code> injetado.</li><li>Segredos nunca entram no registro.</li></ol>
+<h3>Alternatives Considered</h3>
+<div class="tablewrap"><table><tr><th>Alternativa</th><th>Por que não</th></tr><tr><td>Banco embutido (SQLite via GDExtension)</td><td>adiciona dependência binária nativa; reavaliar se o serviço HTTP custar mais</td></tr><tr><td>Servidor de jogo fala direto com Postgres</td><td>sem driver nativo; amplia a superfície de ataque</td></tr><tr><td>Save no cliente assinado</td><td>rejeitado por <code>anti-cheat.md</code> 3.12 (chave no executável)</td></tr><tr><td>Um arquivo único para todos</td><td>sem transação, corrompe em queda</td></tr></table></div>
+<h3>Consequences</h3>
+<p>Positivas: dev sem infra, troca de backend por interface, anti-duplicação por <code>row_version</code>. Negativas: duas implementações para manter; serviço HTTP é um novo componente (linguagem a decidir na Etapa 5); latência de salvar antes do <code>Ack</code>.</p>
+<h3>Performance Implications</h3>
+<ul><li>Save imediato fora do laço do tique (assíncrono ou thread), <code>Ack</code> só depois; o tique não pode passar de 25 ms p95 por causa de E/S (ADR-0001 8).</li><li>Memória: registro de personagem pequeno (meta: menos de 64 KB por personagem, a medir).</li></ul>
+<h3>Validation Criteria</h3>
+<ul><li>Teste de queda (matar o processo entre <code>commit_transaction</code> e <code>Ack</code>): sem duplicação nem perda.</li><li>Teste de migração ida e volta e de quarentena em <code>tests/persist/</code>.</li><li>Troca simultânea de dois jogadores com <code>row_version</code> obsoleto é recusada.</li></ul>
+<h3>GDD Requirements Addressed</h3>
+<div class="tablewrap"><table><tr><th>GDD</th><th>Requisito</th><th>Como</th></tr><tr><td><code>anti-cheat.md</code> 3.12</td><td>persistência versionada e atômica</td><td>itens 2-4</td></tr><tr><td><code>market-trade.md</code></td><td>transações atômicas</td><td>item 6</td></tr><tr><td><code>player-support.md</code></td><td>quarentena avisa suporte</td><td>item 4</td></tr></table></div>
+<h3>Open Questions</h3>
+<ul><li>Linguagem/serviço do beta (Etapa 5) e decisão de hospedagem (criador).</li><li>Retenção de backup (LGPD, a confirmar com advogado).</li></ul>
+<h3>Emendas aceitas (2026-11-08)</h3>
+<p>Aceitas pelo criador no chat em 2026-11-08: "Vou seguir a sua recomendação". O texto completo, alternativas, validação e impacto nas histórias estão nos arquivos das emendas; abaixo, o que passa a valer nesta ADR.</p>
+<h4>Emenda 1 — log de valor dentro de <code>commit_transaction</code> (<code>adr-0002-emenda-1-log-de-valor-no-commit.md</code>, resolve X-02/G-01)</h4>
+<ul><li><code>commit_transaction(ops, expected_row_versions, value_entries, tx_id)</code>: <code>tx_id</code> é ULID do servidor (<code>UidSource</code>) e chave de idempotência (repetir devolve o resultado original); <code>value_entries</code> usa os tipos do <code>ValueJournal</code> (<code>item_create</code>, <code>item_destroy</code>, <code>gold</code>, <code>trade</code>, mais os tipos novos por emenda). <code>save_checkpoint</code> = <code>commit_transaction</code> com <code>value_entries = []</code>.</li><li>Coerência obrigatória: diferença de ouro e de conjunto de <code>uid</code> entre registro anterior e novo tem de ser explicada exatamente pelas <code>value_entries</code>; senão <code>REJECTED</code>, nada gravado.</li><li>Dev (<code>FileCharacterStore</code>): valida; grava <code>pending/&lt;tx_id&gt;.json</code> (rename = <strong>ponto de commit</strong>); anexa ao <code>journal.log</code>; grava registros com <code>last_tx_id</code>; apaga a intenção. Falha depois do ponto de commit = <code>COMMITTED_DEGRADED</code> (o armazenamento fica <code>healthy = false</code>); a recuperação na abertura refaz os passos de forma idempotente, o resto vai para quarentena. Não se desfaz depois do ponto de commit.</li><li>Beta (<code>HttpCharacterStore</code>): uma transação de banco; tempo esgotado = resultado desconhecido, repetir com o mesmo <code>tx_id</code>.</li><li><strong>O log de valor é o <em>outbox</strong></em>: um <code>ValueLogPublisher</code> fora da <code>GameSim</code> publica no <code>EventBus</code> a partir de um cursor <code>published_seq</code>, com <code>eid = tx_id + "#" + índice</code>.</li><li>Hash do log: <strong>HMAC-SHA256 com chave</strong> (esclarecimento na ADR-0007 item 5).</li></ul>
+<h4>Emenda 2 — porta de valor da instância e escritor único (<code>adr-0002-emenda-2-porta-de-valor-da-instancia.md</code>, resolve X-04)</h4>
+<ul><li><strong>Escritor único por registro</strong> (personagem, barraca, custódia de mercado, snapshot de instância, <code>chat_prefs</code>); <code>CONFLICT</code> de <code>row_version</code> é sinal de bug: o host não descarta, para de escrever o registro, alerta o suporte e manda o estado para quarentena.</li><li>A <code>GameSim</code> só <strong>enfileira</strong> transações de valor (<code>PendingValueTx</code>, <code>take_value_txs</code>, <code>export_record</code>, <code>resolve_value_tx</code>) com <strong>trava de valor</strong> (<code>BUSY</code> para pedidos concorrentes); o <code>ValueTxCommitter</code> do host grava fora do tique e o <code>Ack</code> espera o commit; tempo esgotado = repetir com o mesmo <code>tx_id</code>.</li><li><strong>Barraca</strong> é registro próprio <code>stall/&lt;stall_id&gt;</code> (lease da instância de cidade); a compra toca [comprador, barraca], nunca o vendedor; <strong>vende com o dono offline</strong>; o cofre é recolhido <strong>só na barraca</strong> (MVP); a barraca não entra no snapshot de instância.</li><li>Troca: só a confirmação final gera transação (<code>trade</code>); mercado: quem tem o lease do pedinte coordena, reserva de <strong>10 s</strong>; tipo novo <code>transfer</code> no log de valor.</li></ul></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

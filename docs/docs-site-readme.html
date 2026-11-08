@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Site oficial (local, não publicado) | Ragna Tale</title>
+<meta name="description" content="Site oficial (local, não publicado): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-site-readme.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-site-readme.html">
+<meta property="og:title" content="Site oficial (local, não publicado) | Ragna Tale">
+<meta property="og:description" content="Site oficial (local, não publicado): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Site oficial (local, não publicado) | Ragna Tale">
+<meta name="twitter:description" content="Site oficial (local, não publicado): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Site</p><p class="note">Fonte: <code>docs/site/README.md</code></p><h2>Site oficial (local, não publicado)</h2>
+<p>Site estático (HTML/CSS/JS puro, sem rede, sem cookies, sem rastreadores). Saída em <code>site/public/</code>. <strong>Nada foi publicado, nenhuma conta ou hospedagem foi criada.</strong> Nome do jogo = <strong>nome de trabalho</strong> (<code>Ragna Tale</code>).</p>
+<h3>Gerar e ver</h3>
+<p>``<code>bash python tools/site/build_site.py             # tudo: Codex público + páginas do site python tools/site/build_site.py --no-codex  # só as páginas do site (rápido) python tools/site/build_site.py --serve     # gera e serve em http://localhost:8913 </code>`<code> No Claude Code: </code>preview_start<code> com a configuração </code>site-local<code> (</code>.claude/launch.json`). Requer Python com Pillow.</p>
+<h3>Configuração central</h3>
+<p><code>tools/site/config.py</code>: <code>GAME_NAME</code> (nome), <code>DOMAIN</code>, <code>CONTACT_EMAIL</code>, <code>INDEXABLE</code> (noindex enquanto False), paleta (da bíblia de arte), menu, tribos, linhas de classe e pilares. Trocar o nome = editar <code>GAME_NAME</code> e regerar; o nome é substituído também nas páginas do Codex e nos rascunhos legais.</p>
+<h3>Páginas</h3>
+<p>Início, Mundo e classes, Bestiário, NPCs, Notícias (1 entrada de exemplo marcada), Termos e Privacidade (de <code>docs/legal/*-draft.md</code>, com aviso "rascunho, requer advogado"), Contato (placeholder). A lista de espera é um formulário <strong>desativado</strong> que não envia nem coleta nada.</p>
+<h3>Como o Codex sincroniza</h3>
+<p><code>build_site.py</code> roda <code>tools/codex/make_web.py</code> (PNG -&gt; WebP) e <code>tools/codex/build_codex.py &lt;parte&gt; --public</code> para <code>mundo</code>, <code>bestiario</code> e <code>npcs</code>; o modo <code>--public</code> tira prompts de imagem, ferramentas do criador (alturas, "Atualizar") e a aba de documentos internos (anti-cheat, sanções etc.). O HTML vai para <code>site/public/&lt;parte&gt;/</code> com a barra e a paleta do site. Não há mais limite de 511 arquivos. O Artifact do Codex continua gerável pelo pipeline antigo (<code>build_codex.py</code>, <code>stage.py</code>). Regra do <code>CLAUDE.md</code>: a cada mudança de conteúdo, regerar o site e republicar os Artifacts.</p>
+<p>Git: o gerador e as páginas pequenas vão ao git; <code>site/public/img/</code>, <code>bestiario/</code>, <code>npcs/</code>, <code>mundo/</code> e <code>site/codex/parts_public/</code> ficam no <code>.gitignore</code> (pesados, regeneráveis).</p>
+<h3>O que falta para publicar (esperam o criador)</h3>
+<ol><li><strong>Nome definitivo</strong> (análise de marca/INPI, <code>docs/commercial/trademark-research-2026-11-08.md</code>).</li><li><strong>Domínio e hospedagem</strong> (estático grátis, ver <code>docs/commercial/launch-plan.md</code>): exigem o "sim" do criador.</li><li><strong>Advogado</strong> revisando Termos e Privacidade; preencher titular, CNPJ/CPF, encarregado e e-mail.</li><li><strong>Lista de espera real</strong>: serviço de formulário, consentimento LGPD e descadastro (hoje desativada).</li><li><strong>Contato e comunidade</strong> (e-mail, Discord); mudar <code>INDEXABLE</code> para True na publicação.</li><li>Decidir o recorte público do Codex: conteúdo acima do nível 50 e dados de balanceamento ainda aparecem; o plano de lançamento pede só o MVP.</li><li>Página da Steam, trailer e cosméticos (fora deste pacote).</li></ol>
+<h3>Central (página única e privada)</h3>
+<p><code>python tools/site/central.py</code> gera <strong>uma página só</strong> com abas Início, Bestiário, NPCs, Mundo e classes (mapas, zonas, classes, equipamentos e ícones) e EAP (de <code>docs/EAP-progresso.json</code>), com tema claro/escuro, celular, "↻ Atualizar" e carimbo de geração. Usa as funções de parse de <code>tools/codex/build_codex.py</code> só para leitura (não altera o Codex). Conteúdo sem prompts de imagem nem documentos internos. É página <strong>do criador</strong>: a EAP nunca vai para o site público.</p>
+<p>Imagens: WebP ~800 px q80 (reduções das existentes, nada novo é criado), miniaturas 360 px na grade e lightbox próprio (zoom por roda/pinça/botões, arrasto, duplo clique, Esc) sem biblioteca.</p>
+<ul><li><strong>Saída 1</strong> <code>site/public/central/</code> (<code>index.html</code> + <code>img/m</code> médio, <code>img/t</code> miniatura, <code>img/f</code> resolução cheia usada no zoom). Sem limite de arquivos (~1.780 arquivos; as cheias são hardlinks). Ver: <code>preview_start</code> com <code>central-local</code> (porta 8915).</li><li><strong>Saída 2</strong> <code>site/dist/central/</code> (fragmento para Artifact): 458 arquivos, 19,8 MB (limite 505 e 60 MB; Artifact aceita 511 por versão). 198 monstros e 166 NPCs individuais; 24 mapas de zona, 1 vila, 51 folhas e molduras de equipamento individuais; <strong>12 mosaicos de classe</strong> (72 imagens, uma folha por linha) e <strong>1 mosaico de ícones 128 px</strong> (230 ícones) recortados por CSS <code>background-position</code> (e por canvas no zoom). O gerador sai com erro se passar de 505 arquivos ou 60 MB. Zoom no Artifact usa o médio (sem cheia).</li><li>Publicar: Artifact privado em 2 publicações sequenciais para a mesma URL (máx. 255 arquivos por publicação; lista de <code>img/</code> em ordem alfabética, <code>index.html</code> junto). URL atual no <code>CLAUDE.md</code>. Git: <code>site/public/central/</code> e <code>site/dist/central/</code> são regeneráveis (<code>.gitignore</code>).</li><li>Fora: aba de itens e cartas (fichas), documentos Markdown e galeria geral do Codex; alturas e prompts (ferramentas do criador).</li><li>EAP: <code>tools/eap/gen_eap.py</code> está defasado em relação a <code>docs/EAP-progresso.json</code> (gera 38,3% contra 39,2% do JSON atual); não foi rodado. A Central lê o JSON como está.</li></ul>
+<h3>Site público no GitHub Pages (temporário, recorte MVP)</h3>
+<p>URL: https://pio1942.github.io/ragnatale-site/ (repositório público <code>pio1942/ragnatale-site</code>, só o pacote; o repositório do jogo não é enviado). Autorizado pelo criador em 2026-11-08 (<code>docs/DECISIONS.md</code>). Nome de trabalho; noindex mantido.</p>
+<ul><li><strong>Regerar o pacote:</strong> <code>python tools/site/publish_pages.py</code> (saída em <code>site/public_gh/</code>, no <code>.gitignore</code> do jogo, com <code>.git</code> próprio).</li><li><strong>Republicar:</strong> <code>python tools/site/publish_pages.py --push</code> (regera, roda a varredura de segurança, comita no repositório do site e dá push; o Pages reconstrói sozinho). Só <code>--check</code> roda a varredura sem enviar. O <code>.git</code> do pacote usa o e-mail <code>noreply</code> do GitHub (nunca o e-mail pessoal).</li><li><strong>Recorte:</strong> monstros até o nível 50 (92), zonas com faixa até 50 (Sopé das Cinzas cortado em 50), NPCs das vilas e acampamentos até 50 (67), classes só com as formas 1-3 (níveis 1, 20, 40) e "mais evoluções no futuro". Sem: EAP, documentos, prompts, vida/ataque/defesa/XP/ouro, taxas de drop, mapa-múndi (mostra o mundo todo) e chefes finais. Drops aparecem só por nome.</li><li><strong>Imagens:</strong> WebP até 900 px (zoom por clique) e miniaturas de 360 px; cartões de pré-visualização <code>img/og/*.jpg</code> (1200x630) para o WhatsApp.</li><li><strong>Tamanho:</strong> ~19 MB, ~880 arquivos (limite do Pages ~1 GB).</li><li><strong>Primeira publicação (já feita):</strong> <code>gh repo create pio1942/ragnatale-site --public</code>, <code>git init</code> em <code>site/public_gh</code>, push em <code>main</code>, <code>gh api -X POST repos/pio1942/ragnatale-site/pages -f 'source[branch]=main' -f 'source[path]=/'</code>.</li></ul></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>
