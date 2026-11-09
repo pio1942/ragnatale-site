@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ADR-0009: Troca de motor Godot 4.7.2 -&gt; Unity 6 (URP, C#) | Ragna Tale</title>
+<meta name="description" content="ADR-0009: Troca de motor Godot 4.7.2 -&gt; Unity 6 (URP, C#): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0002-troca-para-unity.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-adr-0002-troca-para-unity.html">
+<meta property="og:title" content="ADR-0009: Troca de motor Godot 4.7.2 -&gt; Unity 6 (URP, C#) | Ragna Tale">
+<meta property="og:description" content="ADR-0009: Troca de motor Godot 4.7.2 -&gt; Unity 6 (URP, C#): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ADR-0009: Troca de motor Godot 4.7.2 -&gt; Unity 6 (URP, C#) | Ragna Tale">
+<meta name="twitter:description" content="ADR-0009: Troca de motor Godot 4.7.2 -&gt; Unity 6 (URP, C#): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Arquitetura e ADRs</p><p class="note">Fonte: <code>docs/architecture/adr-0002-troca-para-unity.md</code></p><h2>ADR-0009: Troca de motor Godot 4.7.2 -&gt; Unity 6 (URP, C#)</h2>
+<blockquote>Nome do arquivo pedido pelo criador (<code>adr-0002-troca-para-unity.md</code>); o número 0002 já é de persistência, então o id lógico é <strong>ADR-0009</strong>.</blockquote>
+<h3>Status</h3>
+<p>Accepted (aceito pelo criador em 2026-11-09, "Aprovado")</p>
+<h3>Date</h3>
+<p>2026-11-09</p>
+<h3>Last Verified</h3>
+<p>2026-11-09</p>
+<h3>Decision Makers</h3>
+<p>Criador (decisão e aceite); Claude (plano e redação).</p>
+<h3>Summary</h3>
+<p>O projeto, com 3 dias de vida, troca de Godot (GDScript) para Unity 6 com URP e C#. A GameSim vira C# puro em assembly sem UnityEngine (servidor .NET headless), dados em JSON canônico, ~14,5 mil checks portados com golden de paridade; Godot fica em manutenção até a paridade da Sim.</p>
+<h3>Engine Compatibility</h3>
+<div class="tablewrap"><table><tr><th>Field</th><th>Value</th></tr><tr><td><strong>Engine</strong></td><td>Unity 6 (versão LTS exata fixada na instalação, M0)</td></tr><tr><td><strong>Domain</strong></td><td>Core</td></tr><tr><td><strong>Layer</strong></td><td>Foundation</td></tr><tr><td><strong>Knowledge Risk</strong></td><td>HIGH (pós-cutoff; <code>docs/engine-reference/unity/VERSION.md</code> a preencher no M0)</td></tr><tr><td><strong>References Consulted</strong></td><td><code>docs/architecture/unity-migration-plan.md</code></td></tr><tr><td><strong>Post-Cutoff APIs Used</strong></td><td>A verificar no M0</td></tr><tr><td><strong>Verification Required</strong></td><td>Paridade da Sim (golden + contagem de checks), tick &gt;= <code>tick-baseline-stage3b.md</code>, 60 FPS no greybox</td></tr></table></div>
+<h3>ADR Dependencies</h3>
+<div class="tablewrap"><table><tr><th>Field</th><th>Value</th></tr><tr><td><strong>Depends On</strong></td><td>ADR-0001 (autoridade no servidor, mantida)</td></tr><tr><td><strong>Enables</strong></td><td>Revisão dos ADRs 0001-0008 para C#</td></tr><tr><td><strong>Blocks</strong></td><td>Epics/stories de engine (M0-M5)</td></tr><tr><td><strong>Ordering Note</strong></td><td>Godot em manutenção a partir do M2; desligar após paridade (sugestão: fim do M3)</td></tr></table></div>
+<h3>Context</h3>
+<h4>Problem Statement</h4>
+<p>Escolher o motor definitivo antes que o custo de migração cresça.</p>
+<h4>Current State</h4>
+<p>Godot 4.7.2/GDScript: 42 arquivos de sim, 302 <code>.tres</code>, ~14,5 mil checks.</p>
+<h4>Constraints</h4>
+<p>Manter ADR-0001; não perder a cobertura de testes; sem gasto pago sem "sim" do criador.</p>
+<h4>Requirements</h4>
+<p>Sim determinística e testável fora do Editor; servidor headless; arte/docs/Codex preservados.</p>
+<h3>Decision</h3>
+<p>Migrar para Unity 6 (URP, C#) conforme <code>docs/architecture/unity-migration-plan.md</code>: assembly <code>RagnaTale.Sim</code> (.NET Standard 2.1) sem UnityEngine; servidor .NET headless referenciando o mesmo assembly; dados em JSON canônico (ScriptableObject só como camada opcional de editor); UI Toolkit; rede sobre protocolo próprio com UTP ou LiteNetLib (NGO como plano B); marcos M0-M5; pasta <code>unity/</code> neste repositório. Itens do plano ainda em aberto (versão exata, aval do Unity MCP de terceiros, escolha final de transporte, Git LFS) seguem como pendências do criador na seção 5 do plano.</p>
+<h4>Implementation Guidelines</h4>
+<ul><li>Must: RNG próprio com semente explícita; <code>Request*</code> na Sim, apresentação reage a eventos.</li><li>Must never: referenciar UnityEngine em <code>RagnaTale.Sim</code>; desligar o Godot antes de checks C# &gt;= GDScript e golden verde.</li></ul>
+<h3>Alternatives Considered</h3>
+<h4>Alternative 1: Permanecer em Godot</h4>
+<ul><li><strong>Pros</strong>: sem custo de migração, 14,5 mil checks já verdes.</li><li><strong>Cons</strong>: decisão do criador por Unity.</li><li><strong>Rejection Reason</strong>: escolha do criador.</li></ul>
+<h4>Alternative 2: Netcode for GameObjects</h4>
+<ul><li><strong>Pros</strong>: velocidade de protótipo.</li><li><strong>Cons</strong>: replicação de objetos compete com a autoridade projetada; exige Unity no servidor.</li><li><strong>Rejection Reason</strong>: plano B apenas.</li></ul>
+<h3>Consequences</h3>
+<h4>Positive</h4>
+<p>Sim testável com <code>dotnet test</code>, servidor sem Editor, ecossistema Unity.</p>
+<h4>Negative</h4>
+<p>Reescrita de atores, câmera, visual, UI e shaders (~3 a 4 semanas estimadas); dois motores em paralelo até a paridade.</p>
+<h4>Neutral</h4>
+<p>Arte, Blender, Codex, site, docs e EAP independem do motor.</p>
+<h3>Risks</h3>
+<p>Ver plano seção 4 (paridade numérica, M2 maior que o estimado, rig/retarget, Unity MCP de terceiros). Mitigação: golden, RNG próprio, portar por sistema.</p>
+<h3>GDD Requirements Addressed</h3>
+<p>Foundational — no GDD requirement. Constrains: camera-system (spec FOV 22, pitch 50, yaw 45), todos os GDDs de sim (paridade numérica).</p>
+<h3>Performance Implications</h3>
+<ul><li><strong>CPU</strong>: tick igual ou melhor que o baseline atual (critério do M2).</li><li><strong>Memory</strong>: a medir.</li><li><strong>Load Time</strong>: a medir.</li><li><strong>Network</strong>: protocolo próprio mantido.</li></ul>
+<h3>Migration Plan</h3>
+<p>Marcos M0-M5 em <code>docs/architecture/unity-migration-plan.md</code>.</p>
+<p><strong>Rollback plan</strong>: Godot permanece intacto e em manutenção até a paridade; reverter = continuar nele.</p>
+<h3>Validation Criteria</h3>
+<p>Checks C# &gt;= ~14,5 mil, golden verde, 16 prints do emblem-map reproduzidos (M3), dois clientes sincronizados com soak de 5 min (M5).</p>
+<h3>Related</h3>
+<ul><li><code>docs/architecture/unity-migration-plan.md</code>; ADR-0001 a 0008 (a revisar para C#); <code>docs/DECISIONS.md</code>.</li></ul></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>
