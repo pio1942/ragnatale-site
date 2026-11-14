@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Planta 2D de engenharia: Pouso do Sino (bellrest_village) | Ragna Tale</title>
+<meta name="description" content="Planta 2D de engenharia: Pouso do Sino (bellrest_village): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-levels-cities-bellrest-village-layout-2d.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-levels-cities-bellrest-village-layout-2d.html">
+<meta property="og:title" content="Planta 2D de engenharia: Pouso do Sino (bellrest_village) | Ragna Tale">
+<meta property="og:description" content="Planta 2D de engenharia: Pouso do Sino (bellrest_village): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Planta 2D de engenharia: Pouso do Sino (bellrest_village) | Ragna Tale">
+<meta name="twitter:description" content="Planta 2D de engenharia: Pouso do Sino (bellrest_village): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/levels/cities/bellrest_village/layout-2d.md</code></p><h2>Planta 2D de engenharia: Pouso do Sino (<code>bellrest_village</code>)</h2>
+<blockquote><strong>Status:</strong> ficha do GDD (coordenadas de servico e de saida vem da ficha). Gerado por <code>tools/levels/cities_gen.py</code> a partir de <code>tools/levels/cities_data.py</code> (fonte: <code>design/world/map-layouts-mvp.md</code> e <code>design/world/world-bible.md</code>). Nada foi aberto no Unity; nenhuma imagem foi gerada.<br>Planta: <code>layout-2d.svg</code> (vetorial) e <code>production/qa/evidence/cities/bellrest_village_layout-2d.png</code>. Este documento fecha a historia do lugar no MM: o <strong>mapa de engenharia</strong> do qual o 3D sai.</blockquote>
+<h3>1. Ficha</h3>
+<div class="tablewrap"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Tipo / faixa</td><td>cidade / niveis 1-10</td></tr><tr><td>Tribo / dono</td><td>Vowborn (capital)</td></tr><tr><td>Celula na grade do mundo</td><td>E1 (linha 1 de 10)</td></tr><tr><td>Tamanho</td><td><strong>240 x 200 m</strong> (48000 m2)</td></tr><tr><td>Paleta v3 "Dark Priston"</td><td>palha ambar, verde-campo, bronze (v3: palha #A69A80/#8C6C3E, relva #74784A, bronze #8C6C3E)</td></tr><tr><td>Forma</td><td>vila circular em volta do sino de cristal; praca de 40 m, anel e 5 ruas radiais, casas de palha, colmeias de enfeite, estabulos ao sul.</td></tr><tr><td>Zona segura</td><td>sim: sem combate, sem PvP, sem spawn de monstro</td></tr></table></div>
+<h3>2. Escala e camera isometrica</h3>
+<ul><li>Unidade: metro; modulo de construcao de 2 m; grade de 10 m (fina) e 50 m (grossa) na planta; eixo <strong>norte = +Y</strong> (no Unity, +Z).</li><li>No zoom padrao o heroi (1,8 m) ocupa &gt;= 11% da altura da tela (regra de aceite 1 da skill <code>ragna-criar-mapa</code>): a tela cobre ~16 m de altura de chao e ~29 m de largura (16:9). A cidade de 240 x 200 m equivale a ~9 x 13 telas.</li><li>Escalas fixas (bivel da skill): casa terrea 3 m de altura por 5 m de lado; rua 6-8 m; estrada 4-6 m; trilha 3 m; portas de saida 8-10 m (aqui as saidas seguem a ficha).</li></ul>
+<h3>3. Planta</h3>
+<p>![planta](layout-2d.svg)</p>
+<h3>4. Distritos e zonas</h3>
+<div class="tablewrap"><table><tr><th>Zona</th><th>Descricao</th></tr><tr><td>Praca do Sino</td><td>centro (120,100), raio 20 m; sino de cristal no meio; mestre a frente; bancos em (130,95).</td></tr><tr><td>Anel de servicos</td><td>raio 30-65 m: ferreiro O, pocoes L, curandeira NE, Liga NO, bau SO.</td></tr><tr><td>Anel leste das barracas</td><td>instrutores das 4 linhas em (200,70)-(200,90).</td></tr><tr><td>Periferia sul</td><td>estabulos, estalagem (120,40) e carroca da Liga no portao sul (120,14).</td></tr></table></div>
+<h3>5. Entradas e saidas</h3>
+<div class="tablewrap"><table><tr><th>Saida</th><th>Destino (id)</th><th>Segmento (x0,y0)-(x1,y1) m</th><th>Largura</th><th>Estado</th></tr><tr><td>Vale das Flores-Sino (campo)</td><td><code>bellflower_vale</code></td><td>(100,200)-(140,200)</td><td>40 m</td><td>aberta</td></tr><tr><td>Portao sul decorativo (carroca de viagem)</td><td>-</td><td>(100,0)-(140,0)</td><td>40 m</td><td>decorativa</td></tr></table></div>
+<p>Marcador <code>Exit_&lt;n&gt;</code> em cada abertura aberta (skill, passo 7); a troca de mapa e da GameSim (story-004), a cena so marca.</p>
+<h3>6. Marcos e sinais do mundo</h3>
+<ul><li><strong>Marco da cidade:</strong> Sino de cristal, em (120, 100). Deve ser legivel em silhueta no zoom maximo (aceite 9).</li><li><strong>Sinal do cristal azul:</strong> presente sempre, pequeno e frio (<code>#8FB8D0</code>), nunca neon; so arma brilha (V5).</li><li><strong>Torre de Cristal ao norte (horizonte):</strong> linha 1 da grade, altura angular ~14 graus (camera livre), nevoa 0.7, brilho 0.15; por tras do relevo/muralha, <strong>fora da planta, sem colisao e sem NavMesh</strong>. Cidades isentas: nenhuma deste grupo (todas sao ao ar livre); onde ha muralha alta (Bastiao do Veu) so o topo aparece. Mapa <code>HorizonLandmarkDef</code> proprio no builder (story-005).</li><li><strong>Cristais espalhados</strong> (<code>CrystalScatterDef</code>, aceite 12): &gt;= 1 momento de cristal por area, nenhum sobre rua/trilha.</li></ul>
+<h3>7. NPCs e servicos</h3>
+<div class="tablewrap"><table><tr><th>#</th><th>Servico / NPC</th><th>Posicao (x, y) m</th><th>Id do NPC</th></tr><tr><td>1</td><td>Mestre Vowborn (Bento Tampa)</td><td>(120, 120)</td><td><code>bellrest_master_shield</code></td></tr><tr><td>2</td><td>Ferreiro + refino tutorial (Brida Malho-Doce)</td><td>(60, 110)</td><td><code>bellrest_smith</code></td></tr><tr><td>3</td><td>Loja de pocoes (Tia Favinha)</td><td>(190, 110)</td><td><code>bellrest_apothecary</code></td></tr><tr><td>4</td><td>Curandeira (Vo Candeia)</td><td>(170, 150)</td><td><code>bellrest_healer</code></td></tr><tr><td>5</td><td>Bau da conta + encaixe basico (Tonico Tulha / Seu Lirio)</td><td>(70, 60)</td><td><code>bellrest_chest</code></td></tr><tr><td>6</td><td>Liga + quadro de quests (Ditinha)</td><td>(80, 150)</td><td><code>bellrest_league_post</code></td></tr><tr><td>7</td><td>Estalagem Favo Torto (Rosa Hidromel)</td><td>(120, 40)</td><td><code>bellrest_innkeeper</code></td></tr><tr><td>8</td><td>Instrutores das 4 linhas (barracas-oficina)</td><td>(200, 80)</td><td><code>bellrest_master_bow</code></td></tr><tr><td>9</td><td>Carroca da Liga (Neca Redea)</td><td>(120, 14)</td><td><code>bellrest_carter</code></td></tr><tr><td>10</td><td>Sineiro Ambrosio Badalo</td><td>(138, 112)</td><td><code>bellrest_bellkeeper</code></td></tr></table></div>
+<p>Posicao e "slot": o builder escolhe o NPC final (<code>design/world/npcs.md</code>); servicos exclusivos de capital seguem <code>design/world/tribes-and-funnel.md</code>.</p>
+<h3>8. Fluxo do jogador</h3>
+<p>Chegada por spawn inicial na praca (120,100); servicos em volta; saida norte direta 25 s por 8 m de estrada ate o gargalo (100-140,200). Travessia 0,7 min; volta de servicos 1,5-2 min.</p>
+<h3>9. Elevacao</h3>
+<p>Terreno plano (+-0,5 m, ondulacao suave); leve subida ao norte (+1,5 m em y=200) rumo ao Vale. Sem degraus.</p>
+<h3>10. NavMesh</h3>
+<ul><li><strong>Onde fica:</strong> area em verde-azulado na planta. Tudo caminhavel exceto pegadas de casas, estabulos, viveiros e o sino (r 4,5 m). Cercas baixas (1 m) = obstaculo fino nas bordas, abertas nos 2 portoes.</li><li><strong>Bake:</strong> NavMeshSurface por colisores (como o <code>Pedrabrota_NavMesh.asset</code>); raio do agente do heroi (conferir <code>NavMeshSettings</code> do projeto; valor de partida 0,4 m), altura 1,8 m, declive maximo 35 graus; area unica <code>Walkable</code>, <code>NotWalkable</code> para agua e abismo.</li><li><strong>Pegadas de obstaculo:</strong> 86 predios (casas, servicos, marcos, tendas, estabulos) somando ~4691 m2 (10% da area). Contagens: big 1, house 71, service 13.</li><li>Cidade e zona segura: <strong>sem</strong> marcador <code>SP_</code>; apenas <code>Exit_&lt;n&gt;</code>, <code>Rest_&lt;n&gt;</code> (bancos) e <code>POI_&lt;n&gt;</code> (marcos).</li></ul>
+<h3>11. Imagens que ja existem (para o MM mostrar ao lado do texto)</h3>
+<ul><li><code>production/qa/evidence/world_bellrest_village_v2.png</code></li><li><code>production/qa/evidence/camera/depois/world_bellrest_village.png</code></li><li><code>assets/concepts/world/town_C_v1.png</code></li><li><code>assets/concepts/world/town_v2_bright.png</code></li><li>capturas do Unity (blockout) e 2 conceitos genericos pre-v3 de "cidade inicial" (nao sao do Pouso v3).</li><li>Retratos de NPC: 19 em <code>assets/concepts/npcs/bellrest_*.png</code>.</li></ul>
+<h3>12. Checklist antes do builder 3D</h3>
+<ul><li>[ ] Imagem-conceito aprovada pelo criador (iso + aerea) e comparada com esta planta.</li><li>[ ] Dimensoes, saidas e servicos conferidos com a ficha.</li><li>[ ] <code>HorizonLandmarkDef</code> e <code>CrystalScatterDef</code> do mapa criados.</li><li>[ ] Builder <code>Ragna/Mapas/BellrestVillage</code> idempotente, capturas de aceite (skill passo 8).</li></ul></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

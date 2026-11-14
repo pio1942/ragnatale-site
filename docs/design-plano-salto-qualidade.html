@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Plano: salto de qualidade visual (2026-11-10) | Ragna Tale</title>
+<meta name="description" content="Plano: salto de qualidade visual (2026-11-10): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-plano-salto-qualidade.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-plano-salto-qualidade.html">
+<meta property="og:title" content="Plano: salto de qualidade visual (2026-11-10) | Ragna Tale">
+<meta property="og:description" content="Plano: salto de qualidade visual (2026-11-10): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Plano: salto de qualidade visual (2026-11-10) | Ragna Tale">
+<meta name="twitter:description" content="Plano: salto de qualidade visual (2026-11-10): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/plano-salto-qualidade.md</code></p><h2>Plano: salto de qualidade visual (2026-11-10)</h2>
+<blockquote>Origem: conversa séria com o criador (3 blocos de referências do youtuber Stefan 3D AI, Priston e Ragnarok).<br>Diagnóstico: regras do jogo (Sim em C#) sólidas; acabamento visual muito abaixo do alvo (nota atual ~4-5/10).<br>Alvo: a nostalgia de Priston Tale e Ragnarok com acabamento atual (referências na aba "Alvo visual" do painel),<br>nem genérico nem colossalmente diferente. Motor continua Unity 6.6 + URP (Unreal não é necessário: tudo nas<br>referências é Unity + Blender).</blockquote>
+<h3>O que mudou na forma de trabalhar</h3>
+<ol><li><strong>Alvo fixo</strong>: nenhuma entrega visual fecha sem comparação lado a lado com uma referência da aba "Alvo visual".</li><li><strong>Planta de projeto antes do 3D</strong>: cada mapa nasce de uma planta 2D técnica (como projeto de engenharia), e o 3D é gerado A PARTIR dela, não no olho.</li><li><strong>Blender de verdade</strong>: todo modelo passa pelo Blender (otimização, escala, esqueleto, encaixe das mãos, revisão).</li><li><strong>Revisão com rigor</strong>: direção de arte feita pelo modelo mais forte (Opus/Fable); agentes Sonnet executam com critério de aceite escrito; menos passadas curtas e cortadas.</li><li><strong>Tudo vira skill</strong>: cada aprendizado entra em <code>ragna-criar-mapa</code> (e, depois, <code>ragna-criar-personagem</code>, <code>ragna-animar</code>, <code>ragna-vfx</code>).</li></ol>
+<h3>Fases (ordem de execução)</h3>
+<div class="tablewrap"><table><tr><th>#</th><th>Fase</th><th>O que entrega</th><th>Custo</th></tr><tr><td>F1</td><td><strong>Planta de projeto do mapa</strong></td><td>Planta 2D em grade (A-J × 1-10) com camadas: relevo e taludes (curvas de nível), cursos d'água, caminhos, manchas de terreno, florestas, decalques, spawns com nº de monstros, saídas e pontos de interesse. Exportada em imagens-máscara que o builder lê para gerar o relevo (heightmap) e pintar o terreno. Vista na aba "Mapas" do painel.</td><td>grátis</td></tr><tr><td>F2</td><td><strong>Terreno 2.0</strong></td><td>MicroSplat (até 32 camadas numa passada, anti-repetição, triplanar para penhascos), kit PBR do campo (cor+relevo+brilho+altura, Poly Haven/ambientCG), penhascos e taludes, margens do riacho (lama, pedras, juncos), decalques: de contato sob cada objeto, campos, rachaduras, trilhas, poças.</td><td><strong>US$ 20</strong> (MicroSplat URP para Unity 6; núcleo grátis)</td></tr><tr><td>F3</td><td><strong>Unit Playground</strong></td><td>Cena de teste no Unity com painel: escolher herói/monstro, tocar cada animação (parado, andar, correr, atacar, golpe, morte), presets de câmera, boneco de treino com dano, círculo de perigo. É onde o criador aprova ritmo e sensação.</td><td>grátis</td></tr><tr><td>F4</td><td><strong>Animação</strong></td><td>Biblioteca primeiro (Quaternius UAL, Mixamo grátis) adaptada aos nossos esqueletos; pose de mão e encaixe por classe de arma (espada, escudo, machado, lança, arco, cajado); mortes; criaturas não humanas por ciclos no Blender; animações-assinatura por captura de vídeo (ferramenta gratuita a definir). Quadro de animações no painel com play e velocidade.</td><td>grátis (avaliar ferramenta de captura)</td></tr><tr><td>F5</td><td><strong>Efeitos (VFX)</strong></td><td>Avaliar Cartoon FX Remaster (versão gratuita; pagas baratas) e montar os efeitos por classe/monstro a partir do bestiário (cura com feixe até o alvo, auras, impactos, telégrafos).</td><td>a definir (barato)</td></tr><tr><td>F6</td><td><strong>Áudio</strong></td><td>ElevenLabs Sound Effects V2 para as lacunas (arco, vozes por corpo, habilidades, monstros); música por zona depois (Mureka / Google Lyria / Sonilo a avaliar).</td><td>plano ElevenLabs (barato)</td></tr><tr><td>F7</td><td><strong>Workspace/wiki</strong></td><td>Evoluir o painel para um wiki do jogo (Mundo, Personagens, Mapas, Animações, Áudio, VFX, Devlog), estudando o Mr. Mak Workspace (MIT, github.com/witnesstodark/mr-mak-workspace). Inclui a aba <strong>"Os números"</strong>: dias de trabalho com commits por dia, unidades/modelos/animações/sons/efeitos feitos, e o <strong>custo real acumulado</strong> (créditos Customuse, ElevenLabs, compras, assinaturas) com projeção.</td><td>grátis</td></tr></table></div>
+<h4>Animação sem o GPT-6 Astra (lição do "Overlord")</h4>
+<p>No recibo dele, o grosso do custo de cada unidade foi <strong>vídeo de referência de movimento</strong> (US$ 668 em 430 vídeos) + captura de movimento a partir desses vídeos (US$ 12) + animações compradas (ActorCore US$ 10,50). O agente não "inventou" o movimento: ele gerou ou usou um vídeo do movimento desejado, extraiu a captura de movimento e aplicou no esqueleto, ajustando no Blender. Nosso caminho: (1) animações prontas (Quaternius, Mixamo) para o básico; (2) para animações-assinatura, vídeo de referência (gravado, de banco gratuito ou gerado sob orçamento aprovado) → captura de movimento por vídeo → ajuste no Blender; (3) quadro de aprovação no painel e no Unit Playground.</p>
+<h3>Decisões do criador</h3>
+<ul><li>Comprar o <strong>MicroSplat URP para Unity 6 (US$ 20)</strong> na Asset Store (e pegar o núcleo grátis).</li><li>Câmera: liberar zoom bem mais afastado (hoje 10-17 m, inclinação 44-55°) para a "profundidade" do Priston.</li><li>Aprovar a ordem das fases.</li><li>Material de estudo: PDFs/cursos que tiver vão para <code>knowledge/</code>; a documentação oficial eu busco sozinho.</li></ul></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

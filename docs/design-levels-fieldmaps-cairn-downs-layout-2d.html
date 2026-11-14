@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Mapa de engenharia 2D: Colinas dos Marcos (cairn_downs) | Ragna Tale</title>
+<meta name="description" content="Mapa de engenharia 2D: Colinas dos Marcos (cairn_downs): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-levels-fieldmaps-cairn-downs-layout-2d.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-levels-fieldmaps-cairn-downs-layout-2d.html">
+<meta property="og:title" content="Mapa de engenharia 2D: Colinas dos Marcos (cairn_downs) | Ragna Tale">
+<meta property="og:description" content="Mapa de engenharia 2D: Colinas dos Marcos (cairn_downs): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mapa de engenharia 2D: Colinas dos Marcos (cairn_downs) | Ragna Tale">
+<meta name="twitter:description" content="Mapa de engenharia 2D: Colinas dos Marcos (cairn_downs): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/levels/fieldmaps/cairn_downs/layout-2d.md</code></p><h2>Mapa de engenharia 2D: Colinas dos Marcos (<code>cairn_downs</code>)</h2>
+<blockquote>Gerado por <code>tools/levels/fieldmaps_gen.py</code> (dados: <code>fieldmaps_data.py</code>; saídas: <code>fieldmaps_exits.json</code>). Fonte das fichas: <code>design/world/map-layouts-mvp.md</code>. Itens marcados <strong>[PROPOSTA]</strong> (curvas de nível, profundidade da água, navmesh, cristais, coleta) são decisão de level design a validar. Nada foi aberto no Unity.<br>Planta: <code>layout-2d.svg</code> (vetorial) e <code>production/qa/evidence/fieldmaps/cairn_downs.png</code>.</blockquote>
+<p>![planta](layout-2d.svg)</p>
+<h3>1. Quadro de informações</h3>
+<div class="tablewrap"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Tipo / nível</td><td>campo / 19-26</td></tr><tr><td>Linha da grade</td><td>5 de 10 (célula C5)</td></tr><tr><td>Tribo / tema</td><td>Neutro (campo de grupo; ficha nova)</td></tr><tr><td>Elemento dominante</td><td>Rocha (marcos, golens) [PROPOSTA: monstros a definir no bestiário]</td></tr><tr><td>Tamanho</td><td><strong>560 x 480 m</strong> (26,9 ha), caminhável 26,0 ha [PROPOSTA]</td></tr><tr><td>Cotas [PROPOSTA]</td><td>2.6 a 29 m, curvas a cada 1 m</td></tr><tr><td>Ritmo</td><td>travessia direta 1,9 min a qualquer saída; de caça (grupo) 14-18 min por laço</td></tr><tr><td>Chefe / elite</td><td>MVP/chefe a definir (ficha sem monstros); elite <code>E</code> entre SP-4 e SP-5</td></tr><tr><td>Perigo por trecho</td><td>T1 sul = 2; T2 sela = 3; T3 norte = 4.</td></tr><tr><td>Forma</td><td>Colinas em "sela" com três vales ligados por cruzamentos de marcos (montes de pedra empilhada de 3-5 m), arenas de 40 m de raio; a estrada de marcos desce do Três Fogueiras e se divide em Y rumo ao Charco (L) e aos Moinhos (O).</td></tr></table></div>
+<h3>2. Escala e câmera</h3>
+<ul><li>Unidade metro; norte = +Y (no Unity, +Z); origem no canto SO; grade de 10 m (fina) e 50 m (grossa). Escala da planta: 1 px = 0,45 m.</li><li>Tela no zoom padrão (câmera isométrica): ~29 x 16 m de chão. O mapa equivale a ~20 x 30 telas.</li><li>Escalas fixas: estrada 4-6 m, trilha 2-3 m, passagem de saída 8-10 m (aqui a faixa de saída segue a ficha; a passagem de 10 m fica no centro), clareira calma de 20 m (sem spawn) em volta de cada saída.</li></ul>
+<h3>3. Relevo e curvas de nível [PROPOSTA]</h3>
+<p>[PROPOSTA] Sela: pontos altos NO e NE (22 m) e dorsais a S e SO/SE (10-12 m), três vales a 4-8 m; arenas planas de 40 m nos cruzamentos. Curvas a cada 1 m. Lago do pastor 1,1 m, lagoa 0,8 m.</p>
+<h3>4. Água e profundidade [PROPOSTA]</h3>
+<div class="tablewrap"><table><tr><th>Corpo</th><th>Largura / dimensão</th><th>Profundidade</th><th>Caminhável?</th></tr><tr><td>Vala de contorno do centro (seca, 0,4 m)</td><td>3 m</td><td>margem 0,15 m, centro 0,4 m</td><td>margem sim; centro sim (&lt; 1 m)</td></tr><tr><td>Lago do pastor</td><td>28 x 20 m</td><td>centro 1,1 m</td><td>não no fundo (&gt;= 1 m)</td></tr><tr><td>Lagoa dos marcos</td><td>24 x 18 m</td><td>centro 0,8 m</td><td>sim (&lt; 1 m)</td></tr></table></div>
+<h3>5. Trilhas e pontes</h3>
+<div class="tablewrap"><table><tr><th>Trilha</th><th>Largura</th><th>Pontos (x,y) m</th></tr><tr><td>Estrada de marcos (S &gt; bifurcação em Y) (principal)</td><td>5 m</td><td>(280,0) &gt; (285,50) &gt; (280,100) &gt; (278,180) &gt; (280,260) &gt; (280,320)</td></tr><tr><td>Ramo oeste (Moinhos Quebrados) (principal)</td><td>5 m</td><td>(280,320) &gt; (220,335) &gt; (150,345) &gt; (70,350) &gt; (0,350)</td></tr><tr><td>Ramo leste (Charco dos Juncos) (principal)</td><td>5 m</td><td>(280,320) &gt; (350,335) &gt; (430,345) &gt; (500,350) &gt; (560,350)</td></tr><tr><td>Trilha ao norte (SP-5 e monte-mestre)</td><td>3 m</td><td>(280,320) &gt; (283,370) &gt; (280,410) &gt; (310,438)</td></tr><tr><td>Trilha de pastor SO</td><td>2 m</td><td>(120,180) &gt; (170,230) &gt; (280,260)</td></tr><tr><td>Trilha de pastor SE</td><td>2 m</td><td>(440,170) &gt; (380,220) &gt; (280,260)</td></tr><tr><td>Trilha de pastor O</td><td>2 m</td><td>(100,250) &gt; (95,300) &gt; (90,348)</td></tr><tr><td>Trilha de pastor L</td><td>2 m</td><td>(460,260) &gt; (470,300) &gt; (480,348)</td></tr></table></div>
+<h3>6. Zonas de spawn (ficha)</h3>
+<div class="tablewrap"><table><tr><th>SP</th><th>Posição (x,y) m</th><th>Monstros (id)</th><th>Nível</th><th>Obs</th></tr><tr><td>SP-1</td><td>(280,100)</td><td>[ID A DEFINIR] comum novo A x5-6</td><td>19-20</td><td>S; arena de grupo</td></tr><tr><td>SP-2</td><td>(120,180)</td><td>[ID A DEFINIR] comum novo B x5-6</td><td>21-22</td><td>SO</td></tr><tr><td>SP-3</td><td>(440,170)</td><td>[ID A DEFINIR] comum novo C x5-6</td><td>22-23</td><td>SE</td></tr><tr><td>SP-4</td><td>(280,260)</td><td>bog_slime x2 (reuso do Charco) [PROPOSTA] + [ID A DEFINIR] comum novo D x3-4</td><td>24</td><td>C</td></tr><tr><td>SP-5</td><td>(280,410)</td><td>shard_soldier_royal x2 (reuso das Ruínas) [PROPOSTA] + [ID A DEFINIR] MVP</td><td>25-26</td><td>N</td></tr><tr><td>SP-E</td><td>(300,335)</td><td>[ID A DEFINIR] elite/MVP (entre SP-4 e SP-5)</td><td>26</td><td>bifurcação do Y</td></tr></table></div>
+<p>Densidade 1,2 monstros/1000 m² (campo de grupo); 5 SP de grupo com 5-6 monstros cada em arena de 40 m; ids A DEFINIR (regra do bestiário: 4 comuns novos + 2 reusados de vizinhos + 1 MVP). Clareira calma de 20 m nas 3 saídas.</p>
+<h3>7. Pontos de interesse, descanso e marco</h3>
+<div class="tablewrap"><table><tr><th>Tipo</th><th>Nome</th><th>Posição (x,y) m</th><th>Obs</th></tr><tr><td>PdI P1</td><td>Monte-mestre (8 m, pedra rúnica)</td><td>(330,440)</td><td>marco maior</td></tr><tr><td>PdI P2</td><td>Ruína de torre de vigia</td><td>(230,447)</td><td>mirante: vê o Charco e os Moinhos</td></tr><tr><td>PdI P3</td><td>Banca de Liga abandonada</td><td>(322,46)</td><td>quadro de grupo decorativo</td></tr><tr><td>Descanso</td><td>fogueira de grupo (vale oeste)</td><td>(100,250)</td><td>raio 6 m, &gt;= 40 m de SP</td></tr><tr><td>Descanso</td><td>fogueira de grupo (vale leste)</td><td>(460,260)</td><td>raio 6 m, &gt;= 40 m de SP</td></tr><tr><td>Marco</td><td>Monte-mestre ao norte (e três fumaças ao sul, Três Fogueiras)</td><td>(330,440)</td><td>visível de toda a corda de caça</td></tr></table></div>
+<h3>8. Pontos de coleta [PROPOSTA]</h3>
+<div class="tablewrap"><table><tr><th>Coleta</th><th>Posição (x,y) m</th></tr><tr><td>Pedra-rúnica (fragmento)</td><td>(340,408)</td></tr><tr><td>Líquen-dourado</td><td>(60,100)</td></tr><tr><td>Ferro-de-marco (minério)</td><td>(500,200)</td></tr><tr><td>Musgo-de-pastor</td><td>(160,300)</td></tr><tr><td>Cinza-de-fogueira</td><td>(440,40)</td></tr></table></div>
+<h3>9. Saídas (fonte única: <code>tools/levels/fieldmaps_exits.json</code>)</h3>
+<div class="tablewrap"><table><tr><th>Saída</th><th>Destino</th><th>Segmento (x0,y0)-(x1,y1) m</th><th>Largura</th><th>Estado</th></tr><tr><td>Sul: Tres Fogueiras [a_pe]</td><td><code>threefire_village</code></td><td>(250,0)-(310,0)</td><td>60 m</td><td>aberta</td></tr><tr><td>Leste: Charco dos Juncos [a_pe]</td><td><code>reedwater_marsh</code></td><td>(560,330)-(560,370)</td><td>40 m</td><td>aberta</td></tr><tr><td>Oeste: Colinas dos Moinhos Quebrados [a_pe]</td><td><code>windmill_heights</code></td><td>(0,330)-(0,370)</td><td>40 m</td><td>aberta</td></tr></table></div>
+<p>Marcadores <code>Exit_&lt;n&gt;</code>; a troca de mapa é da GameSim. O mundo está sendo redesenhado em arquipélago: <strong>só o <code>fieldmaps_exits.json</code> muda</strong>; rodar <code>python tools/levels/fieldmaps_gen.py --png</code> atualiza planta, md e <code>index.json</code>.</p>
+<h3>10. Torre de Cristal e cristais da grade</h3>
+<ul><li><strong>Direção da Torre: norte (azimute 0°)</strong>, atrás do relevo ao norte do mapa: altura angular ~29°, névoa 0.43, brilho emissivo 0.48 (linha 5; <code>design/levels/horizon-landmark-crystal-tower.md</code>). Nunca entra na planta, sem colisão nem NavMesh.</li><li><strong>Cristais [PROPOSTA]</strong> (<code>design/levels/world-crystals-scatter.md</code>): densidade 12,3/ha, 321 instâncias: 163 lascas (<code>Shard</code>), 90 veios (<code>Vein</code>), 67 aglomerados (<code>Cluster</code>), 1 grandes (<code>Spire</code>); distância mínima 4,9 m; brilho 0,43; semente <code>fnv32("cairn_downs|crystals|1")</code>. Sem colisão, sem NavMesh. +20% no terço norte.</li><li>Cristais grandes (Spire) propostos: (485,320).</li></ul>
+<h3>11. NavMesh, bloqueios e penhascos [PROPOSTA]</h3>
+<ul><li>Área caminhável 26,0 ha (verde-azulado na planta). Célula de 4 m; raio do agente 0,4 m, altura 1,8 m, declive máx. 35°; água &gt;= 1 m e lava são <code>NotWalkable</code>; pontes, vaus e passarelas são <code>Walkable</code> por cima.</li><li>Bloqueios: marco de pedra (bloqueio) 18, muro de ruína (bloqueio) 1, rocha / afloramento (bloqueio) 4.</li><li>Penhascos: nenhum.</li></ul>
+<h3>12. Elementos 3D a modelar (lista para a fase 2)</h3>
+<ul><li>Terreno 560 x 480 m em sela, 3 vales + 5 arenas planas de 40 m (cruzamentos).</li><li>Marcos de pedra: 5 de arena (r 4 m, 3-5 m de altura), ~20 menores ao longo da estrada, monte-mestre (8 m, pedra rúnica), ruína de torre de vigia (mirante).</li><li>Estrada de marcos 5 m (S, ramos O e L) + trilha norte 3 m + 4 trilhas de pastor 2 m; vala de contorno seca (3 m) em anel de r 65 m.</li><li>2 corpos d'água (Lago do pastor 28 x 20 m, Lagoa 24 x 18 m); 2 fogueiras de grupo; banca de Liga.</li><li>Três fumaças ao sul (efeito, vindo do mapa vizinho).</li><li>Árvores/vegetação decorativa na planta: 107 instâncias ilustrativas (posição final no builder, sem cobrir trilha a &lt; 2,5 m).</li><li>Cristais: 4 malhas (<code>Shard</code> 24 tris, <code>Vein</code> 40, <code>Cluster</code> 120, <code>Spire</code> 180) x 3-4 variações.</li></ul>
+<h3>13. Pendências e decisões em aberto</h3>
+<ul><li>IDs dos monstros e do MVP: definir no bestiário (4 comuns novos).</li><li>Quem reusa bog_slime / shard_soldier_royal e em qual SP: confirmar.</li><li>Saídas: <code>fieldmaps_exits.json</code>.</li></ul>
+<h3>14. Legenda das [PROPOSTA]</h3>
+<p>curvas de nível e cotas, profundidade da água, malha de NavMesh, bloqueios e penhascos finos, geometria detalhada das trilhas, cristais da grade (densidade pela fórmula de world-crystals-scatter.md), pontos de coleta, trechos de perigo e a posição da área de tela. A ficha só dá tamanho, saídas, SP, PdI, descanso e marco. ATENÇÃO: a ficha deste mapa é nova e SEM monstros definidos; a distribuição de reuso (bog_slime, shard_soldier_royal) nos SP é [PROPOSTA].</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

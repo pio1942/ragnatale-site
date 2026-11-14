@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Dossiê: locomoção do herói (Ragna Tale) — para consulta externa | Ragna Tale</title>
+<meta name="description" content="Dossiê: locomoção do herói (Ragna Tale) — para consulta externa: documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-animation-locomotion-dossier.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-animation-locomotion-dossier.html">
+<meta property="og:title" content="Dossiê: locomoção do herói (Ragna Tale) — para consulta externa | Ragna Tale">
+<meta property="og:description" content="Dossiê: locomoção do herói (Ragna Tale) — para consulta externa: documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dossiê: locomoção do herói (Ragna Tale) — para consulta externa | Ragna Tale">
+<meta name="twitter:description" content="Dossiê: locomoção do herói (Ragna Tale) — para consulta externa: documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/animation/locomotion-dossier.md</code></p><h2>Dossiê: locomoção do herói (Ragna Tale) — para consulta externa</h2>
+<p>Autocontido. Unity 6.6 URP, C#, RPG de ação isométrico (referências: Priston Tale, Ragnarok Online). 2026-11-12.</p>
+<h3>Problema</h3>
+<p>Depois de 6 rodadas de correção o jogador relata: "o movimento do personagem ainda é muito ruim". Sintomas vistos no build: corpo vibra ao andar, desliza na partida e na chegada de cada clique, pernas frenéticas, tronco inclinado, escudo deitado.</p>
+<h3>Arquitetura em 10 linhas</h3>
+<ol><li>Simulação autoritativa (<code>GameSim</code>, C#) avança em tique fixo de <strong>20 Hz</strong> (<code>LocalSimHost.TickSeconds = 0.05</code>).</li><li>Clique no chão → a cada tique o cliente pede <code>RequestMove(pos + dir × speed × 0,05)</code>; a Sim grava a posição direto.</li><li><strong>Sem aceleração/desaceleração na Sim</strong>: 0 → 5,6 m/s no primeiro tique; parada seca a 5 cm do destino.</li><li><code>move_speed</code> do guerreiro = <strong>5,6 m/s</strong>; corrida = ×1,4 = <strong>7,84 m/s</strong>. (Não há 1,8 nem 6,8 na Sim.)</li><li>O transform visual persegue a posição da Sim com <code>Lerp(pos, alvo, 1 − e^(−25·dt))</code> (constante de tempo 40 ms).</li><li><code>Facing</code> vira instantâneo na Sim; visual <code>Slerp</code> com k = 14 (180° em ~0,25 s). Sem clipe de giro.</li><li><code>HeroAnimatorBridge</code> mede a velocidade do transform numa janela de 0,25 s (<code>SpeedEstimator</code>) e faz <code>SetFloat("Speed", v, damp 0,08)</code>.</li><li><code>Hero.controller</code> (gerado por código): árvore 1D por <code>Speed</code>, filhos 0 (guarda A autoral) / 0,8 e 1,8 (UAL Walk_Loop, 2,25×) / 5,6 (Mixamo standing_run_forward a 2,16×) / 6,8 (mesmo clipe a 2,63×). <code>applyRootMotion = false</code>. Camadas de dedos por <code>GripSet</code>.</li><li><code>WeaponHandIK</code> (2 ossos, LateUpdate) e <code>FootprintGround</code> (altura = ponto mais alto da pegada). Humanoid retarget para UAL/Mixamo.</li><li>Câmera: FOV 22°, 12 m de altura visível, pitch 40°: o herói ocupa ~13% da tela (~140 px em 1080p).</li></ol>
+<h3>Números medidos</h3>
+<div class="tablewrap"><table><tr><th>Medida</th><th>Valor</th><th>Fonte</th></tr><tr><td>Passo da Sim por tique a 5,6 m/s</td><td>0,28 m a 20 Hz</td><td>cálculo</td></tr><tr><td>Velocidade visual por quadro em corrida constante</td><td><strong>2,6 a 8,9 m/s</strong> (média 5,6)</td><td>comentário de <code>SpeedEstimator.cs</code></td></tr><tr><td>Atraso do parâmetro <code>Speed</code></td><td>~0,2 s (janela 0,25 + damp 0,08)</td><td>código</td></tr><tr><td>Perna do modelo (quadril→chão)</td><td><strong>0,77 m</strong> (altura ≈ 1,6 m)</td><td>rig</td></tr><tr><td>Mixamo run nativo</td><td>2,55 m/s de pé plantado, ciclo 0,867 s, passo 1,1 m</td><td><code>metricas_candidatos.csv</code></td></tr><tr><td>Mixamo a 2,16× (para 5,6 m/s)</td><td>ciclo 0,40 s → <strong>5 passos/s</strong></td><td>derivado</td></tr><tr><td>Inclinação do tronco no Mixamo</td><td>22-30°</td><td><code>corrida_corrida_medidas.txt</code></td></tr><tr><td>Pescoço no Mixamo (turn/tilt/nod)</td><td>14,5 / 7,8 / 25,3° → zerado em clipe derivado</td><td><code>pescoco/medicao.md</code></td></tr><tr><td>Corrida própria run_A (Blender)</td><td>ciclo 0,70 s, passo 1,96 m (2,5× perna), deslize 0,6 cm, quadril <strong>−15 cm</strong> ("agachada")</td><td><code>author_warrior_run.py</code>, commit a8a6db8a</td></tr><tr><td>Critério de aceite adotado em 13/11</td><td>pé plantado = velocidade do corpo (deslize ≈ 0)</td><td>commit aab85c69</td></tr></table></div>
+<h3>Trechos essenciais</h3>
+<p>``<code>csharp // SimHeroController.cs:264-265  (pedido por tique, sem rampa) float step = Mathf.Min((float)(_host.Sim.MoveSpeedOf(_id) * LocalSimHost.TickSeconds), remaining); _host.RequestMove(_id, me.Position + dir * step, dir); // SimHeroController.cs:277  (visual persegue a Sim; tranco a 20 Hz) transform.position = snap ? target : Vector3.Lerp(transform.position, target, 1f - Mathf.Exp(-25f * Time.deltaTime)); // HeroAnimatorBridge.cs:142-143,192  (Speed medido do transform, com janela e damp) _speed.Add(new Vector2(p.x, p.z), Time.deltaTime); _animator.SetFloat(SpeedHash, metersPerSecond &lt; 0.05f ? 0f : metersPerSecond, _speedDamp, dt); // HeroAnimationBuilder.cs:367-375  (árvore) tree.AddChild(stance.idleCombat, 0f); tree.AddChild(Clip("Walk_Loop"), 0.8f); tree.AddChild(Clip("Walk_Loop"), 1.8f); tree.AddChild(RunClip(), 5.6f); tree.AddChild(RunClip(), 6.8f); kids[2].timeScale = 2.25f; kids[3].timeScale = 2.16f; kids[4].timeScale = 2.63f; </code>``</p>
+<h3>Diagnóstico interno (hipótese a validar)</h3>
+<ol><li>Tranco de corpo a 20 Hz (lerp exponencial sobre passos de 28 cm) — nenhum clipe conserta.</li><li>Sim sem rampa × animação com 0,2 s de atraso → deslize em toda partida e chegada.</li><li>5,6 m/s é sprint para perna de 0,77 m; o critério "deslize zero" força cadência de 5 passos/s ou passada de 2,5× a perna.</li><li>Clipes de terceiros retargetados (tronco 25°, pulso de mão vazia); o cliente aprova só os clipes autorais do Blender.</li></ol>
+<p>Plano interno: interpolação de render + <code>Speed</code> pela intenção; novo aceite (cadência ≤ 3/s, tronco ≤ 12°, quadril ≤ −5 cm, deslize ≤ 20%); manter 5,6 m/s na Sim com pé plantado autoral a 4,5-4,8 m/s; não escalar o personagem.</p>
+<h3>3 perguntas objetivas</h3>
+<ol><li>Para um isométrico com o herói a ~140 px de altura na tela, qual deslize de pé (em % da velocidade do corpo) é imperceptível, e qual é a melhor prática em jogos 3D de clique-para-andar: deslize aceito com cadência humana, ou cadência casada com o solo?</li><li>Dado tique de 20 Hz com posição autoritativa, qual é a forma recomendada de suavizar o transform (interpolação entre tiques com alpha do acumulador vs. dead-reckoning à velocidade conhecida) sem introduzir atraso perceptível no clique-para-andar?</li><li>Com perna de 0,77 m, velocidade de jogo de 5,6 m/s e corrida de 7,84 m/s, você escalaria o personagem (×1,23), baixaria a Sim para 4,5 m/s, ou manteria 5,6 com deslize autoral de ~20%? Que efeitos colaterais (alcance, colisão, câmera, mapas) pesam mais?</li></ol></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Cartas x raça (modificador de dano por raça) | Ragna Tale</title>
+<meta name="description" content="Cartas x raça (modificador de dano por raça): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-gdd-card-race-modifier.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-gdd-card-race-modifier.html">
+<meta property="og:title" content="Cartas x raça (modificador de dano por raça) | Ragna Tale">
+<meta property="og:description" content="Cartas x raça (modificador de dano por raça): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cartas x raça (modificador de dano por raça) | Ragna Tale">
+<meta name="twitter:description" content="Cartas x raça (modificador de dano por raça): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/gdd/card-race-modifier.md</code></p><h2>Cartas x raça (modificador de dano por raça)</h2>
+<blockquote>Status: proposta curta (2026-11-12), <strong>extensão</strong> de <code>design/gdd/elements.md</code> (3.7, 3.12, F-01, F-04, Tuning). Não duplica regras: fixa o que o comentário <code>mwe90r50f8bq</code> pede (aumentar <strong>ou diminuir</strong> o dano contra uma raça) e o que a UI mostra. Valores [AJUSTAR].</blockquote>
+<h3>1. Overview</h3>
+<p>Cartas, afixos e habilidades alteram o dano do jogador <strong>contra uma raça</strong> (<code>race_dmg</code>) e o dano que ele <strong>recebe</strong> de uma raça (<code>race_resist</code>). A raça do alvo (10 raças, <code>elements.md</code> 3.7) é só etiqueta; o efeito vem do bônus.</p>
+<h3>2. Player Fantasy</h3>
+<p>"Estudei o bicho": a carta certa na arma vira a luta contra uma raça; a carta errada (ou a maldição) dá a sensação de bater em pedra. O quadro do alvo mostra o bônus.</p>
+<h3>3. Detailed Rules</h3>
+<ol><li><code>race_dmg[raça]</code> soma todas as fontes ativas (cartas equipadas, afixos, conjuntos, habilidades) <strong>antes</strong> do teto (F-04). Vale o equipamento ativo na resolução do golpe.</li><li>Positivo: carta <code>race_dmg</code> em <code>weapon</code> (+10..15% comum, +25% chefe). <strong>Negativo</strong> (diminuir): maldição/debuff [LANÇ] ou carta de risco e recompensa (ex.: +30% contra uma raça, -10% contra outra) [AJUSTAR]. Piso <code>RACE_DMG_FLOOR</code>.</li><li><code>race_resist[raça]</code> (offhand/traje) reduz o dano <strong>recebido</strong> da raça atacante, em <code>m_res</code>, junto da resistência elemental e do teto <code>RESIST_CAP_PLAYER</code> (0,50).</li><li>Empilha <strong>multiplicando entre categorias</strong>: <code>(1+raça) x (1+tamanho) x (1+elemento do alvo)</code>; soma dentro de cada categoria (F-01). <code>m_size</code> (família da arma) e <code>m_elem</code> são fatores separados.</li><li><code>ignores_element</code> não ignora raça (elements.md 5.3); <code>ignores_size</code> idem.</li><li>O jogador é <code>humanoid</code>; não há <code>race_dmg</code> de PvP no MVP.</li><li>UI: "Dano seu: +X% (Raça)" no quadro do alvo (<code>design/ux/target-frame.md</code>), calculado pela GameSim.</li></ol>
+<h3>4. Formulas</h3>
+<p>Variáveis: <code>R = clamp(Σ race_dmg[raça_alvo], RACE_DMG_FLOOR, RACE_DMG_CAP)</code>; <code>S</code> e <code>E</code> idem para tamanho e elemento do alvo (só com teto); <code>m_size</code>, <code>m_elem</code>, <code>m_res</code> como em elements.md. ``<code> m_cards = (1+R)(1+S)(1+E) m_total = clamp(m_size * m_cards * m_elem * m_res, 0,15, 4,0) dano    = round(ataque * variação * crítico * K/(K+defesa) * m_total) </code>`<code> </code>RACE_DMG_CAP = CARD_CATEGORY_CAP = 0,60<code>; </code>RACE_DMG_FLOOR = -0,25<code> [AJUSTAR]. Mudança em relação ao código: </code>CardBonus<code> hoje só aplica o teto superior; passa a aplicar também o piso, somente a </code>race_dmg`.</p>
+<p>Exemplos (ataque 100, defesa 0, sem variação nem crítico):</p>
+<div class="tablewrap"><table><tr><th>Caso</th><th>R</th><th>S</th><th>E</th><th>m_size</th><th>m_elem</th><th>m_total</th><th>Dano</th></tr><tr><td>Sem carta</td><td>0</td><td>0</td><td>0</td><td>1,0</td><td>1,0</td><td>1,00</td><td>100</td></tr><tr><td>1 carta +15%</td><td>0,15</td><td>0</td><td>0</td><td>1,0</td><td>1,0</td><td>1,15</td><td>115</td></tr><tr><td>2 cartas (+30%), espada x grande</td><td>0,30</td><td>0</td><td>0</td><td>0,95</td><td>1,0</td><td>1,235</td><td>124</td></tr><tr><td>3 cartas +30% (soma 0,90, teto 0,60) e Brasa x Seiva 1,5</td><td>0,60</td><td>0</td><td>0</td><td>1,0</td><td>1,5</td><td>2,40</td><td>240</td></tr><tr><td>Maldição -15%</td><td>-0,15</td><td>0</td><td>0</td><td>1,0</td><td>1,0</td><td>0,85</td><td>85</td></tr><tr><td>Maldição -40% (piso -0,25)</td><td>-0,25</td><td>0</td><td>0</td><td>1,0</td><td>1,0</td><td>0,75</td><td>75</td></tr><tr><td>Tudo no teto: R 0,6, S 0,6, E 0,3, m_elem 2,0</td><td>0,6</td><td>0,6</td><td>0,3</td><td>1,0</td><td>2,0</td><td>6,66 -&gt; <strong>4,00</strong></td><td>400</td></tr></table></div>
+<h3>5. Edge Cases</h3>
+<ul><li>Carta de raça contra alvo de outra raça: bônus 0, sem erro. Raça vazia ou desconhecida: bônus 0.</li><li>Duas cartas únicas de chefe iguais: <code>UNIQUE_CONFLICT</code> (elements.md 5.8); conta uma vez.</li><li>Troca de arma durante o windup: lê o equipamento da resolução.</li><li>Soma líquida zero (+15% e -15%): o quadro não mostra a linha "Dano seu".</li><li>Piso e teto valem após somar todas as fontes, nunca por carta.</li><li>Alvo morto no mesmo tique: dano já calculado com o bônus, sem reaplicar.</li></ul>
+<h3>6. Dependencies</h3>
+<p><code>elements.md</code> (F-01, F-04, 3.7, 3.12, 3.14), <code>items.md</code> (slots/agregação F-11), <code>monsters.md</code> (<code>race</code>), <code>design/ux/target-frame.md</code> (leitura), <code>design/art/racas-emblemas.md</code> (ícones). Bidirecional: <code>elements.md</code> deve apontar para este doc na próxima edição.</p>
+<h3>7. Tuning Knobs</h3>
+<div class="tablewrap"><table><tr><th>Knob</th><th>Padrão</th><th>Faixa segura</th><th>Afeta</th><th>Onde</th></tr><tr><td><code>RACE_DMG_CAP</code></td><td>0,60</td><td>0,3-1,0</td><td>quanto uma carta vira a luta</td><td><code>Balance</code> [AJUSTAR]</td></tr><tr><td><code>RACE_DMG_FLOOR</code></td><td>-0,25</td><td>-0,5-0</td><td>dureza das maldições</td><td><code>Balance</code> [AJUSTAR]</td></tr><tr><td>valor por carta de raça</td><td>0,10-0,15 (chefe 0,25)</td><td>0,05-0,30</td><td>valor de mercado da carta</td><td><code>data/items/card_*</code></td></tr><tr><td><code>RESIST_CAP_PLAYER</code></td><td>0,50</td><td>existente</td><td>tanque x raça</td><td><code>Balance</code></td></tr></table></div>
+<h3>8. Acceptance Criteria</h3>
+<ul><li>AC-R1: com <code>race_dmg[flora]=0,15</code>, golpe 100 contra flora = 115; contra beast = 100.</li><li>AC-R2: soma 0,90 usa 0,60; soma -0,40 usa -0,25.</li><li>AC-R3: as linhas da tabela de §4 reproduzidas exatamente em teste.</li><li>AC-R4: <code>request_inspect</code> devolve <code>race_bonus</code> igual ao <code>R</code> usado em F-01 para o mesmo estado.</li><li>AC-R5: <code>race_resist construct 0,15</code> reduz 15% o dano de um construct e 0% o de outras raças.</li><li>AC-R6: a paridade Godot x C# dos testes de ouro continua verde.</li></ul></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

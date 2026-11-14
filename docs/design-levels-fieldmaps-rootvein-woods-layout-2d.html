@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Mapa de engenharia 2D: Bosque do Veio-Raiz (rootvein_woods) | Ragna Tale</title>
+<meta name="description" content="Mapa de engenharia 2D: Bosque do Veio-Raiz (rootvein_woods): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-levels-fieldmaps-rootvein-woods-layout-2d.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-levels-fieldmaps-rootvein-woods-layout-2d.html">
+<meta property="og:title" content="Mapa de engenharia 2D: Bosque do Veio-Raiz (rootvein_woods) | Ragna Tale">
+<meta property="og:description" content="Mapa de engenharia 2D: Bosque do Veio-Raiz (rootvein_woods): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mapa de engenharia 2D: Bosque do Veio-Raiz (rootvein_woods) | Ragna Tale">
+<meta name="twitter:description" content="Mapa de engenharia 2D: Bosque do Veio-Raiz (rootvein_woods): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/levels/fieldmaps/rootvein_woods/layout-2d.md</code></p><h2>Mapa de engenharia 2D: Bosque do Veio-Raiz (<code>rootvein_woods</code>)</h2>
+<blockquote>Gerado por <code>tools/levels/fieldmaps_gen.py</code> (dados: <code>fieldmaps_data.py</code>; saídas: <code>fieldmaps_exits.json</code>). Fonte das fichas: <code>design/world/map-layouts-mvp.md</code>. Itens marcados <strong>[PROPOSTA]</strong> (curvas de nível, profundidade da água, navmesh, cristais, coleta) são decisão de level design a validar. Nada foi aberto no Unity.<br>Planta: <code>layout-2d.svg</code> (vetorial) e <code>production/qa/evidence/fieldmaps/rootvein_woods.png</code>.</blockquote>
+<p>![planta](layout-2d.svg)</p>
+<h3>1. Quadro de informações</h3>
+<div class="tablewrap"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Tipo / nível</td><td>campo / 5-10</td></tr><tr><td>Linha da grade</td><td>4 de 10 (célula D4)</td></tr><tr><td>Tribo / tema</td><td>Ironroot (campo de fronteira; Ilha da Pedrabrota)</td></tr><tr><td>Elemento dominante</td><td>Seiva (javalis, raízes, texugos) + Rocha (besouros-de-cobre)</td></tr><tr><td>Tamanho</td><td><strong>420 x 360 m</strong> (15,1 ha), caminhável 14,6 ha [PROPOSTA]</td></tr><tr><td>Cotas [PROPOSTA]</td><td>5 a 11 m, curvas a cada 1 m</td></tr><tr><td>Ritmo</td><td>travessia direta 1,3 min; de caça 9-12 min</td></tr><tr><td>Chefe / elite</td><td>nenhum no campo; Presa-Velha em <code>tusker_den</code> (entrada oeste, arco de raízes e presas)</td></tr><tr><td>Perigo por trecho</td><td>T1 sul = 2; T2 clareira = 3; T3 saídas e toca = 4.</td></tr><tr><td>Forma</td><td>Bosque denso em "mão aberta": quatro corredores de árvores partem da clareira central (o "punho") e terminam em passagem ou toca; raízes grossas cruzam o chão em alto-relevo (bloqueiam a visão, não o passo) e brilham verde-cobre onde há veio; riacho a NE; cais de balsa na ponta nordeste da ilha.</td></tr></table></div>
+<h3>2. Escala e câmera</h3>
+<ul><li>Unidade metro; norte = +Y (no Unity, +Z); origem no canto SO; grade de 10 m (fina) e 50 m (grossa). Escala da planta: 1 px = 0,40 m.</li><li>Tela no zoom padrão (câmera isométrica): ~29 x 16 m de chão. O mapa equivale a ~15 x 23 telas.</li><li>Escalas fixas: estrada 4-6 m, trilha 2-3 m, passagem de saída 8-10 m (aqui a faixa de saída segue a ficha; a passagem de 10 m fica no centro), clareira calma de 20 m (sem spawn) em volta de cada saída.</li></ul>
+<h3>3. Relevo e curvas de nível [PROPOSTA]</h3>
+<p>[PROPOSTA] Base de 5 m com 1% ao norte; clareira central 1,2 m acima; mirante-toco a leste (300,240; +3,5 m) e colinas suaves nos cantos; riacho de 0,4 m (vadeável). Curvas a cada 1 m.</p>
+<h3>4. Água e profundidade [PROPOSTA]</h3>
+<div class="tablewrap"><table><tr><th>Corpo</th><th>Largura / dimensão</th><th>Profundidade</th><th>Caminhável?</th></tr><tr><td>Riacho do NE (vadeável)</td><td>3,2 m</td><td>margem 0,15 m, centro 0,4 m</td><td>margem sim; centro sim (&lt; 1 m)</td></tr></table></div>
+<h3>5. Trilhas e pontes</h3>
+<div class="tablewrap"><table><tr><th>Trilha</th><th>Largura</th><th>Pontos (x,y) m</th></tr><tr><td>Trilha central S &gt; clareira &gt; N (principal)</td><td>3,5 m</td><td>(210,0) &gt; (212,60) &gt; (208,120) &gt; (210,185) &gt; (195,240) &gt; (178,290) &gt; (150,360)</td></tr><tr><td>Corredor NE (ao Cais do Veio-Raiz) (principal)</td><td>3 m</td><td>(210,185) &gt; (255,200) &gt; (300,222) &gt; (350,255) &gt; (420,270)</td></tr><tr><td>Corredor O (à toca)</td><td>3 m</td><td>(210,185) &gt; (150,178) &gt; (90,170) &gt; (40,166) &gt; (0,165)</td></tr><tr><td>Corredor de raiz SO (lateral)</td><td>3 m</td><td>(190,120) &gt; (140,120) &gt; (90,130) &gt; (70,200) &gt; (70,210)</td></tr><tr><td>Corredor de raiz SE (lateral)</td><td>3 m</td><td>(220,120) &gt; (280,140) &gt; (330,160) &gt; (340,200)</td></tr><tr><td>Vau do riacho NE (ford)</td><td>3 m</td><td>(335,214) &gt; (352,232)</td></tr></table></div>
+<h3>6. Zonas de spawn (ficha)</h3>
+<div class="tablewrap"><table><tr><th>SP</th><th>Posição (x,y) m</th><th>Monstros (id)</th><th>Nível</th><th>Obs</th></tr><tr><td>SP-1</td><td>(200,70)</td><td>thorn_boar x3</td><td>5</td><td>S</td></tr><tr><td>SP-2</td><td>(90,120)</td><td>rootling x4</td><td>6</td><td>SO (flora, imóvel até pull)</td></tr><tr><td>SP-3</td><td>(210,190)</td><td>thorn_boar x2 + rootling x2</td><td>5-6</td><td>centro</td></tr><tr><td>SP-4</td><td>(330,160)</td><td>bark_badger x3</td><td>7</td><td>L</td></tr><tr><td>SP-5</td><td>(340,280)</td><td>bark_badger x2 + pebble_beetle_copper x2</td><td>7-8</td><td>NE</td></tr><tr><td>SP-6</td><td>(70,210)</td><td>pebble_beetle_copper x4</td><td>8</td><td>oeste</td></tr><tr><td>SP-7</td><td>(110,310)</td><td>bark_badger x2 + rootling x2</td><td>7-8</td><td>NO (guarda a saída da fronteira)</td></tr><tr><td>SP-8</td><td>(40,160)</td><td>thorn_boar x2 + bark_badger x2</td><td>6-8</td><td>perto da toca</td></tr></table></div>
+<p>Densidade 0,8 monstros/1000 m² (faixa 1-10); SP = clareira de r 14 m, 3-4 monstros; clareiras calmas de 20 m nas saídas. Fonte: ficha 1.4.</p>
+<h3>7. Pontos de interesse, descanso e marco</h3>
+<div class="tablewrap"><table><tr><th>Tipo</th><th>Nome</th><th>Posição (x,y) m</th><th>Obs</th></tr><tr><td>PdI P1</td><td>Árvore-sino de cristal</td><td>(224,200)</td><td>clareira central</td></tr><tr><td>PdI P2</td><td>Carcaça de javali gigante</td><td>(62,150)</td><td>anúncio do chefe da toca</td></tr><tr><td>PdI P3</td><td>Poça de seiva âmbar</td><td>(340,250)</td><td>cosmética</td></tr><tr><td>Descanso</td><td>círculo de pedras (clareira)</td><td>(210,180)</td><td>raio 6 m, &gt;= 40 m de SP</td></tr><tr><td>Descanso</td><td>toco largo à beira do riacho (NE)</td><td>(300,240)</td><td>raio 6 m, &gt;= 40 m de SP</td></tr><tr><td>Marco</td><td>Raiz gigante atravessando o céu (arco de 30 m) ao norte</td><td>(215,335)</td><td>visível de toda a corda de caça</td></tr></table></div>
+<h3>8. Pontos de coleta [PROPOSTA]</h3>
+<div class="tablewrap"><table><tr><th>Coleta</th><th>Posição (x,y) m</th></tr><tr><td>Raiz-de-veio (cristalizada)</td><td>(120,250)</td></tr><tr><td>Seiva âmbar</td><td>(350,240)</td></tr><tr><td>Casca de raiz</td><td>(280,90)</td></tr><tr><td>Cogumelo-cobre</td><td>(60,40)</td></tr><tr><td>Pepita de veio</td><td>(370,320)</td></tr></table></div>
+<h3>9. Saídas (fonte única: <code>tools/levels/fieldmaps_exits.json</code>)</h3>
+<div class="tablewrap"><table><tr><th>Saída</th><th>Destino</th><th>Segmento (x0,y0)-(x1,y1) m</th><th>Largura</th><th>Estado</th></tr><tr><td>Sul: Socalcos da Pedreira [a_pe]</td><td><code>quarry_terraces</code></td><td>(190,0)-(230,0)</td><td>40 m</td><td>aberta</td></tr><tr><td>Nordeste: Ribeirao de Cobre (barco) [barco]</td><td><code>copper_brook</code></td><td>(420,250)-(420,290)</td><td>40 m</td><td>aberta</td><td>Cais do Veio-Raiz (ponta nordeste) &gt; Cais Torto, balsa nv 10+</td></tr><tr><td>Noroeste-norte: Bosque das Betulas-Cinza (barco) [barco]</td><td><code>ashbirch_wood</code></td><td>(130,360)-(170,360)</td><td>40 m</td><td>aberta</td><td>Cais do Veio-Raiz &gt; Cais do Carvao, balsa nv 10+ (trilha costeira ate o cais)</td></tr><tr><td>Arco de raizes: Toca do Presa-Velha [a_pe]</td><td><code>tusker_den</code></td><td>(0,150)-(0,180)</td><td>30 m</td><td>aberta (calabouco aninhado, arco de raizes; ficha: x 0-10, y 150-180)</td></tr></table></div>
+<p>Marcadores <code>Exit_&lt;n&gt;</code>; a troca de mapa é da GameSim. O mundo está sendo redesenhado em arquipélago: <strong>só o <code>fieldmaps_exits.json</code> muda</strong>; rodar <code>python tools/levels/fieldmaps_gen.py --png</code> atualiza planta, md e <code>index.json</code>.</p>
+<h3>10. Torre de Cristal e cristais da grade</h3>
+<ul><li><strong>Direção da Torre: norte (azimute 0°)</strong>, atrás do relevo ao norte do mapa: altura angular ~24.7°, névoa 0.5, brilho emissivo 0.4 (linha 4; <code>design/levels/horizon-landmark-crystal-tower.md</code>). Nunca entra na planta, sem colisão nem NavMesh.</li><li><strong>Cristais [PROPOSTA]</strong> (<code>design/levels/world-crystals-scatter.md</code>): densidade 8,9/ha, 130 instâncias: 79 lascas (<code>Shard</code>), 32 veios (<code>Vein</code>), 18 aglomerados (<code>Cluster</code>), 1 grandes (<code>Spire</code>); distância mínima 5,2 m; brilho 0,35; semente <code>fnv32("rootvein_woods|crystals|1")</code>. Sem colisão, sem NavMesh. +20% no terço norte.</li><li>Cristais grandes (Spire) propostos: (350,90).</li></ul>
+<h3>11. NavMesh, bloqueios e penhascos [PROPOSTA]</h3>
+<ul><li>Área caminhável 14,6 ha (verde-azulado na planta). Célula de 4 m; raio do agente 0,4 m, altura 1,8 m, declive máx. 35°; água &gt;= 1 m e lava são <code>NotWalkable</code>; pontes, vaus e passarelas são <code>Walkable</code> por cima.</li><li>Bloqueios: rocha / afloramento (bloqueio) 18, torre / estrutura alta 1.</li><li>Penhascos: nenhum.</li></ul>
+<h3>12. Elementos 3D a modelar (lista para a fase 2)</h3>
+<ul><li>Terreno 420 x 360 m suave com 4 corredores de árvores e clareira central de 64 m de diâmetro.</li><li>Árvores: ~62 por ha (copa alta L/O, aberta no centro); árvore-sino de cristal na clareira.</li><li>Raízes em alto-relevo: 12 cristas radiais, brilho verde-cobre nos veios (não bloqueiam o passo).</li><li>Riacho do NE (3 m, 0,4 m) com vau; poça de seiva âmbar; carcaça de javali gigante; arco de raízes e presas na toca (oeste); raiz gigante ao norte (marco).</li><li>Cais do Veio-Raiz na ponta NE (balsa da Liga): o corredor NE termina nele.</li><li>Árvores/vegetação decorativa na planta: 937 instâncias ilustrativas (posição final no builder, sem cobrir trilha a &lt; 2,5 m).</li><li>Cristais: 4 malhas (<code>Shard</code> 24 tris, <code>Vein</code> 40, <code>Cluster</code> 120, <code>Spire</code> 180) x 3-4 variações.</li></ul>
+<h3>13. Pendências e decisões em aberto</h3>
+<ul><li>Descanso do círculo de pedras (210,180) cai sobre o SP-3 (210,190): a ficha pede &gt;= 40 m; mover um dos dois (decidir com o criador).</li><li>Ficha tinha frase truncada nas saídas (NO); usei NE (cais) + NO (fronteira BC).</li><li>Arquipélago: NE e NO viram embarque de balsa (Cais do Veio-Raiz); posição do cais é [PROPOSTA].</li><li>Saídas: <code>fieldmaps_exits.json</code>.</li></ul>
+<h3>14. Legenda das [PROPOSTA]</h3>
+<p>curvas de nível e cotas, profundidade da água, malha de NavMesh, bloqueios e penhascos finos, geometria detalhada das trilhas, cristais da grade (densidade pela fórmula de world-crystals-scatter.md), pontos de coleta, trechos de perigo e a posição da área de tela. A ficha só dá tamanho, saídas, SP, PdI, descanso e marco.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

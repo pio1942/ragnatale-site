@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Contrato de acao unico (RASCUNHO, candidato a ADR) | Ragna Tale</title>
+<meta name="description" content="Contrato de acao unico (RASCUNHO, candidato a ADR): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-action-contract.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-action-contract.html">
+<meta property="og:title" content="Contrato de acao unico (RASCUNHO, candidato a ADR) | Ragna Tale">
+<meta property="og:description" content="Contrato de acao unico (RASCUNHO, candidato a ADR): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contrato de acao unico (RASCUNHO, candidato a ADR) | Ragna Tale">
+<meta name="twitter:description" content="Contrato de acao unico (RASCUNHO, candidato a ADR): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Arquitetura e ADRs</p><p class="note">Fonte: <code>docs/architecture/action-contract.md</code></p><h2>Contrato de acao unico (RASCUNHO, candidato a ADR)</h2>
+<p>Origem: <code>docs/consultoria/astra-extracao.md</code>, item 3. Implementacao: <code>sim/RagnaTale.Sim/ActionContract.cs</code> e <code>GameSim.Actions.cs</code>. Estritamente aditivo: eventos legados, RNG e <code>_pending</code> (so ganhou o campo <code>ActionId</code>) inalterados.</p>
+<h3>Evento</h3>
+<p><code>GameSim.ActionPhase</code> emite <code>ActionEvent</code> (imutavel): <code>ActionId</code> (unico, monotonico, desde 1), <code>Kind</code> (basic / skill / monster_ability / dodge), <code>DefId</code> ("basic", "dodge" ou id da skill/habilidade), <code>ActorId</code>, <code>TargetId</code> (-1 se nao ha), <code>Phase</code>, <code>Tick</code> (emissao), <code>StartTick</code>, <code>ImpactTick</code>, <code>RecoveryEndTick</code>, <code>Shape</code> (Point/Circle/Cone/Line + <code>Radius</code>, <code>Reach</code>, <code>HalfAngleDeg</code>; Line: Reach = comprimento, Radius = meia largura), <code>VisualCue</code> (<code>vfx.&lt;def_id&gt;</code>), <code>AudioCue</code> (<code>sfx.&lt;def_id&gt;</code>), <code>Recovery</code> (s, nominal).</p>
+<h3>Fases</h3>
+<p>Windup (inicio) -&gt; Impact (resolucao, mesmo se errou) -&gt; End (fim do travamento). Cancelled (skill interrompida por atordoamento, ou ator morto) e terminal: nunca ha Impact nem End depois. Basico: recovery 0 (End no mesmo Advance do Impact). Esquiva: Windup e Impact no pedido, End apos <code>DodgeDuration</code>. Habilidade de monstro: <code>Recovery</code> nominal da definicao (o travamento real so se aplica quando erra tudo; o End segue o valor nominal). End nao usa <code>_pending</code>: lista propria, processada em <code>Advance</code> logo apos <code>ResolvePending</code>.</p>
+<h3>Ticks</h3>
+<p><code>ActionContract.TickRate = 20</code> Hz (fora de <code>Balance.cs</code>, que e gerado e comparado com o golden do Godot). <code>TickFromSeconds(s)</code> = <code>floor(s*rate + 0.5 + 1e-9)</code>: arredonda ao mais proximo, metade para cima; negativo/NaN = 0; monotona.</p>
+<h3>Deduplicacao</h3>
+<p>A sim nunca emite o mesmo <code>(ActionId, Phase)</code> duas vezes (registro vivo removido em End/Cancelled; flags de Windup/Impact). A apresentacao deve ainda guardar <code>ActionId</code> e ignorar repeticao (rede/replay): chave <code>(ActionId, Phase)</code>.</p>
+<h3>Quem consome</h3>
+<p>Animacao (Animator por <code>Kind</code>/<code>DefId</code>, tempos por ticks), VFX (<code>VisualCue</code> + <code>Shape</code>), audio (<code>AudioCue</code>), UI de telegrafo (<code>Shape</code>, <code>ImpactTick</code>), rede (replicar o evento). Eventos legados continuam validos durante a transicao.</p>
+<h3>Pendente para virar ADR</h3>
+<p>Cues personalizados por dado (hoje derivados); Shape de <code>rain</code>/<code>zone</code> como Circle; End nominal vs. real de monstro; id por jogador na rede.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

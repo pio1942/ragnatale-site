@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>MCPs Unity e Blender — notas de teste (2026-11-09) | Ragna Tale</title>
+<meta name="description" content="MCPs Unity e Blender — notas de teste (2026-11-09): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-mcp-unity-blender-notas.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-mcp-unity-blender-notas.html">
+<meta property="og:title" content="MCPs Unity e Blender — notas de teste (2026-11-09) | Ragna Tale">
+<meta property="og:description" content="MCPs Unity e Blender — notas de teste (2026-11-09): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MCPs Unity e Blender — notas de teste (2026-11-09) | Ragna Tale">
+<meta name="twitter:description" content="MCPs Unity e Blender — notas de teste (2026-11-09): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Arquitetura e ADRs</p><p class="note">Fonte: <code>docs/architecture/mcp-unity-blender-notas.md</code></p><h2>MCPs Unity e Blender — notas de teste (2026-11-09)</h2>
+<h3>Blender (<code>blender-mcp</code> via uvx) — carregou; socket NÃO conectou</h3>
+<p>Ferramentas: <code>get_addon_status</code>, <code>get_scene_info</code>, <code>execute_blender_code</code>, <code>look</code>, <code>search_assets</code>, <code>import_asset</code>, <code>generate_3d</code> (gasta crédito, não usar), <code>record_trajectory_feedback</code>, <code>disable_telemetry</code>. Erro nas chamadas: "Could not connect to Blender. Make sure the Blender addon is running." → falta o criador clicar <strong>Connect</strong> no painel BlenderMCP. Trabalho feito em headless: <code>D:\Blender\blender.exe -b -P tools/blender/mannequin_base.py -- saida.glb</code> (Blender 5.2.3).</p>
+<h4>Resolvido em 2026-11-10 — conectado (porta 9876, protocolo 15)</h4>
+<p>Causa: o app do Claude é empacotado (MSIX) e <strong>o que ele grava em <code>%APPDATA%</code> é redirecionado</strong>; o Blender da interface não enxergava <code>scripts/addons/blender_mcp_addon.py</code> (o headless lançado pelo Claude enxergava, por isso parecia instalado). Correção: cópia do addon em <code>tools/blender/addons/</code> e, no console Python do Blender: <code>bpy.ops.preferences.addon_install(filepath=r'[removido]', overwrite=True); addon_utils.enable('blender_mcp_addon', default_set=True); bpy.ops.wm.save_userpref(); bpy.ops.blendermcp.start_server()</code> A cada abertura do Blender: aba lateral (N) <strong>MCP for Blender</strong> → Start/Connect. Regra geral: nunca instalar nada para outros programas gravando em <code>%APPDATA%</code> pelo Claude; usar uma pasta em <code>D:\</code> e deixar o próprio programa instalar.</p>
+<h3>Unity MCP (<code>unity mcp --project-path ...</code>) — <code>CONNECTION_CLOSED</code> (corrigido em 2026-11-10)</h3>
+<p><strong>Causa (log <code>%LOCALAPPDATA%\claude-cli-nodejs\Cache\D--Jogos-ragnatale\mcp-logs-unity\<em>.jsonl</code>):</strong> o <code>command</code> era o caminho do alias com espaço (<code>[removido] Pio\...\unity.exe</code>); o Claude Code o repartiu no espaço e a CLI recebeu "comando desconhecido 'Pio\AppData\...\unity.exe'" e saiu. O servidor em si está ok (testado à mão: <code>initialize</code> responde com alias ou caminho real; sem Editor, <code>tools/list</code> devolve só <code>unity-cli-status</code>, "nenhuma instância do Pipeline"). <strong>Correção:</strong> <code>.mcp.json</code> com <code>"command": "unity"</code> (alias no PATH, sem espaço). Reiniciar a sessão do Claude para o MCP carregar; as ferramentas do Editor só aparecem com o Editor aberto (<code>tools/listChanged</code>). Antes da correção, nenhuma ferramenta <code>mcp__unity__</em></code> aparecia na sessão. <strong>Contorno que funciona:</strong> o Unity CLI fala com o Editor aberto (Pipeline, porta 7800, <code>unity status</code> = ready): <code>unity command &lt;grupo&gt; &lt;comando&gt; --no-banner</code> (listar: <code>unity command</code>). Grupos úteis: <code>console</code>, <code>scene</code>, <code>capture</code>, <code>component</code>, <code>gameobject</code>, <code>lighting</code>, <code>asset</code>, <code>package</code>, <code>test</code>, <code>script eval</code> (roda C# no Editor), <code>editor</code>. Testado:</p>
+<ul><li>Console: <code>console get --level warn --tail 5</code> / <code>console clear</code> — OK.</li><li>Cena aberta: <code>scene list_open</code>, <code>scene get_hierarchy</code> — OK (hierarquia grande; filtrar com grep).</li><li>Captura: <code>capture game_view --output-path ...</code> devolve PNG (source=screen/camera, até 4096) — OK. Para 1920x1080 determinístico usamos <code>M1Capture.RunB</code> (RenderTexture).</li><li>Testes: <code>test run --mode editor</code> — 10/10 passam com o Editor aberto (batchmode bloquearia o projeto).</li><li>Pacotes: <code>package add --name X --confirm --wait</code>.</li></ul>
+<p>Pegadinhas: durante recompilação/domain reload o CLI diz "no editor"; esperar <code>unity status</code> = ready.</p>
+<h3>Pacote adicionado</h3>
+<p><code>com.unity.cloud.gltfast</code> 6.20.0 (importa .glb; o Unity 6.6 não importa glTF nativamente).</p>
+<h3>Abrir o Unity Editor pelo Claude sem perder a licença (2026-11-10)</h3>
+<p>Processo filho do app do Claude (MSIX) enxerga um <code>%LOCALAPPDATA%</code> redirecionado, sem o token do Hub → "No valid Unity Editor license found". Abrir <strong>por fora do container</strong>: <code>explorer.exe [removido]</code> (o Explorer lança o Editor como processo comum, que acha a licença). Nunca chamar <code>Unity.exe</code> direto do Claude.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

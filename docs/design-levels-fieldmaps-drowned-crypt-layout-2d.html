@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Mapa de engenharia 2D: Cripta Afogada (drowned_crypt) | Ragna Tale</title>
+<meta name="description" content="Mapa de engenharia 2D: Cripta Afogada (drowned_crypt): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-levels-fieldmaps-drowned-crypt-layout-2d.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-levels-fieldmaps-drowned-crypt-layout-2d.html">
+<meta property="og:title" content="Mapa de engenharia 2D: Cripta Afogada (drowned_crypt) | Ragna Tale">
+<meta property="og:description" content="Mapa de engenharia 2D: Cripta Afogada (drowned_crypt): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mapa de engenharia 2D: Cripta Afogada (drowned_crypt) | Ragna Tale">
+<meta name="twitter:description" content="Mapa de engenharia 2D: Cripta Afogada (drowned_crypt): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/levels/fieldmaps/drowned_crypt/layout-2d.md</code></p><h2>Mapa de engenharia 2D: Cripta Afogada (<code>drowned_crypt</code>)</h2>
+<blockquote>Gerado por <code>tools/levels/fieldmaps_gen.py</code> (dados: <code>fieldmaps_data.py</code>; saídas: <code>fieldmaps_exits.json</code>). Fonte das fichas: <code>design/world/map-layouts-mvp.md</code>. Itens marcados <strong>[PROPOSTA]</strong> (curvas de nível, profundidade da água, navmesh, cristais, coleta) são decisão de level design a validar. Nada foi aberto no Unity.<br>Planta: <code>layout-2d.svg</code> (vetorial) e <code>production/qa/evidence/fieldmaps/drowned_crypt.png</code>.</blockquote>
+<p>![planta](layout-2d.svg)</p>
+<h3>1. Quadro de informações</h3>
+<div class="tablewrap"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Tipo / nível</td><td>calabouço / 30-38 (n_d 1)</td></tr><tr><td>Linha da grade</td><td>4 de 10 (célula C4 (dentro de reedwater_marsh))</td></tr><tr><td>Tribo / tema</td><td>Calabouço solo (aninhado em reedwater_marsh)</td></tr><tr><td>Elemento dominante</td><td>Crepúsculo (chefe) + Maré (água); morto-vivo e lodo</td></tr><tr><td>Tamanho</td><td><strong>200 x 160 m</strong> (3,2 ha), caminhável 1,4 ha [PROPOSTA]</td></tr><tr><td>Cotas [PROPOSTA]</td><td>-2.2 a 0.4 m, curvas a cada 0.5 m</td></tr><tr><td>Ritmo</td><td>14-18 min (maior calabouço solo do MVP)</td></tr><tr><td>Chefe / elite</td><td>Barqueiro Sem Rosto (<code>faceless_ferryman</code>, Crepúsculo 2, n_d 1, sala de 56 x 40 m); mini-chefe O Sineiro Submerso (<code>sunken_bellringer</code>)</td></tr><tr><td>Perigo por trecho</td><td>ossário = 3; corredor = 4; campanário = 4; chefe = 5.</td></tr><tr><td>Forma</td><td>Catacumbas alagadas em duas alas: leste (ossário, sala 1 e 2) e oeste (campanário submerso, mini-chefe), unidas por um cais central que leva à sala do Barqueiro. Água rasa andável em tudo; passarelas de madeira.</td></tr></table></div>
+<h3>2. Escala e câmera</h3>
+<ul><li>Unidade metro; norte = +Y (no Unity, +Z); origem no canto SO; grade de 10 m (fina) e 50 m (grossa). Escala da planta: 1 px = 0,20 m.</li><li>Tela no zoom padrão (câmera isométrica): ~29 x 16 m de chão. O mapa equivale a ~7 x 10 telas.</li><li>Escalas fixas: estrada 4-6 m, trilha 2-3 m, passagem de saída 8-10 m (aqui a faixa de saída segue a ficha; a passagem de 10 m fica no centro), clareira calma de 20 m (sem spawn) em volta de cada saída.</li></ul>
+<h3>3. Relevo e curvas de nível [PROPOSTA]</h3>
+<p>[PROPOSTA] Piso plano a 0 m; poço do sino afundado a -2,2 m (r 10 m); leito do salão do Barqueiro a -0,6 m. Água: 0,3-0,5 m nos corredores e salas (andável), 0,8 m na sala do chefe, 1,6 m no campanário (só passarelas). Curvas a cada 0,5 m.</p>
+<h3>4. Água e profundidade [PROPOSTA]</h3>
+<div class="tablewrap"><table><tr><th>Corpo</th><th>Largura / dimensão</th><th>Profundidade</th><th>Caminhável?</th></tr></table></div>
+<h3>5. Trilhas e pontes</h3>
+<div class="tablewrap"><table><tr><th>Trilha</th><th>Largura</th><th>Pontos (x,y) m</th></tr><tr><td>Passarela do campanário (oeste) (walkway)</td><td>3 m</td><td>(81,132) &gt; (50,132) &gt; (50,82)</td></tr><tr><td>Passarela do campanário (leste) (walkway)</td><td>3 m</td><td>(76,110) &gt; (50,110)</td></tr><tr><td>Cais central (madeira) (walkway)</td><td>10 m</td><td>(100,126) &gt; (100,45)</td></tr></table></div>
+<h3>6. Zonas de spawn (ficha)</h3>
+<div class="tablewrap"><table><tr><th>SP</th><th>Posição (x,y) m</th><th>Monstros (id)</th><th>Nível</th><th>Obs</th></tr><tr><td>SP-1</td><td>(140,120)</td><td>ossuary_rat x5 + crypt_ooze x2</td><td>30-31</td><td>ossário (sala 1)</td></tr><tr><td>SP-2</td><td>(150,70)</td><td>drowned_monk x3 + bloated_sexton x1</td><td>33</td><td>corredor / sala 2</td></tr><tr><td>SP-3</td><td>(50,100)</td><td>weeping_drowned x3 + drowned_monk_abbot x1</td><td>35</td><td>campanário</td></tr><tr><td>SP-M</td><td>(40,60)</td><td>sunken_bellringer x1 (O Sineiro Submerso)</td><td>36</td><td>mini-chefe, ala oeste</td></tr><tr><td>SP-B</td><td>(100,25)</td><td>faceless_ferryman x1 (Barqueiro Sem Rosto)</td><td>38 (Crepúsculo 2, n_d 1)</td><td>sala do chefe 56 x 40 m</td></tr></table></div>
+<p>Densidade de calabouço de solo 2,0 monstros/1000 m² (área ~1,4 ha de chão); SP de r 9 m (ambiente fechado); mini-chefe e chefe com sala própria.</p>
+<h3>7. Pontos de interesse, descanso e marco</h3>
+<div class="tablewrap"><table><tr><th>Tipo</th><th>Nome</th><th>Posição (x,y) m</th><th>Obs</th></tr><tr><td>PdI P1</td><td>Sino submerso</td><td>(36,108)</td><td>cenário e pista (ressoa no campanário)</td></tr><tr><td>PdI P2</td><td>Baú no cais</td><td>(106,88)</td><td></td></tr><tr><td>PdI P3</td><td>Lanterna do barqueiro</td><td>(100,38)</td><td>apagada: aviso do chefe</td></tr><tr><td>Descanso</td><td>passarela seca na entrada</td><td>(100,140)</td><td>raio 6 m, &gt;= 40 m de SP</td></tr><tr><td>Marco</td><td>Lanterna do barqueiro acesa ao fundo (marco do mapa)</td><td>(100,12)</td><td>visível de toda a corda de caça</td></tr></table></div>
+<h3>8. Pontos de coleta [PROPOSTA]</h3>
+<div class="tablewrap"><table><tr><th>Coleta</th><th>Posição (x,y) m</th></tr><tr><td>Cera de osso</td><td>(160,108)</td></tr><tr><td>Alga-de-cripta</td><td>(130,60)</td></tr><tr><td>Pérola-de-lodo</td><td>(60,128)</td></tr></table></div>
+<h3>9. Saídas (fonte única: <code>tools/levels/fieldmaps_exits.json</code>)</h3>
+<div class="tablewrap"><table><tr><th>Saída</th><th>Destino</th><th>Segmento (x0,y0)-(x1,y1) m</th><th>Largura</th><th>Estado</th></tr><tr><td>Norte: entrada vinda do mosteiro [a_pe]</td><td><code>reedwater_marsh</code></td><td>(90,160)-(110,160)</td><td>20 m</td><td>aberta</td></tr><tr><td>Atalho SO (so depois do chefe) [a_pe]</td><td><code>reedwater_marsh</code></td><td>(14,0)-(26,0)</td><td>12 m</td><td>aberta (atalho pos-chefe; ficha: ponto 20,10)</td></tr></table></div>
+<p>Marcadores <code>Exit_&lt;n&gt;</code>; a troca de mapa é da GameSim. O mundo está sendo redesenhado em arquipélago: <strong>só o <code>fieldmaps_exits.json</code> muda</strong>; rodar <code>python tools/levels/fieldmaps_gen.py --png</code> atualiza planta, md e <code>index.json</code>.</p>
+<h3>10. Torre de Cristal e cristais da grade</h3>
+<ul><li>Torre: <strong>isenta</strong> (calabouço = <code>lookZone Fixed</code>, sem horizonte). Cristais: <strong>sim</strong>, linha 4 x <code>closedBoost</code> 1,5, veios &gt;= 50%.</li><li><strong>Cristais [PROPOSTA]</strong> (<code>design/levels/world-crystals-scatter.md</code>): densidade 13,3/ha, 19 instâncias: 2 lascas (<code>Shard</code>), 10 veios (<code>Vein</code>), 6 aglomerados (<code>Cluster</code>), 1 grandes (<code>Spire</code>); distância mínima 5,2 m; brilho 0,35; semente <code>fnv32("drowned_crypt|crystals|1")</code>. Sem colisão, sem NavMesh. +20% no terço norte.</li><li>Cristais grandes (Spire) propostos: (17,66).</li></ul>
+<h3>11. NavMesh, bloqueios e penhascos [PROPOSTA]</h3>
+<ul><li>Área caminhável 1,4 ha (verde-azulado na planta). Célula de 2 m; raio do agente 0,4 m, altura 1,8 m, declive máx. 35°; água &gt;= 1 m e lava são <code>NotWalkable</code>; pontes, vaus e passarelas são <code>Walkable</code> por cima.</li><li>Calabouço fechado: NavMesh = só o piso das salas e corredores (a rocha é sólida). Passarelas de madeira (3 m) e cais (10 m) são Walkable por cima da água funda.</li><li>Bloqueios: rocha / afloramento (bloqueio) 18, poço fundo (bloqueio) 1, construção 1, muro de pedra (bloqueio) 5.</li><li>Penhascos: nenhum.</li></ul>
+<h3>12. Elementos 3D a modelar (lista para a fase 2)</h3>
+<ul><li>Salas/corredores (15 retângulos de piso, paredes de pedra úmida), teto baixo (câmera isométrica: corte de parede voltada à câmera).</li><li>Ala leste: ossário (nichos de ossos, 60 x 42 m), sala 2 (60 x 50 m), 8 colunas.</li><li>Ala oeste: campanário submerso (66 x 57 m) com sino caído no poço (-2,2 m), passarelas de madeira, sala do Sineiro.</li><li>Cais central (16 m, madeira) até a sala do Barqueiro (56 x 40 m): barco central, lanterna (apagada/acesa), 4 colunas.</li><li>Água: 3 níveis (0,3-0,5; 0,8; 1,6 m) com plano de água + decal de lodo; corredor de atalho pós-chefe até a saída SO.</li><li>Cristais: veios nas paredes (linha 4 x 1,5, &gt;= 50% veios).</li><li>Árvores/vegetação decorativa na planta: 0 instâncias ilustrativas (posição final no builder, sem cobrir trilha a &lt; 2,5 m).</li><li>Cristais: 4 malhas (<code>Shard</code> 24 tris, <code>Vein</code> 40, <code>Cluster</code> 120, <code>Spire</code> 180) x 3-4 variações.</li></ul>
+<h3>13. Pendências e decisões em aberto</h3>
+<ul><li>Torre: calabouço = isento (lookZone Fixed). Cristais: sim, só em paredes.</li><li>Posição do atalho de saída (ficha: ponto 20,10) virou segmento (14,0)-(26,0).</li><li>Saídas: <code>fieldmaps_exits.json</code>.</li></ul>
+<h3>14. Legenda das [PROPOSTA]</h3>
+<p>curvas de nível e cotas, profundidade da água, malha de NavMesh, bloqueios e penhascos finos, geometria detalhada das trilhas, cristais da grade (densidade pela fórmula de world-crystals-scatter.md), pontos de coleta, trechos de perigo e a posição da área de tela. A ficha só dá tamanho, saídas, SP, PdI, descanso e marco. O traçado das salas (retângulos) e a profundidade do campanário (1,6 m, só passarelas) são interpretação da ficha ("água rasa andável em tudo"): conferir com o criador.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

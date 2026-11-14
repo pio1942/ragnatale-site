@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Mapa de engenharia 2D: Colinas dos Moinhos Quebrados (windmill_heights) | Ragna Tale</title>
+<meta name="description" content="Mapa de engenharia 2D: Colinas dos Moinhos Quebrados (windmill_heights): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-levels-fieldmaps-windmill-heights-layout-2d.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-levels-fieldmaps-windmill-heights-layout-2d.html">
+<meta property="og:title" content="Mapa de engenharia 2D: Colinas dos Moinhos Quebrados (windmill_heights) | Ragna Tale">
+<meta property="og:description" content="Mapa de engenharia 2D: Colinas dos Moinhos Quebrados (windmill_heights): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mapa de engenharia 2D: Colinas dos Moinhos Quebrados (windmill_heights) | Ragna Tale">
+<meta name="twitter:description" content="Mapa de engenharia 2D: Colinas dos Moinhos Quebrados (windmill_heights): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/levels/fieldmaps/windmill_heights/layout-2d.md</code></p><h2>Mapa de engenharia 2D: Colinas dos Moinhos Quebrados (<code>windmill_heights</code>)</h2>
+<blockquote>Gerado por <code>tools/levels/fieldmaps_gen.py</code> (dados: <code>fieldmaps_data.py</code>; saídas: <code>fieldmaps_exits.json</code>). Fonte das fichas: <code>design/world/map-layouts-mvp.md</code>. Itens marcados <strong>[PROPOSTA]</strong> (curvas de nível, profundidade da água, navmesh, cristais, coleta) são decisão de level design a validar. Nada foi aberto no Unity.<br>Planta: <code>layout-2d.svg</code> (vetorial) e <code>production/qa/evidence/fieldmaps/windmill_heights.png</code>.</blockquote>
+<p>![planta](layout-2d.svg)</p>
+<h3>1. Quadro de informações</h3>
+<div class="tablewrap"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Tipo / nível</td><td>campo / 26-33</td></tr><tr><td>Linha da grade</td><td>6 de 10 (célula C6)</td></tr><tr><td>Tribo / tema</td><td>Neutro (Ermândia)</td></tr><tr><td>Elemento dominante</td><td>Vendaval (vespas, gafanhotos, mariposas) + Rocha/Seiva (espantalhos, louva-deus)</td></tr><tr><td>Tamanho</td><td><strong>640 x 520 m</strong> (33,3 ha), caminhável 32,4 ha [PROPOSTA]</td></tr><tr><td>Cotas [PROPOSTA]</td><td>4 a 23.6 m, curvas a cada 1 m</td></tr><tr><td>Ritmo</td><td>travessia direta 2,2 min; de caça 14-18 min</td></tr><tr><td>Chefe / elite</td><td>Zunira (<code>hornet_queen</code>, voadora, enxame, Vendaval 2, n_d 1) na colina 5 (90,460)</td></tr><tr><td>Perigo por trecho</td><td>T1 leste/sul = 3; T2 centro = 4; T3 nordeste = 5. [PROPOSTA: a ficha não dá o perigo por trecho.]</td></tr><tr><td>Forma</td><td>Cinco colinas de trigo em fileira diagonal (SE &gt; NO), cada uma com um moinho quebrado no topo; entre elas, vales de ceifa e campos de trigo alto que escondem espantalhos; a estrada dos carros de grão sobe pelo flanco sul e segue até Vau-de-Pedra.</td></tr></table></div>
+<h3>2. Escala e câmera</h3>
+<ul><li>Unidade metro; norte = +Y (no Unity, +Z); origem no canto SO; grade de 10 m (fina) e 50 m (grossa). Escala da planta: 1 px = 0,50 m.</li><li>Tela no zoom padrão (câmera isométrica): ~29 x 16 m de chão. O mapa equivale a ~23 x 33 telas.</li><li>Escalas fixas: estrada 4-6 m, trilha 2-3 m, passagem de saída 8-10 m (aqui a faixa de saída segue a ficha; a passagem de 10 m fica no centro), clareira calma de 20 m (sem spawn) em volta de cada saída.</li></ul>
+<h3>3. Relevo e curvas de nível [PROPOSTA]</h3>
+<p>[PROPOSTA] Base de 4 m com 1% ao norte; 5 colinas de 15 m (r ~52 m) com moinhos no topo; vales de ceifa a ~4-6 m; celeiro-túnel sob o vale. Curvas a cada 1 m, mestras a cada 5 m.</p>
+<h3>5. Trilhas e pontes</h3>
+<div class="tablewrap"><table><tr><th>Trilha</th><th>Largura</th><th>Pontos (x,y) m</th></tr><tr><td>Estrada dos carros de grão (Colinas dos Marcos &gt; Vau-de-Pedra) (principal)</td><td>5 m</td><td>(640,120) &gt; (580,85) &gt; (500,60) &gt; (440,105) &gt; (455,170) &gt; (470,250) &gt; (450,330) &gt; (470,420) &gt; (540,480) &gt; (570,520)</td></tr><tr><td>Trilha das colinas (1 &gt; 2)</td><td>2,5 m</td><td>(520,150) &gt; (460,175) &gt; (410,190)</td></tr><tr><td>Trilha das colinas (2 &gt; 3)</td><td>2,5 m</td><td>(390,215) &gt; (330,280) &gt; (270,330)</td></tr><tr><td>Trilha das colinas (3 &gt; 4 &gt; 5)</td><td>2,5 m</td><td>(250,350) &gt; (190,395) &gt; (120,440) &gt; (95,455)</td></tr><tr><td>Trilha ao norte (centro-norte)</td><td>2,5 m</td><td>(330,280) &gt; (330,360) &gt; (335,450) &gt; (480,420)</td></tr><tr><td>Celeiro-túnel (atalho) (tunnel)</td><td>3 m</td><td>(450,330) &gt; (390,300) &gt; (330,280)</td></tr></table></div>
+<h3>6. Zonas de spawn (ficha)</h3>
+<div class="tablewrap"><table><tr><th>SP</th><th>Posição (x,y) m</th><th>Monstros (id)</th><th>Nível</th><th>Obs</th></tr><tr><td>SP-1</td><td>(520,120)</td><td>wheat_hornet x4</td><td>26</td><td>colina 1</td></tr><tr><td>SP-2</td><td>(400,200)</td><td>blight_locust x4</td><td>27</td><td>colina 2</td></tr><tr><td>SP-3</td><td>(330,280)</td><td>straw_scarecrow x3</td><td>28</td><td>vale</td></tr><tr><td>SP-4</td><td>(260,340)</td><td>mill_mantis x2</td><td>29</td><td>colina 3</td></tr><tr><td>SP-5</td><td>(180,400)</td><td>pollen_moth x3</td><td>30</td><td>colina 4</td></tr><tr><td>SP-6</td><td>(480,420)</td><td>grain_weevil x3</td><td>31</td><td>NE</td></tr><tr><td>SP-7</td><td>(330,450)</td><td>straw_scarecrow x2 + mill_mantis x2</td><td>29-31</td><td>centro-norte</td></tr><tr><td>SP-E</td><td>(90,460)</td><td>hornet_queen x1 (Zunira; voadora, enxame)</td><td>33 (Vendaval 2, n_d 1)</td><td>colina 5 (norte); respawn 8-25 min</td></tr></table></div>
+<p>Densidade 1,2 monstros/1000 m² (faixa 21-50); SP = clareira de r 15 m, 2-4 monstros; elite na colina 5 (SP-E, r 18 m). Fonte: ficha 1.13.</p>
+<h3>7. Pontos de interesse, descanso e marco</h3>
+<div class="tablewrap"><table><tr><th>Tipo</th><th>Nome</th><th>Posição (x,y) m</th><th>Obs</th></tr><tr><td>PdI P1</td><td>Moinho quebrado (colina 1)</td><td>(523,123)</td><td></td></tr><tr><td>PdI P2</td><td>Celeiro sinalizado</td><td>(445,345)</td><td>entrada do atalho-túnel</td></tr><tr><td>PdI P3</td><td>Espantalho-rei</td><td>(330,305)</td><td>cenário (no vale)</td></tr><tr><td>Descanso</td><td>carroça de grão</td><td>(360,130)</td><td>raio 6 m, &gt;= 40 m de SP</td></tr><tr><td>Descanso</td><td>celeiro sem teto</td><td>(450,330)</td><td>raio 6 m, &gt;= 40 m de SP</td></tr><tr><td>Marco</td><td>Fileira diagonal de cinco moinhos quebrados no alto das colinas</td><td>(263,343)</td><td>visível de toda a corda de caça</td></tr></table></div>
+<h3>8. Pontos de coleta [PROPOSTA]</h3>
+<div class="tablewrap"><table><tr><th>Coleta</th><th>Posição (x,y) m</th></tr><tr><td>Espiga-dourada (erva)</td><td>(560,240)</td></tr><tr><td>Mel-de-trigo</td><td>(400,120)</td></tr><tr><td>Palha-trançada</td><td>(320,440)</td></tr><tr><td>Casca de gafanhoto</td><td>(230,270)</td></tr><tr><td>Pólen-brilhante</td><td>(140,300)</td></tr></table></div>
+<h3>9. Saídas (fonte única: <code>tools/levels/fieldmaps_exits.json</code>)</h3>
+<div class="tablewrap"><table><tr><th>Saída</th><th>Destino</th><th>Segmento (x0,y0)-(x1,y1) m</th><th>Largura</th><th>Estado</th></tr><tr><td>Leste-sul: Colinas dos Marcos [a_pe]</td><td><code>cairn_downs</code></td><td>(640,100)-(640,140)</td><td>40 m</td><td>aberta</td></tr><tr><td>Norte-leste: Vau-de-Pedra [a_pe]</td><td><code>stoneford_city</code></td><td>(540,520)-(600,520)</td><td>60 m</td><td>aberta</td></tr></table></div>
+<p>Marcadores <code>Exit_&lt;n&gt;</code>; a troca de mapa é da GameSim. O mundo está sendo redesenhado em arquipélago: <strong>só o <code>fieldmaps_exits.json</code> muda</strong>; rodar <code>python tools/levels/fieldmaps_gen.py --png</code> atualiza planta, md e <code>index.json</code>.</p>
+<h3>10. Torre de Cristal e cristais da grade</h3>
+<ul><li><strong>Direção da Torre: norte (azimute 0°)</strong>, atrás do relevo ao norte do mapa: altura angular ~33.3°, névoa 0.37, brilho emissivo 0.57 (linha 6; <code>design/levels/horizon-landmark-crystal-tower.md</code>). Nunca entra na planta, sem colisão nem NavMesh.</li><li><strong>Cristais [PROPOSTA]</strong> (<code>design/levels/world-crystals-scatter.md</code>): densidade 16,1/ha, 520 instâncias: 230 lascas (<code>Shard</code>), 139 veios (<code>Vein</code>), 150 aglomerados (<code>Cluster</code>), 1 grandes (<code>Spire</code>); distância mínima 4,6 m; brilho 0,52; semente <code>fnv32("windmill_heights|crystals|1")</code>. Sem colisão, sem NavMesh. +20% no terço norte.</li><li>Cristais grandes (Spire) propostos: (600,440).</li></ul>
+<h3>11. NavMesh, bloqueios e penhascos [PROPOSTA]</h3>
+<ul><li>Área caminhável 32,4 ha (verde-azulado na planta). Célula de 4 m; raio do agente 0,4 m, altura 1,8 m, declive máx. 35°; água &gt;= 1 m e lava são <code>NotWalkable</code>; pontes, vaus e passarelas são <code>Walkable</code> por cima.</li><li>Bloqueios: torre / estrutura alta 5, construção 2, rocha / afloramento (bloqueio) 3.</li><li>Penhascos: nenhum.</li></ul>
+<h3>12. Elementos 3D a modelar (lista para a fase 2)</h3>
+<ul><li>Terreno 640 x 520 m com 5 colinas de trigo em diagonal e vales de ceifa.</li><li>5 moinhos quebrados (torre de 12-14 m, sem pás); celeiro sinalizado (atalho-túnel) e celeiro sem teto.</li><li>Campos de trigo alto (5 manchas, esconde espantalhos); espantalho-rei no vale.</li><li>Estrada de grão 5 m, 4 trilhas de colina 2,5 m.</li><li>Árvores/vegetação decorativa na planta: 66 instâncias ilustrativas (posição final no builder, sem cobrir trilha a &lt; 2,5 m).</li><li>Cristais: 4 malhas (<code>Shard</code> 24 tris, <code>Vein</code> 40, <code>Cluster</code> 120, <code>Spire</code> 180) x 3-4 variações.</li></ul>
+<h3>13. Pendências e decisões em aberto</h3>
+<ul><li>Ficha tinha frase truncada nas saídas (oeste-norte): usei só leste-sul (cairn) e NE (cidade).</li><li>Perigo por trecho: [PROPOSTA].</li><li>Saídas: <code>fieldmaps_exits.json</code>.</li></ul>
+<h3>14. Legenda das [PROPOSTA]</h3>
+<p>curvas de nível e cotas, profundidade da água, malha de NavMesh, bloqueios e penhascos finos, geometria detalhada das trilhas, cristais da grade (densidade pela fórmula de world-crystals-scatter.md), pontos de coleta, trechos de perigo e a posição da área de tela. A ficha só dá tamanho, saídas, SP, PdI, descanso e marco.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

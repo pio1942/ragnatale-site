@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Mapa de engenharia 2D: Tocas dos Saqueadores (raider_warrens) | Ragna Tale</title>
+<meta name="description" content="Mapa de engenharia 2D: Tocas dos Saqueadores (raider_warrens): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-levels-fieldmaps-raider-warrens-layout-2d.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-levels-fieldmaps-raider-warrens-layout-2d.html">
+<meta property="og:title" content="Mapa de engenharia 2D: Tocas dos Saqueadores (raider_warrens) | Ragna Tale">
+<meta property="og:description" content="Mapa de engenharia 2D: Tocas dos Saqueadores (raider_warrens): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mapa de engenharia 2D: Tocas dos Saqueadores (raider_warrens) | Ragna Tale">
+<meta name="twitter:description" content="Mapa de engenharia 2D: Tocas dos Saqueadores (raider_warrens): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/levels/fieldmaps/raider_warrens/layout-2d.md</code></p><h2>Mapa de engenharia 2D: Tocas dos Saqueadores (<code>raider_warrens</code>)</h2>
+<blockquote>Gerado por <code>tools/levels/fieldmaps_gen.py</code> (dados: <code>fieldmaps_data.py</code>; saídas: <code>fieldmaps_exits.json</code>). Fonte das fichas: <code>design/world/map-layouts-mvp.md</code>. Itens marcados <strong>[PROPOSTA]</strong> (curvas de nível, profundidade da água, navmesh, cristais, coleta) são decisão de level design a validar. Nada foi aberto no Unity.<br>Planta: <code>layout-2d.svg</code> (vetorial) e <code>production/qa/evidence/fieldmaps/raider_warrens.png</code>.</blockquote>
+<p>![planta](layout-2d.svg)</p>
+<h3>1. Quadro de informações</h3>
+<div class="tablewrap"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Tipo / nível</td><td>calabouço / 38-45 (n_d 3, mínimo 2)</td></tr><tr><td>Linha da grade</td><td>6 de 10 (célula B6 (dentro de thornwood))</td></tr><tr><td>Tribo / tema</td><td>Calabouço de grupo (aninhado em thornwood)</td></tr><tr><td>Elemento dominante</td><td>Brasa (chefe, forja) + Rocha (escavadores) + Seiva (cães)</td></tr><tr><td>Tamanho</td><td><strong>240 x 200 m</strong> (4,8 ha), caminhável 1,4 ha [PROPOSTA]</td></tr><tr><td>Cotas [PROPOSTA]</td><td>0 a 0.4 m, curvas a cada 1 m</td></tr><tr><td>Ritmo</td><td>12-16 min (grupo; primeiro gosto de grupo)</td></tr><tr><td>Chefe / elite</td><td>Ferrabruta (<code>goblin_warlord</code>, Brasa 2, n_d 3), sala central de 60 x 50 m; mini-chefe Mandíbula-de-Ferro (<code>war_hound_alpha</code>) no canil</td></tr><tr><td>Perigo por trecho</td><td>barricada = 3; forja = 4; canil = 4 (mini-chefe 5); chefe = 5.</td></tr><tr><td>Forma</td><td>Rede de túneis em "colmeia": quatro câmaras (barricada, forja, canil, depósito) ligadas por um anel de túneis de 9 m, com a sala do chefe ao centro (4 acessos); obriga o grupo a dividir atenção; ramo sul com tesouro; câmara lateral segura; atalho pós-chefe ao sul.</td></tr></table></div>
+<h3>2. Escala e câmera</h3>
+<ul><li>Unidade metro; norte = +Y (no Unity, +Z); origem no canto SO; grade de 10 m (fina) e 50 m (grossa). Escala da planta: 1 px = 0,22 m.</li><li>Tela no zoom padrão (câmera isométrica): ~29 x 16 m de chão. O mapa equivale a ~9 x 13 telas.</li><li>Escalas fixas: estrada 4-6 m, trilha 2-3 m, passagem de saída 8-10 m (aqui a faixa de saída segue a ficha; a passagem de 10 m fica no centro), clareira calma de 20 m (sem spawn) em volta de cada saída.</li></ul>
+<h3>3. Relevo e curvas de nível [PROPOSTA]</h3>
+<p>[PROPOSTA] Piso plano 0 m com leve elevação (0,4 m) da sala central; sem água.</p>
+<h3>5. Trilhas e pontes</h3>
+<div class="tablewrap"><table><tr><th>Trilha</th><th>Largura</th><th>Pontos (x,y) m</th></tr></table></div>
+<h3>6. Zonas de spawn (ficha)</h3>
+<div class="tablewrap"><table><tr><th>SP</th><th>Posição (x,y) m</th><th>Monstros (id)</th><th>Nível</th><th>Obs</th></tr><tr><td>SP-1</td><td>(50,100)</td><td>goblin_slinger x3 + goblin_tunneler x3</td><td>38-39</td><td>câmara da barricada</td></tr><tr><td>SP-2</td><td>(110,160)</td><td>goblin_smith x3 + goblin_raider_pilferer x3</td><td>40-41</td><td>forja</td></tr><tr><td>SP-3</td><td>(190,150)</td><td>war_hound x5</td><td>42-43</td><td>canil</td></tr><tr><td>SP-4</td><td>(170,50)</td><td>goblin_wallbreaker x3 + goblin_tunneler x2</td><td>41-42</td><td>depósito</td></tr><tr><td>SP-M</td><td>(200,160)</td><td>war_hound_alpha x1 (Mandíbula-de-Ferro)</td><td>43 (mini-chefe)</td><td>canil</td></tr><tr><td>SP-B</td><td>(120,100)</td><td>goblin_warlord x1 (Ferrabruta)</td><td>45 (Brasa 2, n_d 3)</td><td>sala central 60 x 50 m, 4 pilares quebram linha de tiro</td></tr></table></div>
+<p>Densidade de calabouço de grupo 2,5 monstros/1000 m² (comuns de grupo: vida x2, balance-curve 3.5); SP de r 10 m; mini-chefe e chefe com sala própria. Mínimo 2 jogadores.</p>
+<h3>7. Pontos de interesse, descanso e marco</h3>
+<div class="tablewrap"><table><tr><th>Tipo</th><th>Nome</th><th>Posição (x,y) m</th><th>Obs</th></tr><tr><td>PdI P1</td><td>Forja gigante</td><td>(110,170)</td><td>marco (brilho e fumaça)</td></tr><tr><td>PdI P2</td><td>Tesouro de saque (baú)</td><td>(76,22)</td><td>ramo sul</td></tr><tr><td>PdI P3</td><td>Mapa de túneis na parede</td><td>(22,112)</td><td>cosmético</td></tr><tr><td>Descanso</td><td>barricada de entrada</td><td>(20,100)</td><td>raio 6 m, &gt;= 40 m de SP</td></tr><tr><td>Descanso</td><td>câmara lateral segura</td><td>(120,18)</td><td>raio 6 m, &gt;= 40 m de SP</td></tr><tr><td>Marco</td><td>Brilho da forja ao fundo e fumaça dos túneis</td><td>(110,170)</td><td>visível de toda a corda de caça</td></tr></table></div>
+<h3>8. Pontos de coleta [PROPOSTA]</h3>
+<div class="tablewrap"><table><tr><th>Coleta</th><th>Posição (x,y) m</th></tr><tr><td>Ferro-bruto (minério)</td><td>(100,150)</td></tr><tr><td>Carvão de forja</td><td>(140,168)</td></tr><tr><td>Couro de cão de guerra</td><td>(180,140)</td></tr><tr><td>Sucata goblin</td><td>(190,56)</td></tr></table></div>
+<h3>9. Saídas (fonte única: <code>tools/levels/fieldmaps_exits.json</code>)</h3>
+<div class="tablewrap"><table><tr><th>Saída</th><th>Destino</th><th>Segmento (x0,y0)-(x1,y1) m</th><th>Largura</th><th>Estado</th></tr><tr><td>Oeste: entrada (volta a Mata dos Espinhos) [a_pe]</td><td><code>thornwood</code></td><td>(0,90)-(0,110)</td><td>20 m</td><td>aberta</td></tr><tr><td>Atalho pos-chefe (S) para a Mata dos Espinhos [a_pe]</td><td><code>thornwood</code></td><td>(114,0)-(126,0)</td><td>12 m</td><td>aberta (atalho pos-chefe; ficha: ponto 120,0)</td></tr></table></div>
+<p>Marcadores <code>Exit_&lt;n&gt;</code>; a troca de mapa é da GameSim. O mundo está sendo redesenhado em arquipélago: <strong>só o <code>fieldmaps_exits.json</code> muda</strong>; rodar <code>python tools/levels/fieldmaps_gen.py --png</code> atualiza planta, md e <code>index.json</code>.</p>
+<h3>10. Torre de Cristal e cristais da grade</h3>
+<ul><li>Torre: <strong>isenta</strong> (calabouço = <code>lookZone Fixed</code>, sem horizonte). Cristais: <strong>sim</strong>, linha 6 x <code>closedBoost</code> 1,5, veios &gt;= 50%.</li><li><strong>Cristais [PROPOSTA]</strong> (<code>design/levels/world-crystals-scatter.md</code>): densidade 24,1/ha, 33 instâncias: 7 lascas (<code>Shard</code>), 19 veios (<code>Vein</code>), 7 aglomerados (<code>Cluster</code>), 0 grandes (<code>Spire</code>); distância mínima 4,6 m; brilho 0,52; semente <code>fnv32("raider_warrens|crystals|1")</code>. Sem colisão, sem NavMesh. +20% no terço norte.</li><li>Cristais grandes (Spire) propostos: nenhum.</li></ul>
+<h3>11. NavMesh, bloqueios e penhascos [PROPOSTA]</h3>
+<ul><li>Área caminhável 1,4 ha (verde-azulado na planta). Célula de 2 m; raio do agente 0,4 m, altura 1,8 m, declive máx. 35°; água &gt;= 1 m e lava são <code>NotWalkable</code>; pontes, vaus e passarelas são <code>Walkable</code> por cima.</li><li>Calabouço fechado: NavMesh = só o piso dos túneis e câmaras (a rocha é sólida). 4 pilares na sala central; forja e caixas bloqueiam. Túneis de 9-10 m.</li><li>Bloqueios: rocha / afloramento (bloqueio) 4, construção 6, muro de pedra (bloqueio) 1, muro de ruína (bloqueio) 1.</li><li>Penhascos: nenhum.</li></ul>
+<h3>12. Elementos 3D a modelar (lista para a fase 2)</h3>
+<ul><li>Rede de túneis: 20 áreas de piso (4 câmaras + anel de 9 m + 4 acessos + sala central 60 x 50 m), teto baixo (corte de parede voltada à câmera).</li><li>Forja gigante com brilho laranja (marco), canil com jaulas, depósito de saque, barricada de entrada.</li><li>Sala central com estandarte e cadeira de ferro; 4 pilares quebram linha de tiro.</li><li>Câmara lateral segura (descanso) e ramo sul com baú; atalho pós-chefe de 42 m ao sul; cristais: veios nas paredes (linha 6 x 1,5, &gt;= 50% veios).</li><li>Árvores/vegetação decorativa na planta: 0 instâncias ilustrativas (posição final no builder, sem cobrir trilha a &lt; 2,5 m).</li><li>Cristais: 4 malhas (<code>Shard</code> 24 tris, <code>Vein</code> 40, <code>Cluster</code> 120, <code>Spire</code> 180) x 3-4 variações.</li></ul>
+<h3>13. Pendências e decisões em aberto</h3>
+<ul><li>Posição do atalho (ficha: ponto 120,0) virou segmento de 12 m.</li><li>Torre: calabouço = isento. Cristais: sim, só em paredes.</li><li>Saídas: <code>fieldmaps_exits.json</code>.</li></ul>
+<h3>14. Legenda das [PROPOSTA]</h3>
+<p>curvas de nível e cotas, profundidade da água, malha de NavMesh, bloqueios e penhascos finos, geometria detalhada das trilhas, cristais da grade (densidade pela fórmula de world-crystals-scatter.md), pontos de coleta, trechos de perigo e a posição da área de tela. A ficha só dá tamanho, saídas, SP, PdI, descanso e marco.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

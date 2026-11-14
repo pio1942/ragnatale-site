@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Quadro do alvo (janela rápida do monstro clicado) | Ragna Tale</title>
+<meta name="description" content="Quadro do alvo (janela rápida do monstro clicado): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-ux-target-frame.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-ux-target-frame.html">
+<meta property="og:title" content="Quadro do alvo (janela rápida do monstro clicado) | Ragna Tale">
+<meta property="og:description" content="Quadro do alvo (janela rápida do monstro clicado): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quadro do alvo (janela rápida do monstro clicado) | Ragna Tale">
+<meta name="twitter:description" content="Quadro do alvo (janela rápida do monstro clicado): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/ux/target-frame.md</code></p><h2>Quadro do alvo (janela rápida do monstro clicado)</h2>
+<blockquote>Status: proposta (2026-11-12). Resposta ao comentário <code>mwe90r50f8bq</code>. Complementa <code>hud-mvp.md</code> (o item "alvo/inimigo selecionado" estava em "Depois"). Código em <code>unity/Assets/_Game/UI/</code> (nada tocado aqui).</blockquote>
+<h3>1. Posição e mock (1920x1080, canto superior, 360x96 px, escala de UI 75-150%)</h3>
+<p>``` +------------------------------------------+</p>
+<div class="tablewrap"><table><tr><th>+--------+  Cogumelo Cuspidor       Nv 7</th></tr><tr><td></td><td>retrato</td><td>HP [#########-----] 312/480</td></tr><tr><td></td><td>96px</td><td>(E) Seiva nv2   Alvo grande</td></tr><tr><td></td><td>(R)</td><td>Dano seu: +15% (Flora)</td></tr><tr><td>+--------+</td></tr></table></div>
+<p>+------------------------------------------+ (R) = emblema da raça, 32 px, no canto INFERIOR do retrato ```</p>
+<ul><li>Retrato: busto do monstro (render de 96 px do prefab ou <code>assets/ui/portraits/monsters/&lt;id&gt;.png</code>; provisório = silhueta na cor da raça).</li><li><strong>Emblema de raça</strong> (<code>assets/ui/racas/&lt;race&gt;.svg</code>/PNG): 32 px, ancorado ao canto inferior direito do retrato, saindo 25% da borda; <strong>tooltip</strong> com o nome da raça e "Seu bônus contra esta raça".</li><li><strong>Chip de elemento</strong> (círculo 20 px, cor de <code>elements.md</code> 3.1) junto do texto; nível do elemento em pontos (1-4).</li><li>Barra de vida: vermelho-escuro; chefe: moldura dourada e marcadores de fase.</li></ul>
+<h3>2. Estados</h3>
+<div class="tablewrap"><table><tr><th>Estado</th><th>Aparência</th></tr><tr><td>Hostil normal</td><td>como o mock</td></tr><tr><td>Aliado/NPC/jogador</td><td>moldura azul, <strong>sem</strong> emblema de raça, barra verde, sem "Dano seu"</td></tr><tr><td>Chefe</td><td>moldura dourada, nome em caixa alta, ícone de coroa; emblema mantido</td></tr><tr><td>Fora de alcance (além de <code>TARGET_RANGE</code> [AJUSTAR] ou sem linha de visão)</td><td>60% de opacidade; vida vira "?" se nunca inspecionado; some após 3 s sem alvo</td></tr><tr><td>Morto</td><td>retrato cinza, barra vazia, emblema permanece; fecha em 1,5 s</td></tr><tr><td>Alvo novo</td><td>troca sem animação (menos de 150 ms); só o mais recente conta</td></tr></table></div>
+<h3>3. Regras de informação</h3>
+<p><strong>Sempre:</strong> nome, nível, barra de vida em percentual, emblema de raça (a raça é conhecimento do mundo), tamanho (se vê pelo corpo). <strong>Depende de nível ou habilidade</strong> (cortado pelo servidor em <code>request_inspect</code>, <code>elements.md</code> 3.14):</p>
+<ul><li>Números exatos de vida (312/480): só se <code>nível_jogador &gt;= nível_alvo - 3</code> [AJUSTAR] ou habilidade "Estudar" [LANÇ]; senão só a barra. Chefe: sem números para quem estiver 10 níveis abaixo.</li><li>Elemento e nível do elemento: depois de abater 1x a espécie (entrada do Bestiário liberada) ou por habilidade; antes, chip "?".</li><li>"Dano seu: +X% (Raça)" (bônus de carta contra a raça, <code>design/gdd/card-race-modifier.md</code>): só se X diferente de 0 e só do próprio jogador; verde se positivo, vermelho se negativo (maldição).</li></ul>
+<h3>4. Fronteiras de arquitetura</h3>
+<ul><li>A UI <strong>só lê</strong> estado e sinais (<code>GameSim</code>/<code>ClientWorld</code>). <code>request_inspect(entity_id, target_id)</code> devolve <code>{name, level, hp, hp_max, element, element_level, race, size, is_boss, hostile, race_bonus}</code> já filtrado pela regra de informação: o servidor corta, o cliente não decide. O quadro reage a <code>damaged</code>, <code>died</code> e <code>target_changed</code>.</li><li>Clique no mundo só em <code>_unhandled_input</code> (a UI consome os seus primeiro); o quadro não emite pedidos de dano.</li><li>Raça -&gt; emblema por dados do cliente (<code>data/ui/race_emblems.json</code>: <code>race -&gt; sprite, cor</code>); trocar o provisório pelo final é trocar arquivo, sem código.</li><li>Sem regra na UI: o "+15%" vem de <code>race_bonus</code>, calculado pela GameSim com a mesma função de F-01.</li></ul>
+<h3>5. Aceite</h3>
+<p>Capturas em <code>production/qa/evidence/ui/target-frame/</code>: hostil, chefe, aliado, fora de alcance, morto, com e sem bônus de raça; emblema legível a 32 e 24 px em 3 escalas de UI.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>

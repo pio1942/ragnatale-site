@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Paridade GameSim C# (sim/) x Godot (scripts/sim/) | Ragna Tale</title>
+<meta name="description" content="Paridade GameSim C# (sim/) x Godot (scripts/sim/): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-gamesim-paridade.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/docs-architecture-gamesim-paridade.html">
+<meta property="og:title" content="Paridade GameSim C# (sim/) x Godot (scripts/sim/) | Ragna Tale">
+<meta property="og:description" content="Paridade GameSim C# (sim/) x Godot (scripts/sim/): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Paridade GameSim C# (sim/) x Godot (scripts/sim/) | Ragna Tale">
+<meta name="twitter:description" content="Paridade GameSim C# (sim/) x Godot (scripts/sim/): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Arquitetura e ADRs</p><p class="note">Fonte: <code>docs/architecture/gamesim-paridade.md</code></p><h2>Paridade GameSim C# (sim/) x Godot (scripts/sim/)</h2>
+<p>Atualizado em 2026-11-13 (2a rodada). Referência: <code>scripts/sim/game_sim.gd</code> (3575 linhas) e <code>tests/run_unit_tests.gd</code>. Verificação: <code>cd sim &amp;&amp; dotnet test RagnaTale.Sim.Tests</code> (113 verdes) + golden (<code>tests/golden/*.json</code>, gerado por <code>tools/export/golden_from_godot.gd</code>).</p>
+<h3>Estado por área</h3>
+<div class="tablewrap"><table><tr><th>Área (Godot)</th><th>C#</th><th>Paridade</th></tr><tr><td>Dano, XP, ouro, elementos, Balance, DataDb</td><td><code>CombatRules</code>, <code>Balance</code>, <code>DataDb</code></td><td>golden</td></tr><tr><td>Ataque básico, habilidades, árvore, estados, Provocar, ameaça</td><td><code>GameSim.cs</code>, <code>.Skills.cs</code></td><td>golden + portados</td></tr><tr><td>IA de monstro, MonsterField, MonsterRules (inclui <code>Validate</code>/<code>ValidateBoss</code>)</td><td><code>MonsterBrain</code>, <code>MonsterField</code>, <code>MonsterRules</code></td><td>golden + <code>MonsterValidateTests</code></td></tr><tr><td>Habilidades de monstro, chefes, fases (inclui <code>line</code>, <code>rain</code>, invocações/âncoras do Colosso)</td><td><code>GameSim.Abilities.cs</code></td><td>golden, cenário <code>ai_boss_crystal_colossus</code> (6 jogadores, 5000 tiques, fases 1 e 2, âncoras, morcegos, chuva)</td></tr><tr><td>Itens, equipar, cinto, poções, bloqueio, loot de abate</td><td><code>Items/*</code></td><td>golden</td></tr><tr><td>Economia: compra, venda, cartas, refino, reroll, pedras, têmpera, porta de valor</td><td><code>Items/GameSim.Economy.cs</code></td><td>golden</td></tr><tr><td>Itens no chão: pickup, drop, TTL, trava por coleta em voo</td><td><code>Items/GameSim.Items.cs</code></td><td>golden <code>ground_pickup_drop_ttl</code> + <code>GroundItemTests</code></td></tr><tr><td>Kit inicial, cura de NPC, gasto de ouro, respawn do servidor, <code>set_attribute</code>, <code>set_move_blocker</code>, <code>set_entity_facing</code></td><td><code>GameSim.Services.cs</code></td><td>golden <code>npc_heal_rules</code> + <code>ServicesTests</code></td></tr><tr><td>Grupo, missões</td><td><code>PartyRules</code>, <code>GameSim.Quests.cs</code></td><td>golden</td></tr><tr><td>Estado salvo (export/import)</td><td><code>GameSim.State.cs</code></td><td>golden</td></tr><tr><td>Contrato de ação (20 Hz, dedup)</td><td><code>GameSim.Actions.cs</code></td><td><code>ActionContractTests</code></td></tr></table></div>
+<h3>Falta (ordem de importância)</h3>
+<ol><li>~~<code>SimAuthority</code>~~ implementado em 2026-11-13 como fronteira de compilação (<code>IPlayerRequests</code> + <code>internal</code> + <code>InternalsVisibleTo</code>; ver DECISIONS). A proposta abaixo vale como registro.</li><li>Afixos/conjuntos como pedidos dedicados; proteção de azar (também só fórmula no Godot).</li></ol>
+<p>Nota: a ordem das poções do cinto no kit inicial vem da ordem das chaves do JSON exportado (igual ao <code>.tres</code> hoje).</p>
+<h3>Proposta: equivalente C# do <code>SimAuthority</code> (sem implementar)</h3>
+<p>No Godot, <code>SimAuthority</code> (<code>scripts/sim/sim_authority.gd</code>) é uma capacidade em runtime: 32 funções internas da <code>GameSim</code> (grant_*, give_item, apply_damage, spawn_*, set_*, advance, resolve_value_tx...) checam <code>_srv(nome)</code> e, fora de um contexto <code>enter()/run()</code> aberto e vinculado àquela sim, recusam, contam e logam (limite de taxa por nome). No C# hoje essas funções são <code>public</code> e qualquer código as chama; a fronteira real é o assembly <code>RagnaTale.Server</code>.</p>
+<p>Proposta, em ordem de custo:</p>
+<ol><li><strong>Fronteira por tipo (compilação):</strong> separar a <code>GameSim</code> em duas superfícies. <code>IPlayerRequests</code> (apenas <code>Request*</code>, o que o cliente/rede pode pedir; é a lista branca do ADR-0008) e <code>ServerSim</code> (tudo que é interno: Grant*, GiveItem, ApplyDamage, Spawn*, Set*, Advance, ResolveValueTx...). A rede e o cliente espelho recebem só <code>IPlayerRequests</code>. Erro de uso vira erro de compilação, sem custo de runtime e sem <code>_srv</code> em 32 pontos.</li><li><strong>Tornar o interno <code>internal</code>:</strong> métodos de servidor viram <code>internal</code> em <code>RagnaTale.Sim</code>, com <code>InternalsVisibleTo</code> para <code>RagnaTale.Server</code> e <code>RagnaTale.Sim.Tests</code>. O Unity (cliente) referencia só a superfície pública e não consegue chamar o interno. Cobre o objetivo de segurança (SEC-101..109) do jeito idiomático de C#.</li><li><strong>Opcional, só se o criador quiser o log de tentativas:</strong> classe <code>SimAuthority</code> mínima (<code>Enter/Leave/Run</code>, <code>Denied</code>, vínculo a uma única <code>GameSim</code>) mantida para paridade de testes, usada só nos pontos <code>public</code> que precisem aceitar chamada condicionada (ex.: <code>value_gate</code>, <code>resolve_value_tx</code>). Custo: 32 verificações por chamada e estado mutável global por sim.</li></ol>
+<p>Recomendação: 1 + 2, sem 3. Testes de paridade: manter os testes <code>test_sim_*</code> de recusa do Godot como testes de compilação (a API pública não expõe o interno) mais um teste que lista por reflexão que todo método público de <code>GameSim</code> começa com <code>Request</code>. Decisão de arquitetura: precisa do aval do criador antes de mexer em <code>RagnaTale.Server</code>.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>
