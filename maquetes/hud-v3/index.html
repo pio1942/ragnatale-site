@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ragna Tale · HUD v3 (maquete)</title>
+<style>
+@font-face{font-family:Cinzel;src:url(assets/Cinzel.ttf);font-weight:400 900}
+@font-face{font-family:Manrope;src:url(assets/Manrope-500.ttf);font-weight:500}
+@font-face{font-family:Manrope;src:url(assets/Manrope-700.ttf);font-weight:700}
+@font-face{font-family:Manrope;src:url(assets/Manrope-800.ttf);font-weight:800}
+*{box-sizing:border-box}
+html,body{margin:0;background:#0a0d14;color:#f4f1ea;font:500 14px/1.35 Manrope,system-ui,sans-serif}
+button{font:inherit;color:inherit;cursor:pointer}
+
+/* ---------- painel de controle da maquete (fora do jogo) ---------- */
+.ctl{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:10px 16px;border-bottom:1px solid rgba(224,184,106,.35);background:#0d121c}
+.ctl h1{font:600 17px Cinzel,serif;letter-spacing:1px;margin:0 8px 0 0;color:#e0b86a}
+.ctl .grp{display:flex;gap:4px;align-items:center}
+.ctl .grp>span{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(244,241,234,.55);margin-right:4px}
+.ctl button{background:rgba(140,188,255,.08);border:1px solid rgba(244,241,234,.22);border-radius:8px;padding:5px 11px;font-weight:700;font-size:13px}
+.ctl button.on{background:rgba(224,184,106,.28);border-color:#e0b86a}
+.ctl label{font-size:13px;display:flex;gap:5px;align-items:center;cursor:pointer}
+.ctl input[type=range]{width:110px}
+body.shot .ctl,body.shot .cap{display:none}
+.wrap{display:grid;gap:10px;padding:10px}
+body.shot .wrap{padding:0;gap:0}
+.wrap.trio{grid-template-columns:repeat(3,1fr)}
+.cell{position:relative;overflow:hidden}
+.cap{font:600 13px Cinzel,serif;letter-spacing:1px;color:#e0b86a;padding:6px 2px}
+.cap small{font:500 12px Manrope;color:rgba(244,241,234,.6);letter-spacing:0;margin-left:8px}
+
+/* ---------- palco: tela do jogo em px de referência ---------- */
+.stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;overflow:hidden;background:#222;user-select:none;
+  --ui:1;--ws:1;
+  /* tokens comuns */
+  --w:#f6f2e8;--dim:rgba(246,242,232,.66);--track:rgba(6,9,16,.62);
+  --hp1:#ff3f55;--hp2:#ff7a63;--mp1:#2f9bff;--mp2:#74d4ff;--sp:#ffd257;--xp1:#f0b93a;--xp2:#ffe08a;
+  --ring:#5cc0ff;--ally:#5fe0a0;--boss:#ffcf6a;--danger:#ff4a4a}
+.stage .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:filter .6s}
+.stage[data-s=morte] .bg{filter:grayscale(.85) brightness(.5)}
+.stage[data-s=morte] .world{filter:grayscale(.85) brightness(.5)}
+
+/* mundo (apoio da maquete: monstro, anel, número de dano) */
+.world{position:absolute;inset:0;transition:filter .6s}
+.mob{position:absolute;left:57.5%;top:45%;width:0;height:0;cursor:pointer;transform:scale(var(--ws))}
+.mob img{position:absolute;left:-46px;top:-96px;width:92px;filter:brightness(1.25) saturate(1.15)}
+.mob .shadow{position:absolute;left:-44px;top:-12px;width:88px;height:30px;border-radius:50%;background:radial-gradient(rgba(0,0,0,.45),transparent 70%)}
+.mob.boss img{left:-92px;top:-196px;width:184px;filter:brightness(1.1) saturate(1.3) hue-rotate(-18deg)}
+.mob.boss .shadow{left:-90px;top:-26px;width:180px;height:60px}
+.mob .whp{position:absolute;left:-30px;top:-112px;width:60px;height:5px;background:var(--track);border-radius:3px}
+.mob .whp i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,var(--hp1),var(--hp2))}
+.mob .whp::before{content:"";position:absolute;left:-11px;top:-1px;width:7px;height:7px;transform:rotate(45deg);background:var(--ring);box-shadow:0 0 6px var(--ring)}
+.stage.nomark .mob .whp::before{display:none}
+.mob.boss .whp{display:none}
+.mob[hidden]{display:none}
+/* ANEL DE ALVO: pisca 2x (~1 s) e some; o alvo segue marcado na barra do topo */
+.ring{position:absolute;left:-66px;top:-34px;width:132px;height:68px;border-radius:50%;border:3px solid var(--ring);
+  box-shadow:0 0 14px var(--ring),inset 0 0 10px rgba(92,192,255,.55);opacity:0;pointer-events:none}
+.mob.boss .ring{left:-130px;top:-64px;width:260px;height:128px}
+.ring.go{animation:ring2 1s ease-out forwards}
+.ring.hold{opacity:1}
+@keyframes ring2{
+  0%{opacity:0;transform:scale(1.35)}
+  14%{opacity:1;transform:scale(1)}
+  38%{opacity:.12;transform:scale(1)}
+  58%{opacity:1;transform:scale(1.03)}
+  78%{opacity:.85;transform:scale(1)}
+  100%{opacity:0;transform:scale(.96)}}
+@media (prefers-reduced-motion:reduce){.ring.go{animation:ringrm 1s linear forwards}@keyframes ringrm{0%,70%{opacity:1}100%{opacity:0}}}
+.dmg{position:absolute;left:-14px;top:-150px;font:800 30px Manrope;color:#ffd84d;text-shadow:0 2px 0 #3a2500,0 0 10px rgba(0,0,0,.6);opacity:0}
+.stage[data-s=combate] .dmg,.stage[data-s=grupo] .dmg,.stage[data-s=chefe] .dmg{opacity:1}
+.mob.boss .dmg{top:-250px;font-size:38px}
+
+/* ---------- HUD ---------- */
+.hud{position:absolute;inset:0;pointer-events:none;color:var(--w);text-shadow:0 1px 3px rgba(0,0,0,.85);transition:opacity .5s}
+.hud .a{position:absolute;transform:scale(var(--ui));transition:opacity .35s}
+.a.tl{left:28px;top:24px;transform-origin:0 0}
+.a.tc{left:50%;top:22px;transform:translateX(-50%) scale(var(--ui));transform-origin:50% 0}
+.a.tr{right:28px;top:24px;transform-origin:100% 0}
+.a.ml{left:28px;top:168px;transform-origin:0 0}
+.a.bl{left:28px;bottom:26px;transform-origin:0 100%}
+.a.bc{left:50%;bottom:16px;transform:translateX(-50%) scale(var(--ui));transform-origin:50% 100%}
+.a.br{right:28px;bottom:22px;transform-origin:100% 100%}
+.cz{font-family:Cinzel,Georgia,serif}
+.bar{position:relative;background:var(--track);border-radius:var(--rbar);overflow:hidden}
+.bar>i{position:absolute;left:0;top:0;bottom:0;border-radius:var(--rbar)}
+.bar>i::after{content:"";position:absolute;left:0;right:0;top:0;height:45%;background:linear-gradient(rgba(255,255,255,.34),transparent)}
+.bar.hp>i{background:linear-gradient(90deg,var(--hp1),var(--hp2))}
+.bar.mp>i{background:linear-gradient(90deg,var(--mp1),var(--mp2))}
+.bar.sp>i{background:var(--sp)}
+.bar.al>i{background:linear-gradient(90deg,#2fbf7a,var(--ally))}
+.bar b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;letter-spacing:.3px}
+.stage.nonum .bar b,.stage.nonum .tg .pct{display:none}
+
+/* 1. herói: emblema da tribo + vida e mana */
+.hero{display:flex;align-items:center;gap:14px}
+.emb{position:relative;width:72px;height:72px;flex:none}
+.emb svg{width:100%;height:100%;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+.emb .lv{position:absolute;right:-6px;bottom:-4px;min-width:26px;height:26px;display:grid;place-items:center;font:800 13px Manrope;
+  background:var(--plate);border:1px solid var(--edge);border-radius:var(--rlv);padding:0 5px}
+.hero .bars{width:286px;display:grid;gap:4px}
+.hero .hp{height:18px}.hero .mp{height:11px}.hero .sp{height:3px;width:60%}
+.hero .mp b{font-size:10px}
+.buffs{display:flex;gap:5px;margin-top:4px;min-height:24px}
+.buffs span{width:24px;height:24px;border-radius:var(--rslot);background:var(--plate);border:1px solid var(--edge);display:grid;place-items:center;font-size:12px;position:relative}
+.buffs span em{position:absolute;right:-3px;bottom:-5px;font:800 10px Manrope;font-style:normal}
+.buffs span.bad{border-color:var(--danger)}
+
+/* 2. alvo / chefe no topo central */
+.tg{width:440px;text-align:center}
+.tg .nm{font-weight:700;font-size:16px;display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:5px}
+.tg .nm i{width:9px;height:9px;transform:rotate(45deg);background:var(--el,#8ed16a);box-shadow:0 0 6px var(--el,#8ed16a)}
+.tg .nm small{font-weight:700;color:var(--dim);font-size:13px}
+.tg .bar{height:11px}
+.tg .pct{font-size:12px;color:var(--dim);font-weight:700;margin-top:3px}
+.tg.boss{width:760px}
+.tg.boss .nm{font:700 25px Cinzel,serif;letter-spacing:3px;text-transform:uppercase;color:var(--boss);margin-bottom:7px}
+.tg.boss .nm i{background:var(--boss);box-shadow:0 0 8px var(--boss);width:11px;height:11px}
+.tg.boss .bar{height:17px;overflow:visible;box-shadow:0 0 0 1px var(--edge)}
+.tg.boss .bar>i{border-radius:var(--rbar) 0 0 var(--rbar)}
+.tg.boss .ph{position:absolute;top:-4px;width:9px;height:9px;margin-left:-4px;transform:rotate(45deg);background:var(--boss);border:1px solid #2a1c05}
+.tg.boss .ph.b{top:auto;bottom:-4px}
+.tg.boss .cap1,.tg.boss .cap2{position:absolute;top:50%;width:15px;height:15px;margin-top:-7.5px;transform:rotate(45deg);background:var(--plate);border:1px solid var(--boss)}
+.tg.boss .cap1{left:-9px}.tg.boss .cap2{right:-9px}
+.tg .fx{display:flex;justify-content:center;gap:5px;margin-top:6px}
+.tg .cast{margin:8px auto 0;width:300px;height:5px}
+.tg .cast>i{background:linear-gradient(90deg,#ffb23e,#ffe08a)}
+.tg .castl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--boss);margin-top:3px;font-weight:700}
+
+/* 3. barra de habilidades + XP logo abaixo */
+.hot{display:flex;gap:6px;align-items:flex-end;padding:var(--hotpad);background:var(--hotbg);border-radius:var(--rhot);border:var(--hotline)}
+.hot .sep{width:9px;align-self:center;height:9px;transform:rotate(45deg) scale(.7);background:var(--edge);margin:0 3px;flex:none;opacity:var(--sepop)}
+.sl{position:relative;width:54px;height:54px;border-radius:var(--rslot);background:var(--plate);border:1px solid var(--edge);overflow:hidden;pointer-events:auto;clip-path:var(--clip)}
+.sl img{position:absolute;inset:5px;width:44px;height:44px;object-fit:contain;filter:saturate(1.25) brightness(1.08)}
+.sl kbd{position:absolute;left:4px;top:2px;font:800 11px Manrope;color:var(--w);opacity:.92}
+.sl .q{position:absolute;right:4px;bottom:1px;font:800 12px Manrope}
+.sl.cd img{filter:grayscale(.9) brightness(.55)}
+.sl.cd::after{content:"";position:absolute;inset:0;background:conic-gradient(rgba(0,0,0,.62) var(--cd),transparent 0)}
+.sl .t{position:absolute;inset:0;display:grid;place-items:center;font:800 19px Manrope;z-index:2}
+.sl.nomana{border-color:var(--mp1)}.sl.nomana img{filter:grayscale(.6) brightness(.6) sepia(1) hue-rotate(180deg)}
+.sl.empty{opacity:.42}
+.sl.act{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc),0 0 12px var(--acc)}
+.sl:hover{border-color:var(--w)}
+.xp{display:flex;align-items:center;gap:8px;margin-top:7px;position:relative}
+.xp .bar{flex:1;height:5px}
+.xp .bar>i{background:linear-gradient(90deg,var(--xp1),var(--xp2));box-shadow:0 0 8px var(--xp1)}
+.xp .bar>i::after{display:none}
+.xp .d{font:800 11px Manrope;min-width:22px;height:22px;display:grid;place-items:center;background:var(--plate);border:1px solid var(--edge);border-radius:var(--rlv);color:var(--xp2);padding:0 4px}
+.xp .tip{position:absolute;left:50%;top:-1px;transform:translate(-50%,-100%);font-size:11px;font-weight:700;color:var(--dim);opacity:0;transition:opacity .2s;white-space:nowrap;display:none}
+.toast{text-align:center;font-weight:700;font-size:15px;color:var(--xp2);margin-bottom:10px;min-height:20px}
+
+/* 4. grupo (só existe em grupo) */
+.pt{display:grid;gap:9px}
+.pm{display:flex;align-items:center;gap:9px;pointer-events:auto}
+.pm .ic{width:22px;height:22px;transform:rotate(45deg);background:var(--plate);border:1px solid var(--c,#e0b86a);display:grid;place-items:center;flex:none;border-radius:var(--rpm)}
+.pm .ic b{transform:rotate(-45deg);font:800 11px Manrope;color:var(--c,#e0b86a)}
+.pm .nm{font-size:13px;font-weight:700;line-height:1;margin-bottom:3px;display:flex;gap:6px}
+.pm .nm small{color:var(--dim);font-weight:700}
+.pm .bar.hp{width:150px;height:7px}.pm .bar.mp{width:150px;height:3px;margin-top:2px}
+.pm.weak .nm{color:#ff9a8a}.pm.dead{opacity:.45}.pm.far{opacity:.6}
+
+/* 5. minimapa, chat e menu: discretos, ocultáveis */
+.mini{width:148px;height:148px;position:relative}
+.mini .m{position:absolute;inset:0;background:#1c2a1a url(assets/minimap.jpg) center/190%;clip-path:var(--miniclip);border-radius:var(--rmini)}
+.mini .f{position:absolute;inset:0;clip-path:var(--miniclip);border-radius:var(--rmini);box-shadow:inset 0 0 0 2px var(--edge),inset 0 0 18px rgba(0,0,0,.55)}
+.mini .me{position:absolute;left:50%;top:50%;width:0;height:0;border:5px solid transparent;border-bottom:11px solid #fff;margin:-10px 0 0 -5px;filter:drop-shadow(0 0 2px #000)}
+.mini .e{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--hp1);left:62%;top:40%}
+.zone{text-align:right;margin-top:6px;font:600 14px Cinzel,serif;letter-spacing:1px}
+.zone small{display:block;font:700 11px Manrope;letter-spacing:1.5px;color:var(--dim);text-transform:uppercase}
+.chat{width:420px;font-size:13.5px;line-height:1.5}
+.chat p{margin:0;opacity:.95;text-shadow:0 1px 2px #000,0 0 6px rgba(0,0,0,.9)}.chat p:nth-child(1){opacity:.4}.chat p:nth-child(2){opacity:.65}
+.chat p b{color:var(--acc);font-weight:700}
+.chat .hint{font-size:11px;letter-spacing:1px;color:var(--dim);opacity:.55;margin-top:4px}
+.menu{width:40px;height:40px;transform:rotate(45deg);background:var(--plate);border:1px solid var(--edge);display:grid;place-items:center;pointer-events:auto;border-radius:var(--rpm)}
+.menu b{transform:rotate(-45deg);font-size:17px}
+.stage.nomini .a.tr,.stage.nochat .a.bl,.stage.nochat .a.br,.stage.noparty .a.ml{opacity:0}
+
+/* estados */
+.stage[data-s=explorar] .a.tl{opacity:.78}
+.stage[data-s=explorar] .hot{opacity:.72}
+.stage[data-s=explorar] .buffs{visibility:hidden}
+.stage:not([data-s=explorar]) .chat p:nth-child(-n+2){display:none}
+.low{position:absolute;inset:0;pointer-events:none;opacity:0;box-shadow:inset 0 0 150px 0 rgba(255,30,40,.38)}
+.stage[data-s=chefe] .low{animation:lowp 1.4s ease-in-out infinite}
+@keyframes lowp{0%,100%{opacity:.3}50%{opacity:.75}}
+.stage[data-s=chefe] .hero .hp{box-shadow:0 0 0 1px var(--danger),0 0 12px var(--danger)}
+.death{position:absolute;inset:0;display:none;place-items:center;text-align:center;pointer-events:none}
+.stage[data-s=morte] .death{display:grid}
+.stage[data-s=morte] .hud .a:not(.bc){opacity:.28}
+.stage[data-s=morte] .hot{opacity:.3}
+.death>div{transform:scale(var(--ui))}
+.death h2{font:700 62px Cinzel,serif;letter-spacing:10px;margin:0;color:#f6f2e8;text-shadow:0 4px 24px #000}
+.death .ln{width:340px;height:1px;margin:14px auto;background:linear-gradient(90deg,transparent,var(--acc),transparent);position:relative}
+.death .ln::after{content:"";position:absolute;left:50%;top:-4px;width:9px;height:9px;margin-left:-4px;transform:rotate(45deg);background:var(--acc)}
+.death p{font-size:16px;color:var(--dim);margin:0 0 22px}
+.death button{pointer-events:auto;font:700 16px Manrope;padding:11px 34px;background:var(--plate);border:1px solid var(--acc);border-radius:var(--rslot);color:var(--w)}
+.death button small{color:var(--dim);margin-left:8px}
+
+/* ---------- VARIAÇÕES ---------- */
+/* A · Cristal e Ouro: identidade do mapa-múndi e da sala de produção (Cinzel, losango, ouro fino, vidro azul-noite) */
+.stage[data-v=a]{--plate:rgba(10,15,26,.74);--edge:rgba(224,184,106,.78);--acc:#e0b86a;--rbar:2px;--rslot:6px;--rlv:3px;--rpm:2px;--rhot:0;--rmini:0;
+  --hotbg:none;--hotpad:0;--hotline:0;--sepop:1;--clip:none;--miniclip:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.stage[data-v=a] .mini{width:176px;height:176px}
+.stage[data-v=a] .mini .f{box-shadow:none}
+.mini .fr{display:none;position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--edge);stroke-width:1.6}
+.stage[data-v=a] .mini .fr{display:block}
+.stage[data-v=a] .tg .nm{font-family:Cinzel,serif;font-weight:600;letter-spacing:1px}
+.stage[data-v=a] .tg:not(.boss) .bar,.stage[data-v=a] .hero .bar{box-shadow:0 0 0 1px rgba(224,184,106,.42)}
+/* B · Silêncio de Cristal 3: evolução do HUD B atual (sem moldura, branco-osso, acento azul, vidro arredondado) */
+.stage[data-v=b]{--plate:rgba(14,20,32,.6);--edge:rgba(246,242,232,.36);--acc:#8cbcff;--rbar:6px;--rslot:14px;--rlv:13px;--rpm:5px;--rhot:0;--rmini:22px;
+  --hotbg:none;--hotpad:0;--hotline:0;--sepop:0;--clip:none;--miniclip:none;--boss:#f6f2e8;--xp1:#8cbcff;--xp2:#d6e6ff}
+.stage[data-v=b] .tg.boss .nm{font:800 22px Manrope;letter-spacing:5px}
+.stage[data-v=b] .zone,.stage[data-v=b] .death h2{font-family:Manrope;font-weight:800}
+.stage[data-v=b] .sl,.stage[data-v=b] .emb .lv,.stage[data-v=b] .xp .d{backdrop-filter:blur(10px)}
+.stage[data-v=b] .pm .ic,.stage[data-v=b] .menu{border-radius:50%}
+/* C · Bronze Vivo: mais perto do Ashes of Creation (placas escuras chanfradas, bronze quente, barras mais cheias) */
+.stage[data-v=c]{--plate:rgba(24,18,14,.86);--edge:rgba(214,150,84,.9);--acc:#ff9d47;--rbar:0;--rslot:0;--rlv:0;--rpm:0;--rhot:0;--rmini:0;
+  --hotbg:linear-gradient(rgba(24,18,14,.0),rgba(24,18,14,.78));--hotpad:8px 12px 8px;--hotline:0;--sepop:1;
+  --clip:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px);
+  --miniclip:polygon(16% 0,84% 0,100% 16%,100% 84%,84% 100%,16% 100%,0 84%,0 16%);--hp1:#e8242f;--hp2:#ff5a3c;--mp1:#1d7df0;--mp2:#49b8ff;--xp1:#e8a32a;--xp2:#ffd36a}
+.stage[data-v=c] .bar{clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.stage[data-v=c] .hero .bars{padding:6px 10px 6px 8px;background:linear-gradient(90deg,rgba(24,18,14,.82),rgba(24,18,14,0));margin-left:-10px;width:300px}
+.stage[data-v=c] .hero .hp{height:20px}.stage[data-v=c] .hero .mp{height:13px}
+.stage[data-v=c] .tg .nm{font-family:Cinzel,serif;font-weight:700;background:linear-gradient(90deg,transparent,rgba(24,18,14,.8),transparent);padding:4px 0}
+.stage[data-v=c] .tg .bar{height:14px}.stage[data-v=c] .tg.boss .bar{height:20px;clip-path:none}
+.stage[data-v=c] .mini .f{box-shadow:inset 0 0 0 3px var(--edge),inset 0 0 18px rgba(0,0,0,.6)}
+</style>
+</head>
+<body>
+<div class="ctl">
+  <h1>HUD v3</h1>
+  <div class="grp" id="gv"><span>Variação</span>
+    <button data-k="v" data-x="trio">Lado a lado</button><button data-k="v" data-x="a">A · Cristal e Ouro</button><button data-k="v" data-x="b">B · Silêncio 3</button><button data-k="v" data-x="c">C · Bronze Vivo</button></div>
+  <div class="grp" id="gs"><span>Estado</span>
+    <button data-k="s" data-x="explorar">Fora de combate</button><button data-k="s" data-x="combate">Combate</button><button data-k="s" data-x="grupo">Grupo</button><button data-k="s" data-x="chefe">Chefe</button><button data-k="s" data-x="morte">Morte</button></div>
+  <div class="grp" id="gr"><span>Tela</span><button data-k="r" data-x="1080">1080p</button><button data-k="r" data-x="1440">1440p</button></div>
+  <div class="grp"><span>Escala da UI</span><input type="range" id="ui" min="75" max="150" step="5"><b id="uiv"></b></div>
+  <div class="grp"><span>Mostrar</span>
+    <label><input type="checkbox" data-t="mini" checked>minimapa</label><label><input type="checkbox" data-t="chat" checked>chat</label>
+    <label><input type="checkbox" data-t="num" checked>números</label><label><input type="checkbox" data-t="mark" checked>marca no alvo</label></div>
+  <button id="again">Clicar no monstro (anel)</button>
+</div>
+<div class="wrap" id="wrap"></div>
+
+<script>
+const Q=new URLSearchParams(location.search);
+const S={v:Q.get('v')||'trio',s:Q.get('s')||'combate',r:Q.get('r')||'1080',ui:+(Q.get('ui')||0),ring:Q.get('ring')||'',
+  mini:Q.get('mini')!=='0',chat:Q.get('chat')!=='0',num:Q.get('num')!=='0',mark:Q.get('mark')!=='0'};
+if(Q.get('shot'))document.body.classList.add('shot');
+const NAMES={a:['A · Cristal e Ouro','identidade do mapa-múndi: Cinzel, losango, ouro fino'],b:['B · Silêncio de Cristal 3','o HUD B de hoje, enxugado'],c:['C · Bronze Vivo','mais perto do Ashes of Creation']};
+const ST={
+  explorar:{hp:[340,340],mp:[63,63],sp:100},
+  combate:{hp:[253,340],mp:[49,63],sp:62,tg:{n:'Goblin Saqueador',lv:3,p:71,el:'#8ed16a'},cd:1},
+  grupo:{hp:[253,340],mp:[49,63],sp:62,tg:{n:'Goblin Saqueador',lv:3,p:38,el:'#8ed16a'},cd:1,party:1},
+  chefe:{hp:[71,340],mp:[12,63],sp:20,tg:{n:'Gorjal, o Rei Goblin',lv:10,p:57,boss:1},cd:1,party:1,low:1},
+  morte:{hp:[0,340],mp:[49,63],sp:0,dead:1,party:1}};
+const emblem=`<svg viewBox="0 0 72 72"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c2a48"/><stop offset="1" stop-color="#0b1220"/></linearGradient></defs>
+ <path class="e1" d="M36 3 69 36 36 69 3 36Z" fill="url(#g)" stroke="var(--edge)" stroke-width="2"/><path d="M36 10 62 36 36 62 10 36Z" fill="none" stroke="var(--edge)" stroke-opacity=".45"/>
+ <path d="M36 20c-7 0-10 6-10 13 0 6-2 9-4 11h28c-2-2-4-5-4-11 0-7-3-13-10-13Z" fill="var(--acc)"/><circle cx="36" cy="48" r="3.2" fill="var(--acc)"/><path d="M36 16v5" stroke="var(--acc)" stroke-width="2.4" stroke-linecap="round"/></svg>`;
+const SK=[['icon_sword_t05','M1',''],['icon_shield_t05','M2',''],['icon_sword_t08','Q','cd:4,9:.62'],['icon_axe_t05','E',''],['icon_tower_t05','R','cd:12:.3'],['icon_mace_t05','F','nomana'],['','G','empty'],['','X','empty']];
+const PO=[['potion_hp','1',12],['potion_mp','2',8],['potion_sp','3',8],['potion_other','4',3]];
+const PT=[['Lívia','S','#7fe0b0',92,80,''],['Brandão','G','#e0b86a',44,100,''],['Yara','A','#ff9d6a',18,55,'weak'],['Teodoro','M','#8cbcff',0,0,'dead']];
+const bar=(c,p,t)=>`<div class="bar ${c}"><i style="width:${p}%"></i>${t?`<b>${t}</b>`:''}</div>`;
+function hud(st){const d=ST[st],t=d.tg,hp=d.hp[0]/d.hp[1]*100,mp=d.mp[0]/d.mp[1]*100;
+ const slot=([ic,k,f],i)=>{const cd=d.cd&&f.startsWith('cd')?f.split(':'):null,nm=d.low&&i==3||d.cd&&f=='nomana';
+  return `<div class="sl ${cd?'cd':''} ${nm?'nomana':''} ${f=='empty'?'empty':''} ${i==0&&d.cd?'act':''}" ${cd?`style="--cd:${cd[2]*100}%"`:''}>${ic?`<img src="assets/${ic}.png">`:''}<kbd>${k}</kbd>${cd?`<span class="t">${cd[1]}</span>`:''}</div>`};
+ return `<div class="low"></div><div class="hud">
+ <div class="a tl"><div class="hero"><div class="emb">${emblem}<span class="lv">12</span></div><div class="bars">
+   ${bar('hp',hp,d.hp[0]+' / '+d.hp[1])}${bar('mp',mp,d.mp[0]+' / '+d.mp[1])}${bar('sp',d.sp)}
+   <div class="buffs">${d.cd?'<span>🛡<em>24</em></span><span>⚔<em>8</em></span>':''}${d.low?'<span class="bad">☠<em>5</em></span>':''}</div></div></div></div>
+ ${t?`<div class="a tc"><div class="tg ${t.boss?'boss':''}" style="--el:${t.el||''}"><div class="nm"><i></i>${t.n}${t.boss?'<i></i>':` <small>Nv ${t.lv}</small>`}</div>
+   <div class="bar hp"><i style="width:${t.p}%"></i>${t.boss?'<span class="ph" style="left:66%"></span><span class="ph" style="left:33%"></span><span class="cap1"></span><span class="cap2"></span>':''}</div>
+   ${t.boss?`<div class="pct">Nv ${t.lv} · Chefe · ${t.p}%</div><div class="bar cast"><i style="width:64%"></i></div><div class="castl">Golpe do Trono</div>`:`<div class="pct">${t.p}%</div>`}</div></div>`:''}
+ ${d.party?`<div class="a ml"><div class="pt">${PT.map(([n,c,col,h,m,f])=>`<div class="pm ${f}" style="--c:${col}"><span class="ic"><b>${c}</b></span><div><div class="nm">${n}${f=='dead'?' <small>caiu</small>':''}</div>${bar(st=='grupo'?'hp':'hp',h)}${bar('mp',m)}</div></div>`).join('')}</div></div>`:''}
+ <div class="a tr"><div class="mini"><div class="m"></div><div class="f"></div><svg class="fr" viewBox="0 0 100 100"><polygon points="50,1 99,50 50,99 1,50"/><polygon points="50,6 94,50 50,94 6,50" stroke-opacity=".4"/></svg>${d.cd?'<span class="e"></span>':''}<span class="me"></span></div><div class="zone">Vale das Flores-Sino<small>Campo · níveis 1-5</small></div></div>
+ <div class="a bl"><div class="chat"><p><b>[Grupo] Lívia:</b> puxa pra perto do sino</p><p><b>[Sistema]</b> Você alcançou o nível 12!</p><p><b>[Sistema]</b> +999 XP</p><div class="hint">ENTER para falar</div></div></div>
+ <div class="a bc"><div class="toast">${st=='combate'?'':''}</div><div class="hot">${SK.slice(0,2).map(slot).join('')}<span class="sep"></span>${SK.slice(2).map((s,i)=>slot(s,i+2)).join('')}<span class="sep"></span>
+   ${PO.map(([ic,k,q])=>`<div class="sl"><img src="assets/${ic}.png"><kbd>${k}</kbd><span class="q">${q}</span></div>`).join('')}</div>
+   <div class="xp"><span class="d">12</span><div class="bar"><i style="width:37.5%"></i></div><span class="d">13</span></div></div>
+ <div class="a br"><div class="menu"><b>≡</b></div></div>
+ </div>
+ <div class="death"><div><h2>VOCÊ CAIU</h2><div class="ln"></div><p>Derrotado por Gorjal, o Rei Goblin</p><button>Reaparecer no Pouso do Sino <small>4 s</small></button></div></div>`}
+function stage(v){const d=ST[S.s],W=S.r=='1440'?2560:1920,H=W*9/16,ui=(S.ui||(S.r=='1440'?133:100))/100;
+ return `<div class="cell" data-cell><div class="stage ${S.mini?'':'nomini'} ${S.chat?'':'nochat'} ${S.num?'':'nonum'} ${S.mark?'':'nomark'}" data-v="${v}" data-s="${S.s}" style="width:${W}px;height:${H}px;--ui:${ui};--ws:${W/1920}">
+  <img class="bg" src="assets/vale.jpg" alt=""><div class="world"><div class="mob ${d.tg&&d.tg.boss?'boss':''}" ${d.tg?'':'hidden'}><span class="shadow"></span><span class="ring"></span><img src="assets/goblin.png" alt=""><span class="whp"><i style="width:${d.tg?d.tg.p:0}%"></i></span><span class="dmg">37</span></div></div>
+  ${hud(S.s)}</div></div>`}
+function fit(){document.querySelectorAll('[data-cell]').forEach(c=>{const s=c.firstElementChild,w=parseFloat(s.style.width),k=c.clientWidth/w;s.style.transform=`scale(${k})`;c.style.height=parseFloat(s.style.height)*k+'px'})}
+function ring(){document.querySelectorAll('.ring').forEach(r=>{r.classList.remove('go','hold');if(S.ring=='hold'){r.classList.add('hold');return}void r.offsetWidth;r.classList.add('go')})}
+function render(){const w=document.getElementById('wrap'),vs=S.v=='trio'?['a','b','c']:[S.v];w.className='wrap'+(S.v=='trio'?' trio':'');
+ w.innerHTML=vs.map(v=>`<div><div class="cap">${NAMES[v][0]}<small>${NAMES[v][1]}</small></div>${stage(v)}</div>`).join('');
+ document.querySelectorAll('.ctl [data-k]').forEach(b=>b.classList.toggle('on',S[b.dataset.k]==b.dataset.x));
+ const u=document.getElementById('ui');u.value=S.ui||(S.r=='1440'?133:100);document.getElementById('uiv').textContent=u.value+'%';
+ fit();ring()}
+document.querySelector('.ctl').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(!b)return;S[b.dataset.k]=b.dataset.x;if(b.dataset.k=='r')S.ui=0;render()});
+document.querySelectorAll('[data-t]').forEach(c=>{c.checked=S[c.dataset.t];c.onchange=()=>{S[c.dataset.t]=c.checked;render()}});
+document.getElementById('ui').oninput=e=>{S.ui=+e.target.value;render()};
+document.getElementById('again').onclick=ring;
+document.getElementById('wrap').addEventListener('click',e=>{if(e.target.closest('.mob'))ring()});
+addEventListener('resize',fit);render();
+</script>
+</body>
+</html>
