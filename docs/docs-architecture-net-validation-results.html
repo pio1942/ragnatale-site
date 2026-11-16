@@ -27,12 +27,14 @@
 </style>
 <link rel="stylesheet" href="../assets/site.css">
 <link rel="stylesheet" href="../assets/public.css">
+<link rel="stylesheet" href="../assets/wiki.css">
 <script src="../assets/site.js"></script>
 <script src="../assets/public.js" defer></script>
+<script src="../assets/wiki.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
-<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Início</a><a href="../mundo/index.html">Mundo e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../npcs/index.html">NPCs</a><a href="../galeria/index.html">Galeria</a><a href="../docs/index.html" aria-current="page">Documentos</a><a href="../eap/index.html">EAP</a><a href="../noticias/index.html">Notícias</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Visão geral</a><a href="../historia/index.html">História</a><a href="../mundo/index.html">Mundo</a><a href="../personagens/index.html">Personagens e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../itens/index.html">Itens e armamentos</a><a href="../design/index.html" aria-current="page">Design do jogo</a><a href="../audio/index.html">Áudio</a><a href="../workflow/index.html">Produção</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
 <main id="conteudo">
 <section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Arquitetura e ADRs</p><p class="note">Fonte: <code>docs/architecture/net-validation-results.md</code></p><h2>Etapa 3b (ADR-0001 6.3) — Resultados da validação de rede</h2>
 <p>Data: 2026-11-07. Godot 4.7.2 (<code>[removido]</code>), Windows 11, tudo no mesmo PC (127.0.0.1), headless. Código: <code>scripts/net/</code> (<code>server_mover.gd</code>, <code>move_predictor.gd</code>, <code>lag_shim.gd</code>, <code>snapshot_codec.gd</code>, <code>net_config.gd</code>, <code>validation/</code>), testes: <code>tests/net/move_authority_tests.gd</code> (story 003), <code>tests/net/net_validation_tests.gd</code> (story 004), bancada <code>tests/net/world_load_bench.gd</code>. Os dois testes estão no <code>tests/run_all.ps1</code>. Status: <strong>aguardando technical-director/criador</strong>; <strong>dois critérios de tique e um de sobrecarga ficaram ABERTOS</strong> (abaixo), portanto as stories 003/004 <strong>não</strong> foram marcadas Done.</p>
