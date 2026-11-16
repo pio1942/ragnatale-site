@@ -1,0 +1,26 @@
+/* Mapa-múndi interativo (derivado do Mr. Mak, wmap.css). Tokens do site: --panel --line --ink --mute --accent --gold */
+.wm{margin:8px 0 6px}
+.wm-frame{position:relative;border:2px solid var(--gold,#b8925a);border-radius:14px;overflow:hidden;background:#1d3442;box-shadow:0 10px 40px #0005}
+.wm-scroll{overflow:hidden;touch-action:none;max-height:86vh;background:#1d3442}
+.wm-scroll svg{display:block;width:100%;height:auto;cursor:grab;max-height:86vh}
+.wm-scroll.wm-drag svg{cursor:grabbing}
+.wm-tools{position:absolute;top:10px;right:10px;z-index:3;display:flex;flex-direction:column;gap:6px}
+.wm-tools button{width:38px;height:38px;border-radius:8px;border:1px solid #0006;background:#fbf8f0;color:#2f2a26;font-size:19px;line-height:1;cursor:pointer;padding:0}
+.wm-tools button:hover{background:#fff}
+.wm-tip{position:absolute;z-index:4;pointer-events:none;background:#14110d;color:#f3eee3;border:1px solid #b8925a;border-radius:8px;padding:8px 11px;font-size:12px;line-height:1.35;max-width:260px;box-shadow:0 4px 18px #0008}
+.wm-tip b{display:block;font-size:13px}.wm-tip span{color:#d8cfb8}
+.wm-r,.wm-p{cursor:pointer}
+.wm-r:hover path:first-child,.wm-r:focus path:first-child,.wm-r.wm-hl path:first-child,.wm-r.wm-sel path:first-child{fill-opacity:.55;stroke-width:2.6;stroke-dasharray:none}
+.wm-p:hover,.wm-p:focus,.wm-p.wm-hl,.wm-p.wm-sel{filter:drop-shadow(0 0 4px #ffd36a)}
+.wm-r:focus,.wm-p:focus{outline:none}
+.wm-note{margin:10px 2px 14px;font-size:13px;color:var(--mute)}
+.wm-detail{border:1px solid var(--line);border-left:4px solid var(--gold,#b8925a);border-radius:12px;background:var(--panel);padding:14px 18px;margin:12px 0;min-height:64px}
+.wm-detail h3{margin:0 0 2px;font-size:19px}.wm-detail .meta{color:var(--mute);font-size:13px;margin:0 0 6px}.wm-detail p{margin:.3em 0}
+.wm-detail .btn{padding:7px 14px;font-size:14px;margin-top:6px}
+.wm-listbox{border:1px solid var(--line);border-radius:12px;padding:12px 16px;background:var(--panel);margin:12px 0}.wm-listbox summary{cursor:pointer;font-weight:600}
+.wm-listbox h3{font-size:14px;margin:16px 0 8px}
+.wm-index{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px}
+.wm-index a{display:flex;flex-direction:column;padding:8px 10px;border:1px solid var(--line);border-radius:8px;text-decoration:none;color:inherit}
+.wm-index a:hover,.wm-index a.wm-hl{border-color:var(--gold,#b8925a);background:color-mix(in srgb,var(--gold,#b8925a) 12%,transparent)}
+.wm-index small{color:var(--mute);font-size:12px}
+@media(max-width:700px){.wm-scroll svg{max-height:74vh}.wm-tools button{width:42px;height:42px}}
