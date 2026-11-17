@@ -83,3 +83,20 @@
 .bz-drop{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:6px 10px;background:var(--panel)}.bz-drop span:last-child{margin-left:auto;color:var(--mute);font-size:14px}
 .bz-ico{display:inline-block;width:48px;height:48px;flex:none;border-radius:8px;background:var(--chip)}img.bz-ico{object-fit:contain}
 .bz-ihead{display:flex;gap:12px;align-items:center}.bz-ihead h3{margin:0}.wk-pre{white-space:pre-wrap;font-size:12px;background:var(--panel);padding:10px;border-radius:8px;overflow:auto}
+
+/* árvore de evolução por classe (personagens) */
+.wk-class-h{display:flex;gap:14px;align-items:flex-start}.wk-class-h>div{flex:1;min-width:0}
+.wk-class-emb{flex:0 0 72px;width:72px}.wk-class-emb img{width:72px;height:auto;border-radius:10px}
+.wk-sw{display:inline-block;width:.85em;height:.85em;border-radius:3px;vertical-align:-1px;margin-right:4px;border:1px solid var(--line)}
+.wk-evo-wrap{margin-top:12px}.wk-evo-wrap h4{margin:0 0 6px;font-size:.95rem}
+.wk-evo-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px}
+.wk-evo{display:grid;grid-template-columns:repeat(7,minmax(108px,1fr));gap:8px;min-width:800px}
+.wk-evo-h{font-size:.78rem;font-weight:700;text-align:center;opacity:.8}.wk-evo-h small{display:block;font-weight:400}
+.wk-evo-n{border:1px solid var(--line);border-radius:10px;padding:6px;display:flex;flex-direction:column;gap:3px;font-size:.8rem;align-self:center}
+.wk-evo-n.r-a{border-top:3px solid #e4a94a}.wk-evo-n.r-b{border-top:3px solid #78b0a4}
+.wk-evo-n small{opacity:.7;font-size:.72rem}
+.wk-evo-slot{aspect-ratio:4/5;border-radius:8px;background:rgba(127,127,127,.12);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.wk-evo-slot .wk-pic{display:block;width:100%;height:100%;margin:0}.wk-evo-slot img{width:100%;height:100%;object-fit:cover;display:block}
+.wk-evo-cap{position:absolute;left:0;right:0;bottom:0;background:rgba(10,8,18,.72);color:#f3e9c8;font-size:.66rem;text-align:center;padding:2px}
+.wk-evo-empty{font-size:.7rem;opacity:.55}
+.wk-evo-paths{font-size:.82rem;margin:.4em 0 0}.wk-evo-paths .r-a{color:#c98a28}.wk-evo-paths .r-b{color:#4f9487}

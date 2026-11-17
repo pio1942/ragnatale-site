@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Monstros provisórios Quaternius (CC0): par por espécie e povoamento do Vale (2026-11-17) | Ragna Tale</title>
+<meta name="description" content="Monstros provisórios Quaternius (CC0): par por espécie e povoamento do Vale (2026-11-17): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-gdd-monstros-provisorios-quaternius.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-gdd-monstros-provisorios-quaternius.html">
+<meta property="og:title" content="Monstros provisórios Quaternius (CC0): par por espécie e povoamento do Vale (2026-11-17) | Ragna Tale">
+<meta property="og:description" content="Monstros provisórios Quaternius (CC0): par por espécie e povoamento do Vale (2026-11-17): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Monstros provisórios Quaternius (CC0): par por espécie e povoamento do Vale (2026-11-17) | Ragna Tale">
+<meta name="twitter:description" content="Monstros provisórios Quaternius (CC0): par por espécie e povoamento do Vale (2026-11-17): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<link rel="stylesheet" href="../assets/wiki.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+<script src="../assets/wiki.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Visão geral</a><a href="../historia/index.html">História</a><a href="../mundo/index.html">Mundo</a><a href="../personagens/index.html">Personagens e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../itens/index.html">Itens e armamentos</a><a href="../design/index.html" aria-current="page">Design do jogo</a><a href="../audio/index.html">Áudio</a><a href="../workflow/index.html">Produção</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/gdd/monstros-provisorios-quaternius.md</code></p><h2>Monstros provisórios Quaternius (CC0): par por espécie e povoamento do Vale (2026-11-17)</h2>
+<blockquote>Planilha: <code>monstros-provisorios-quaternius.csv</code> (40 espécies). Fontes: <code>monster-spawn-distribution.md/.csv</code>, <code>monsters.md</code> 3.3, <code>world-bible.md</code>,<br><code>design/world/vale-rotas-e-limites-v1.md</code>. Pacotes: <code>unity/Assets/_Game/Art/ThirdParty/Quaternius/UltimateMonsters</code> (50 FBX: Big 16, Blob 17, Flying 17)<br>e <code>LowpolyAnimatedMonsters</code> (Bat, Dragon, Skeleton, Slime). Só leitura; nada em <code>unity/</code> foi alterado. Status: <strong>proposta</strong>.</blockquote>
+<h3>1. Veredito</h3>
+<p><strong>O Vale pode ser povoado hoje, com as 4 espécies oficiais e par bom</strong>: goblin e veterano = Big/Orc e Big/Orc_Skull; Gosma-Mel = LowPoly Slime; Lebre = Big/Bunny (falta o chifre). 23 das 40 espécies têm par A ou B; 8 não têm par (besouros, caracol, furão, lagarta, Colosso). Nenhum monstro dos 2 primeiros mapas contraria o tom "fofo-ameaçador" (<code>world-bible.md</code>: Z02-Z04 são fofos de propósito); o desacordo começa no nível 11+.</p>
+<h3>2. Armadilhas técnicas (medidas nos FBX)</h3>
+<ol><li><strong>Ultimate Monsters usa 1 material só ("Atlas") com textura-paleta</strong> (<code>Atlas_Monsters.png</code>): não há recolor por material. Recolor = cópia do Atlas por espécie com as amostras de cor trocadas (o <em>Color Guide.png</em> mostra 3 a 11 amostras por modelo) ou um shader de troca de paleta. Isto é trabalho de Unity/Blender, não feito aqui. <strong>Bat, Dragon, Slime e Skeleton têm materiais separados</strong> (Bat: Main/Belly/Eyes/Nose/Black; Slime: Body/Eyes): recolor direto.</li><li><strong>Clipes</strong> (todos no mesmo FBX, prefixo <code>CharacterArmature|</code>):</li><li><strong>Big</strong>: Idle, Walk, Run, Punch, Weapon, HitReact, Death, Jump, Jump_Idle, Jump_Land, Duck, Wave, Yes, No.</li><li><strong>Blob</strong>: Idle, Walk, Bite_Front, HitRecieve (sic), Death, Jump, Dance, Yes, No.</li><li><strong>Flying</strong>: Flying_Idle, Fast_Flying, Punch, Headbutt, HitReact, Death, Yes, No (sem Walk: Fast_Flying faz de perseguição).</li><li><strong>LowPoly</strong>: Slime = Idle/Walk/Attack/Death (sem Hit); Skeleton = Idle/Running/Attack/Death/Spawn (sem Walk e Hit); Bat e Dragon = Flying/Attack/Hit/Death (sem Idle). Todos têm idle, ataque e morte; <strong>hit falta</strong> no Slime e no Skeleton (resolver com flinch por código, escala/tremor de 0,15 s).</li><li><strong>Escala:</strong> valor bruto de cada FBX não foi medido (sem abrir o Unity); a planilha dá <strong>altura-alvo em metros</strong> (herói ~1,8 m). Escala = alvo ÷ altura nativa, calibrar uma vez por modelo no Editor.</li><li><strong>Olhos grandes e boca aberta</strong> são a assinatura do pacote: combinam com Z02-Z04, brigam com "feio = perigoso" a partir de Z05. Quaternius é provisório até o 3D definitivo.</li></ol>
+<h3>3. Paleta do Vale (sem neon)</h3>
+<p>Família do mapa: verde-musgo, laranja e amarelo-mel quentes; <strong>azul-campânula só como acento raro</strong> (cristal, bandana, chifre). Regras: saturação das amostras originais cai ~20% (o pacote vem em verde/rosa/azul-elétrico), valor um pouco acima do chão (personagem mais claro que o terreno, <code>project_cores_vivas_personagens</code>), sem verde-limão puro nem rosa. Cores-alvo na planilha (coluna <code>recolor</code>); resumo do Vale:</p>
+<div class="tablewrap"><table><tr><th>Espécie</th><th>Cores</th></tr><tr><td>goblin_raider</td><td>pele #7A9A4A, crista/bandana #8B3A2A, clava #6B4A2E</td></tr><tr><td>goblin_raider_veteran</td><td>pele #8A8F4A, couro #A5522E, faixa azul #3E5F8F</td></tr><tr><td>honey_slime</td><td>corpo mel #D9A23A translúcido, olhos originais</td></tr><tr><td>horned_hare</td><td>pelo #E8A560, barriga #F2EBDD, chifre #5F8FD0 (a modelar)</td></tr></table></div>
+<h3>4. Plano de povoamento: Vale das Flores-Sino (nível 1-5)</h3>
+<p>Coerente com a distribuição oficial (36 vivos: goblin M12, gosma M12, lebre m8, veterano p4; HS-1 mais 10). Sem espécies fora das 4: <strong>bristle_bee, spore_shooter e o restante são de <code>plundered_hives</code></strong> (mapa-casa); trazê-los ao Vale violaria "1 casa + até 2 extras vizinhos" e mataria a identidade da próxima etapa.</p>
+<div class="tablewrap"><table><tr><th>Espécie</th><th>Modelo</th><th>Nível</th><th>Reaparecimento</th></tr><tr><td>goblin_raider</td><td>Big/Orc</td><td>1 (2 em ligação)</td><td>15 s</td></tr><tr><td>honey_slime</td><td>LowPoly Slime</td><td>2-3</td><td>25 s (bando)</td></tr><tr><td>horned_hare</td><td>Big/Bunny + chifre</td><td>3-4</td><td>20 s</td></tr><tr><td>goblin_raider_veteran</td><td>Big/Orc_Skull</td><td>5</td><td>20 s</td></tr></table></div>
+<div class="tablewrap"><table><tr><th>Ponto</th><th>Posição (m)</th><th>Bando</th><th>Nível</th></tr><tr><td>SP-1 Primeiro Barranco</td><td>140, 70</td><td>4 goblin (2+2, <code>pack_max</code> 2)</td><td>1</td></tr><tr><td>L1 Sentinelas do Vau</td><td>190, 117</td><td>2 goblin</td><td>1-2</td></tr><tr><td>SP-2 Prado das Campânulas</td><td>250, 110</td><td>4 gosma</td><td>2</td></tr><tr><td>SP-7 Lago e Lynn</td><td>254, 163</td><td>2 gosma</td><td>2-3</td></tr><tr><td>SP-4 Tocas da Lebre</td><td>260, 220</td><td>4 lebre</td><td>3-4</td></tr><tr><td>SP-6 Acampamento</td><td>190, 270</td><td>3 veterano</td><td>5</td></tr><tr><td>SP-5 (oeste, perto da Fazenda)</td><td>a confirmar na planta</td><td>2 goblin + 2 veterano</td><td>1 e 5 (<strong>misto</strong>)</td></tr><tr><td>SP-3 (oeste)</td><td>a confirmar na planta</td><td>3 gosma</td><td>2-3</td></tr><tr><td>L2 Cruzamento / L3 Portão / L4 Ponte</td><td>148,139 / 100,200 / 174,193</td><td>2 gosma / 2 lebre / 2 lebre</td><td>2-4</td></tr><tr><td>HS-1 Fazenda (disputado)</td><td>118, 146</td><td>6 goblin + 4 gosma, 30 s um a um</td><td>1-2</td></tr></table></div>
+<p>Soma: SP 24 + L 8 + HS 10 = <strong>42 vivos</strong> (mantém a conta de <code>vale-rotas-e-limites-v1.md</code>; pendência do criador: HS-1 de 10 para 8 ou meta do Vale 42). Por espécie: goblin 14, gosma 15, lebre 8, veterano 5. Pior trecho sem bando à vista 10 s, a regra de 15 s do pilar fica cumprida pela malha da rota; nada muda com o provisório. Os SP-3 e SP-5 só têm posição na planta de rotas v3; confirmar ao importar.</p>
+<p>Ordem para não travar: <strong>1)</strong> goblin + Slime (já cobre a chegada e o 1º bando), <strong>2)</strong> Bunny sem chifre (chifre depois), <strong>3)</strong> Orc_Skull recolorido. Elite/chefe do Vale (Rei Gorjal) fica em <code>gorjal_camp</code>, fora desta rodada.</p>
+<h3>5. O que contraria o tom (marcado na coluna <code>tom</code>)</h3>
+<ul><li><strong>Fofo demais:</strong> <code>bark_badger</code> e <code>moor_hound</code> (Blob/Dog), <code>grass_lynx</code> (Blob/Cat), <code>brook_otter</code> (Blob/Fish), <code>kite_hawk</code> (Pigeon). Aceitável só até o nível ~8.</li><li><strong>Fofo, mas dentro do tom Z02-Z04:</strong> Slime, Bunny, Mushnub, Birb, Ghost. Não mexer.</li><li><strong>Fora de tema:</strong> o chapéu sombrero do Cactoro (esconder o submesh), Alien, Ninja, Wizard, Cat, Chicken, Pigeon (não usados).</li><li><strong>Pacote sem peso "feio = perigoso":</strong> nada em Quaternius serve para Z05+ além de Demon, Dragon, Skeleton, Yeti; chefes e monstros do meio do jogo precisam de arte própria.</li><li><strong>Sem par:</strong> pebble_beetle (e cobre), stone_snail, charcoal_beetle, smoke_ferret, silt_crawler, crystal_colossus.</li></ul>
+<h3>6. Próximos passos (não feitos aqui)</h3>
+<p>Cópia do Atlas com paleta do Vale para os 4 modelos; prefab por espécie (Animator com idle/walk/attack/hit/death mapeados ao <code>GameSim</code>); chifre da lebre; ajuste de escala no Editor.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>
