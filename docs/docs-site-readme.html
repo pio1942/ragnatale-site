@@ -20,6 +20,7 @@
 <meta name="twitter:title" content="Site oficial (local, não publicado) | Ragna Tale">
 <meta name="twitter:description" content="Site oficial (local, não publicado): documento de design do Ragna Tale.">
 <meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
 <style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
 :root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
@@ -28,9 +29,11 @@
 <link rel="stylesheet" href="../assets/site.css">
 <link rel="stylesheet" href="../assets/public.css">
 <link rel="stylesheet" href="../assets/wiki.css">
+<link rel="stylesheet" href="../assets/vitrine.css">
 <script src="../assets/site.js"></script>
 <script src="../assets/public.js" defer></script>
 <script src="../assets/wiki.js" defer></script>
+<script src="../assets/vitrine.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
@@ -59,7 +62,10 @@
 <h3>Workflow (<code>/workflow/</code>)</h3>
 <p><code>python tools/site/workflow.py</code> (também chamado por <code>build_site.py</code> e <code>publish_pages.py</code>) gera a página com abas: Painel do dia (Agora, Próximos, Esperando o criador com imagens, Feitos; lido de <code>ragnatale-workspace/live/status.json</code>, com cópia versionada em <code>tools/site/workflow_data/</code>), Timeline do MVP e progresso por área (<code>docs/EAP-progresso.json</code>), Mapas e cenas (prontos / em produção / próximos, capturas de <code>production/qa/evidence/</code>, história de <code>design/world/historias/</code>), Conteúdo (links para o Codex), Devlog por dia (git log, miniaturas e pares antes/depois) e Comentários. Imagens: WebP 480 px (miniatura) e 1200 px (zoom), ~15 MB. Comentar = botão que abre uma issue pré-preenchida em <code>pio1942/ragnatale-site</code> (grátis, sem servidor; exige login no GitHub). Para publicar: <code>python tools/site/publish_pages.py --push</code> (precisa do sim do criador).</p>
 <h3>Wiki oficial (menu único, 15/11)</h3>
-<p><code>tools/site/wiki.py</code> (menu, Início, índices, busca) e <code>tools/site/wiki_pages.py</code> (conteúdo) são chamados por <code>publish_pages.py</code>. Páginas: Visão geral, História, Mundo (Ermândia), Personagens e classes (8 classes iniciais), Bestiário, Itens e armamentos, Design do jogo (Mecânicas, Habilidades, Magias e efeitos, Interface e HUD, Animações, Arte e imersão), Áudio e Produção (Workflow). Tudo vem dos dados e documentos vigentes (<code>data/json</code>, <code>design/<em>*</code>, <code>docs/DECISIONS.md</code>, <code>production/retrato-mvp-</em>.md</code>, evidências recentes); nada de conceito antigo, proposta superada ou placeholder. Conferência: <code>python tools/site/check_links.py</code>.</p></div></section>
+<p><code>tools/site/wiki.py</code> (menu, Início, índices, busca) e <code>tools/site/wiki_pages.py</code> (conteúdo) são chamados por <code>publish_pages.py</code>. Páginas: Visão geral, História, Mundo (Ermândia), Personagens e classes (8 classes iniciais), Bestiário, Itens e armamentos, Design do jogo (Mecânicas, Habilidades, Magias e efeitos, Interface e HUD, Animações, Arte e imersão), Áudio e Produção (Workflow). Tudo vem dos dados e documentos vigentes (<code>data/json</code>, <code>design/<em>*</code>, <code>docs/DECISIONS.md</code>, <code>production/retrato-mvp-</em>.md</code>, evidências recentes); nada de conceito antigo, proposta superada ou placeholder. Conferência: <code>python tools/site/check_links.py</code>.</p>
+<h3>Vitrine: cartões uniformes, vídeos em loop e interação (17/11)</h3>
+<p><code>tools/site/vitrine.py</code> + <code>static/vitrine.css</code> + <code>static/vitrine.js</code> (sem biblioteca), usados por <code>wiki_pages.py</code> e <code>publish_pages.py</code>: cartões de proporção fixa por tipo com selo de estado (No jogo, Em produção, Conceito, Provisório), vídeos sempre em loop (<code>autoplay muted loop playsinline</code>; pausam fora da tela; clique amplia), comparador deslizante, filtros por etiqueta, painel da forma na árvore de evolução (clique na forma: imagem grande do traje, caminho A/B, masculino/feminino, setas trocam de forma), simulador de drop e sons com player. Onde aparece: Início (vídeos), Personagens (filtro por classe, S1 x S6, faixa S1-S6, Sala das Classes), Itens (estilo Priston, trajes até o 60, folhas), Bestiário (monstros do Vale), Mundo (rotas do Vale), Interface (telas C/I/K/M), Animações e Galeria (todos os vídeos), Áudio (amostra de SFX).</p>
+<p>Vídeos: <code>VIDEOS</code> em <code>vitrine.py</code> aponta para <code>production/qa/evidence/**.mp4</code>; <code>python tools/site/vitrine.py</code> converte um por vez (H.264 mp4 + VP9 webm, sem áudio, até 720p e 4 MB, pôster WebP) para <code>site/media_cache/</code> (fora do git) e o build copia para <code>media/</code>. Ver o pacote: <code>preview_start</code> com <code>site-publico</code> (porta 8919).</p></div></section>
 </main>
 <footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
 <div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
