@@ -31,8 +31,8 @@
 .vt-fade{animation:vt-in .28s ease both}@keyframes vt-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 /* comparador deslizante */
-.vt-cmp{position:relative;width:100%;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#15131c;user-select:none;touch-action:pan-y}
-.vt-cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.vt-cmp{position:relative;width:100%;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#c9c9cc;user-select:none;touch-action:pan-y}
+.vt-cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
 .vt-cmp img.top{clip-path:inset(0 calc(100% - var(--p)) 0 0)}
 .vt-cmp-line{position:absolute;top:0;bottom:0;left:var(--p);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.35);pointer-events:none}
 .vt-cmp-line::after{content:"◂ ▸";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;color:#221b12;font-size:.72rem;border-radius:99px;padding:6px 8px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.4)}
