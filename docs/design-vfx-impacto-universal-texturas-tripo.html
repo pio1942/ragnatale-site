@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Impacto de acerto universal — texturas para gerar no canvas da Tripo | Ragna Tale</title>
+<meta name="description" content="Impacto de acerto universal — texturas para gerar no canvas da Tripo: documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-vfx-impacto-universal-texturas-tripo.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-vfx-impacto-universal-texturas-tripo.html">
+<meta property="og:title" content="Impacto de acerto universal — texturas para gerar no canvas da Tripo | Ragna Tale">
+<meta property="og:description" content="Impacto de acerto universal — texturas para gerar no canvas da Tripo: documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Impacto de acerto universal — texturas para gerar no canvas da Tripo | Ragna Tale">
+<meta name="twitter:description" content="Impacto de acerto universal — texturas para gerar no canvas da Tripo: documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<link rel="stylesheet" href="../assets/wiki.css">
+<link rel="stylesheet" href="../assets/vitrine.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+<script src="../assets/wiki.js" defer></script>
+<script src="../assets/vitrine.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Visão geral</a><a href="../historia/index.html">História</a><a href="../mundo/index.html">Mundo</a><a href="../personagens/index.html">Personagens e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../itens/index.html">Itens e armamentos</a><a href="../design/index.html" aria-current="page">Design do jogo</a><a href="../audio/index.html">Áudio</a><a href="../workflow/index.html">Produção</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/vfx/impacto-universal-texturas-tripo.md</code></p><h2>Impacto de acerto universal — texturas para gerar no canvas da Tripo</h2>
+<p>Frente: VFX e magia (<code>docs/frentes/vfx-magia.md</code>). Data: 2026-11-19. Motivo: cinco voltas com textura feita em código não passaram no crivo (núcleo de 33 px, faísca de 1–2 px). As texturas abaixo substituem as de código em <code>ImpactVfxPlayer</code>.</p>
+<h3>Regras para todas</h3>
+<ul><li>Quadrado 1:1, exportar no maior tamanho (2048 px ou mais), PNG.</li><li><strong>Fundo preto puro <code>#000000</code></strong>, sem chão, sem personagem, sem texto, sem moldura, sem marca-d'água.</li><li>Forma <strong>branca / cinza-claro</strong> (a cor do elemento é aplicada no jogo: uma textura serve aos 9 elementos). Só a nº 6 é colorida.</li><li>Forma centrada, com folga de ~10% até a borda (nada cortado).</li><li>Estilo: pintado à mão, traço grosso e legível de longe (Diablo IV / Lost Ark), não fotorrealista, sem lens flare.</li><li>Gerar 4 variações de cada e salvar em <code>[removido]</code> com o nome indicado (<code>_a</code>, <code>_b</code>...).</li></ul>
+<h3>1. Imagem-alvo (referência, não vai para o jogo) — <code>alvo_impacto.png</code></h3>
+<blockquote>Isometric action RPG screenshot, top-down 45 degree camera, a warrior's sword striking a goblin, at the contact point a bold hit impact effect: bright white-hot starburst flash about the size of the goblin's torso, 6 to 8 thick chunky sparks flying outward in a cone away from the attacker, tiny dust puff at the feet, dark fantasy meadow ground, stylized hand-painted game art in the style of Diablo IV and Lost Ark, high contrast, readable silhouette, no UI, no text</blockquote>
+<h3>2. Clarão de contato — <code>clarao.png</code></h3>
+<blockquote>Game VFX texture, single hit impact flash, asymmetric starburst with 5 thick tapered spikes of uneven length and a solid bright core, hand-painted stylized, pure white and light gray on pure black background (#000000), centered, soft falloff at the tips, no lens flare, no rings, no text, for additive rendering, square</blockquote>
+<h3>3. Estilhaços / faíscas (grade 2×2) — <code>faiscas_2x2.png</code></h3>
+<blockquote>Game VFX sprite sheet, 2x2 grid of four different spark streak sprites, each a thick tapered comet-shaped streak pointing up, bright head and fading tail, slightly bent, chunky and readable, hand-painted stylized, pure white on pure black background (#000000), each sprite centered in its cell with margin, no overlap between cells, no grid lines, no text, for additive rendering, square</blockquote>
+<h3>4. Explosão animada (grade 4×4, 16 quadros) — <code>impacto_flipbook_4x4.png</code></h3>
+<blockquote>Game VFX flipbook sprite sheet, 4x4 grid, 16 sequential frames read left to right and top to bottom of a single melee hit impact burst: frame 1 small bright core, frames 2-4 starburst expanding fast with thick spikes, frames 5-10 spikes breaking into chunky shards flying outward, frames 11-16 shards thinning and fading to black, same center in every cell, hand-painted stylized, pure white and light gray on pure black background (#000000), no grid lines, no text, for additive rendering, square</blockquote>
+<h3>5. Golpe resistido (desvio) — <code>resistido_arco.png</code></h3>
+<blockquote>Game VFX texture, deflected blow glint, a single thick curved arc like a shield edge catching light, crescent shape opening downward, bright in the middle and fading at both ends, two tiny dull sparks bouncing off, hand-painted stylized, pure white and gray on pure black background (#000000), centered, no text, for additive rendering, square</blockquote>
+<h3>6. Brasas (única colorida, grade 2×2) — <code>brasas_2x2.png</code></h3>
+<blockquote>Game VFX sprite sheet, 2x2 grid of four different glowing ember sprites, irregular small burning coal fragments with a hot amber core (#F2B347) and forge-orange edge (#E8742A), short flame lick on each, hand-painted stylized, on pure black background (#000000), each centered in its cell with margin, no grid lines, no text, for additive rendering, square</blockquote>
+<h3>7. Poeira de chão (alfa, para chão claro) — <code>poeira_2x2.png</code></h3>
+<blockquote>Game VFX sprite sheet, 2x2 grid of four different small dust puff sprites, soft billowy cloud shapes with clear painted edges, hand-painted stylized, light gray on pure black background (#000000), each centered in its cell with margin, no grid lines, no text, square</blockquote>
+<h3>Ordem de prioridade</h3>
+<p>1 (alvo) → 2 → 3 → 5 primeiro; 4, 6 e 7 em seguida. Com 2, 3 e 5 já dá para refazer a volta 6.</p>
+<h3>O que acontece depois</h3>
+<p>Recorte das grades por script, brilho vira alfa para a nº 7, troca no <code>ImpactVfxPlayer</code>, captura a 60 fps nos dois chãos e crivo independente.</p></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>
