@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Motor de VFX e magias — especificação (v1, proposta) | Ragna Tale</title>
+<meta name="description" content="Motor de VFX e magias — especificação (v1, proposta): documento de design do Ragna Tale.">
+<link rel="canonical" href="https://pio1942.github.io/ragnatale-site/docs/design-vfx-motor-de-vfx.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ragna Tale">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://pio1942.github.io/ragnatale-site/docs/design-vfx-motor-de-vfx.html">
+<meta property="og:title" content="Motor de VFX e magias — especificação (v1, proposta) | Ragna Tale">
+<meta property="og:description" content="Motor de VFX e magias — especificação (v1, proposta): documento de design do Ragna Tale.">
+<meta property="og:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Motor de VFX e magias — especificação (v1, proposta) | Ragna Tale">
+<meta name="twitter:description" content="Motor de VFX e magias — especificação (v1, proposta): documento de design do Ragna Tale.">
+<meta name="twitter:image" content="https://pio1942.github.io/ragnatale-site/img/og/inicio.jpg">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<style>:root{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}}
+:root[data-theme="dark"]{--bg:#14121A;--panel:#1D1A27;--ink:#EDE6D8;--mute:#ABA2B4;--line:#352F45;--accent:#F08A5A;--accent2:#5FD0CC;--chip:#2A2536;--gold:#E2B84A;--crystal:#7FD0FF;}
+:root[data-theme="light"]{--bg:#F6EFDF;--panel:#FFFBF0;--ink:#2A2118;--mute:#655842;--line:#DCCDAF;--accent:#B8481A;--accent2:#1F7F7C;--chip:#EFE3C8;--gold:#B9892A;--crystal:#2E8FC4;}
+</style>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="stylesheet" href="../assets/public.css">
+<link rel="stylesheet" href="../assets/wiki.css">
+<link rel="stylesheet" href="../assets/vitrine.css">
+<script src="../assets/site.js"></script>
+<script src="../assets/public.js" defer></script>
+<script src="../assets/wiki.js" defer></script>
+<script src="../assets/vitrine.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="sb"><div class="wrap"><a class="sb-brand" href="../index.html" aria-label="Ragna Tale, página inicial">Ragna Tale</a><button type="button" id="sb-menu" aria-expanded="false" aria-controls="sb-links">Menu</button><div class="sb-links" id="sb-links" role="navigation" aria-label="Principal"><a href="../index.html">Visão geral</a><a href="../historia/index.html">História</a><a href="../mundo/index.html">Mundo</a><a href="../personagens/index.html">Personagens e classes</a><a href="../bestiario/index.html">Bestiário</a><a href="../itens/index.html">Itens e armamentos</a><a href="../design/index.html" aria-current="page">Design do jogo</a><a href="../audio/index.html">Áudio</a><a href="../workflow/index.html">Produção</a></div><button type="button" id="sb-theme" aria-pressed="false" title="Alternar tema claro/escuro">Tema</button></div></div>
+<main id="conteudo">
+<section><div class="wrap prose docpage"><p class="kicker"><a href="index.html">Documentos</a> &middot; Design</p><p class="note">Fonte: <code>design/vfx/motor-de-vfx.md</code></p><h2>Motor de VFX e magias — especificação (v1, proposta)</h2>
+<p>Frente: VFX e magia (<code>docs/frentes/vfx-magia.md</code>). Data: 2026-11-19. Estado: <strong>formato aprovado pelo criador em 2026-11-19</strong> (molde + receita em dados); itens 2 e 3 do §6 seguem a recomendação até ele dizer o contrário. Motivo: o impacto de acerto universal levou 8 voltas artesanais. Com ~84 ativas das formas 1–3, 12 classes, 9 elementos e a biblioteca de status, efeito feito um a um não fecha o MVP. Este documento define a linha de produção.</p>
+<h3>1. Ideia em uma frase</h3>
+<p>Toda magia é <strong>molde + elemento + parâmetros</strong>, descrita em <strong>dados</strong>, tocada por <strong>um tocador único</strong>, montada com <strong>peças brancas reutilizáveis</strong> e aprovada por uma <strong>fábrica de prova</strong> automática. Nenhuma magia tem código próprio.</p>
+<p>Paralelo com as outras frentes: personagens (roteiro → Tripo → oficina), animação (clipe → marcador de contato), terreno (planta CAD → cena gerada). Aqui: <strong>receita → peças → tocador → prova</strong>.</p>
+<h3>2. As cinco partes</h3>
+<h4>2.1 Biblioteca de peças (<code>Resources/Vfx/Pecas/</code>)</h4>
+<p>Texturas <strong>brancas com alfa</strong>, organizadas por <strong>forma</strong>, nunca por magia. A cor vem do elemento no jogo; uma peça serve aos 9.</p>
+<div class="tablewrap"><table><tr><th>Família</th><th>Exemplos</th><th>Origem</th></tr><tr><td>clarão</td><td>estrela de 5 pontas, disco, cruz</td><td>Tripo Canvas</td></tr><tr><td>risco</td><td>faísca, estilhaço, lasca, gota</td><td>Tripo Canvas (folha 4×4 montada por script)</td></tr><tr><td>arco</td><td>corte, crescente, desvio</td><td>Tripo Canvas</td></tr><tr><td>chão</td><td>anel, runa, rachadura, poça</td><td>Tripo Canvas</td></tr><tr><td>volume</td><td>fumaça, poeira, chama, névoa</td><td>Tripo (quadros-chave) ou Blender assado em flipbook</td></tr><tr><td>feixe</td><td>raio, corrente, rastro</td><td>código (malha/Trail) + textura de ruído</td></tr><tr><td>corpo</td><td>contorno, aura, escudo</td><td>shader (<code>RagnaHitFlash</code> e derivados)</td></tr></table></div>
+<p>Regras de entrada de uma peça: fundo preto puro na origem, preparada por <code>tools/unity/vfx_impacto_texturas.py</code> (luma → alfa, centralizada, 512 px), registrada em <code>docs/ASSETS.md</code>, conferida em fundo claro e escuro. Nada do Asset Store/Fab como entrada. Meta: <strong>~40 peças</strong> cobrem o MVP. Peça nova só quando nenhuma existente serve.</p>
+<h4>2.2 Moldes</h4>
+<p>Seis moldes. Cada um fixa a anatomia (camadas e ordem no tempo); a receita só preenche.</p>
+<div class="tablewrap"><table><tr><th>Molde</th><th>Anatomia fixa</th><th>Usa em</th></tr><tr><td><strong>Impacto</strong></td><td>clarão (2–3 quadros) → riscos em cone → contorno do alvo → resto no chão</td><td>todo acerto; chegada de projétil</td></tr><tr><td><strong>Projétil</strong></td><td>núcleo → cauda → rastro; ao chegar chama um Impacto</td><td>flecha, orbe, bola de fogo, lança</td></tr><tr><td><strong>Área</strong></td><td>telégrafo (contorno + preenchimento de tempo) → erupção → resíduo</td><td>as 6 formas da Sim (<code>AreaShapeKind</code>)</td></tr><tr><td><strong>Estado</strong></td><td>marca no corpo (≤ 1 m acima da cabeça) em laço → fim</td><td>lento, atordoado, queimadura, escudo, cura contínua</td></tr><tr><td><strong>Canal</strong></td><td>feixe origem→alvo em laço, com pulso</td><td>corrente do Carrasco, dreno, cura canalizada</td></tr><tr><td><strong>Surgimento</strong></td><td>sinal no chão → coluna/brotar → assentar</td><td>invocação, subir de nível, evolução, cristal, portal</td></tr></table></div>
+<p>O Impacto já existe (é o que está em obra). Os outros reaproveitam <code>AreaVfx*</code>, <code>StateVfx*</code> e <code>ClassVfx</code> como ponto de partida.</p>
+<h4>2.3 Receita (dados)</h4>
+<p>Um arquivo JSON por efeito em <code>unity/Assets/_Game/Resources/Vfx/Receitas/&lt;id&gt;.json</code>, id estável = nome do arquivo, igual ao resto do projeto. Exemplo (o impacto atual):</p>
+<p>``<code>json { "id": "impacto_universal", "molde": "impacto", "elemento": "do_evento", "gatilho": "HitLanded", "ancora": "corpo_do_alvo", "variantes": { "normal":    { "escala": 1.0,  "riscos": 8 }, "forte":     { "escala": 1.55, "riscos": 12 }, "resistido": { "troca": { "clarao": "arco_desvio" }, "riscos": 2 } }, "camadas": [ { "peca": "clarao_estrela_a", "tamanho_px": 64, "vida_s": 0.08, "curva": "pico_e_encolhe", "cor": "nucleo" }, { "peca": "halo_macio",       "tamanho_px": 80, "vida_s": 0.06, "alfa": 0.22, "mistura": "aditiva", "cor": "base" }, { "peca": "riscos_4x4",       "tamanho_px": [5, 22], "vida_s": [0.16, 0.28], "cone_graus": 70, "direcao": "para_longe_do_atacante" }, { "peca": "contorno_alvo",    "vida_s": 0.05 } ], "som": "hit_&lt;elemento&gt;", "upgrades": { "riscos": "+2 por nível", "escala": "+4% por nível" } } </code>``</p>
+<p>Decisões do formato:</p>
+<ul><li><strong>Tamanho em pixels na tela</strong> (a 1280×720 no zoom padrão), não em metros. O tocador converte. Foi a lição nº 1 do impacto.</li><li><strong>Cor nunca é hex na receita</strong>: só papéis (<code>nucleo</code>, <code>base</code>, <code>borda</code>) resolvidos pela paleta do elemento e, se pedido, da classe.</li><li><strong>Variantes e upgrades são parâmetros</strong> (contagem, escala, atraso, espalhamento), como no fluxo do Can It Code?.</li><li><strong>Gatilho</strong> é sempre um evento que já existe (Sim ou ponte de animação). O VFX não cria regra de jogo.</li></ul>
+<h4>2.4 Tocador único (<code>VfxPlayer</code>)</h4>
+<p>Generalização do <code>ImpactVfxPlayer</code>: lê a receita, monta os emissores a partir de um <strong>pool</strong>, aplica a paleta e toca. Limites embutidos, impossíveis de furar pela receita:</p>
+<ul><li>≤ 48 partículas vivas por efeito e ~200 por herói; se estourar, o tocador corta as camadas de menor prioridade.</li><li>Cor &lt; 1,0 (sem HDR), sem luz dinâmica; mistura aditiva ou alfa; borda escura automática quando o chão é claro.</li><li>Duração máxima por molde (Impacto ≤ 0,35 s; Estado em laço com fim limpo).</li><li>Ancoragem padrão: <code>corpo_do_alvo</code>, <code>chao_do_alvo</code>, <code>arma</code>, <code>peito_do_heroi</code>, <code>projetil</code>, <code>origem_alvo</code>.</li><li>Elementos: os 9 da paleta (<code>docs/frentes/vfx-magia.md</code> §2). Classe só dá o contorno quando a receita pede.</li></ul>
+<p>Um validador (teste EditMode) lê <strong>todas</strong> as receitas e reprova: peça inexistente, tamanho fora da faixa do molde, duração acima do teto, soma de partículas acima do orçamento, gatilho desconhecido.</p>
+<h4>2.5 Fábrica de prova</h4>
+<p>O que hoje é <code>ImpactVfxCapture</code> + <code>vfx_impacto_folha.py</code>, valendo para qualquer receita:</p>
+<ol><li><code>python tools/unity/vfx_prova.py &lt;id&gt;</code> toca a receita no jogo e captura a matriz: chão escuro e laje clara × zoom padrão e close × variantes × elementos pedidos, a 60 fps.</li><li>Mede sozinho: tamanho do efeito isolado (ON − OFF) em px, largura/comprimento dos riscos, pico de luma, partículas vivas, duração. Compara com as faixas do molde e marca o que saiu.</li><li>Gera folhas, mp4 e <code>medidas.csv</code> em <code>production/qa/evidence/vfx/&lt;id&gt;/R&lt;nn&gt;/</code>.</li><li>Só então entram os olhos: os meus, depois o revisor independente (<code>ragna-crivo</code>), depois o criador.</li></ol>
+<p>Efeito que falha na medida automática nem chega ao revisor. É o que corta as voltas de 8 para 2 ou 3.</p>
+<h3>3. Linha de produção de um efeito novo</h3>
+<ol><li><strong>Ficha</strong> (5 linhas): o que a habilidade faz na Sim, molde, elemento, sensação, o que o jogador precisa ler.</li><li><strong>Imagem-alvo</strong> no Tripo Canvas (cena isométrica do efeito), quando o efeito é novo de verdade.</li><li><strong>Peças</strong>: usar as da biblioteca; gerar no Canvas só as que faltam (1 nó, 4 variações, forma solta em preto).</li><li><strong>Receita</strong>: copiar a do efeito mais parecido e ajustar parâmetros.</li><li><strong>Prova</strong>: rodar a fábrica; corrigir até as medidas baterem.</li><li><strong>Crivo</strong> independente; só com laudo PASSA vai ao criador.</li><li><strong>Registro</strong>: receita + provas commitadas; Codex atualizado se o efeito é de habilidade publicada.</li></ol>
+<p>Quem faz o quê: ficha e receita por agente Sonnet; peças pelo criador no Canvas quando o lote é grande (um nó custa ~180 mil tokens por agente); prova automática; crivo por revisor Fable.</p>
+<h3>4. Ordem de construção</h3>
+<div class="tablewrap"><table><tr><th>Etapa</th><th>Entrega</th><th>Critério de pronto</th></tr><tr><td>0</td><td>Impacto universal aprovado no crivo (em obra, volta 8)</td><td>laudo PASSA</td></tr><tr><td>1</td><td>Extrair receita + <code>VfxPlayer</code> do impacto, sem mudar o visual</td><td>provas antes/depois idênticas; testes passam</td></tr><tr><td>2</td><td><strong>Bola de fogo do Mago</strong> pelo motor (molde Projétil + Impacto de Brasa)</td><td>segundo efeito sem código próprio</td></tr><tr><td>3</td><td>Fábrica de prova genérica (<code>vfx_prova.py</code>) e validador de receitas</td><td>roda para os 2 efeitos</td></tr><tr><td>4</td><td>Moldes Estado e Área (refazer os 3 status e as 6 formas)</td><td>biblioteca de status do MVP</td></tr><tr><td>5</td><td>Impacto nos 9 elementos (só paleta + 3 ou 4 peças novas)</td><td>27 variações provadas em lote</td></tr><tr><td>6</td><td>Kit das classes em lotes de 4 efeitos por classe</td><td>1 classe por rodada</td></tr><tr><td>7</td><td>Moldes Canal e Surgimento; ambientação</td><td>fecha o §4 do MD da frente</td></tr></table></div>
+<p>Só depois da etapa 2 o formato da receita fica congelado: duas magias diferentes mostram o que é comum de verdade.</p>
+<h3>5. O que fica fora</h3>
+<ul><li>Motor gráfico próprio: não. É Unity URP + Particle System + shaders nossos.</li><li>VFX Graph: não no MVP (GPU fraca alvo e sem HDR); reavaliar depois.</li><li>Vídeo de IA pago (Seedance/Higgsfield) e simulação no Blender: só como <strong>fontes de peça</strong> da família "volume", com o sim do criador quando houver custo.</li><li>Peso do golpe (pausa de impacto, tremor, número de dano) e som: outras frentes; a receita só referencia o evento e o id do som.</li></ul>
+<h3>6. Decisões que são do criador</h3>
+<ol><li>O formato "molde + receita em dados" é o caminho? (recomendo sim)</li><li>A segunda magia do motor é a bola de fogo do Mago? (recomendo sim: testa Projétil + Impacto + elemento)</li><li>Lotes grandes de peças no Canvas: o criador cola os prompts à mão, ou gasta-se token de agente? (recomendo à mão acima de 5 nós)</li></ol>
+<h3>7. Riscos</h3>
+<ul><li><strong>Molde engessa</strong>: magia-assinatura de classe pode pedir algo fora dos seis. Saída: camada "livre" na receita apontando para um prefab feito à mão, limitada a 1 por classe.</li><li><strong>Peça repetida cansa</strong>: 40 peças para ~100 efeitos. Saída: variação por rotação, espelho, escala e tempo no tocador; peça nova entra quando o crivo acusar repetição.</li><li><strong>Editor compartilhado derruba capturas</strong> (aconteceu 6 vezes em 19/11): a fábrica precisa de janela exclusiva ou de um segundo projeto só de prova. A decidir com a sessão principal.</li></ul></div></section>
+</main>
+<footer class="sf"><div class="wrap"><div><strong>Ragna Tale</strong> é um <em>nome de trabalho</em>; pode mudar antes do lançamento.<br>Jogo em desenvolvimento. Imagens são conceitos de design, não capturas do jogo final. Sem cookies e sem rastreadores.</div><div role="navigation" aria-label="Rodapé"><nav><a href="../termos/index.html">Termos</a><a href="../privacidade/index.html">Privacidade</a><a href="../contato/index.html">Contato</a></nav><div style="margin-top:8px">&copy; 2026 equipe do projeto</div></div></div></footer>
+<div id="lb" class="lb" hidden role="dialog" aria-modal="true" aria-label="Imagem ampliada"></div>
+</body>
+</html>
