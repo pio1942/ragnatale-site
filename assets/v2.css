@@ -239,3 +239,4 @@ background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,#a3762c);border:1
 .hero-logo{width:min(440px,62vw);height:auto;margin:0 0 18px -14px;filter:drop-shadow(0 10px 30px rgba(0,0,0,.75))}.hero.home h1{font-size:clamp(2rem,5.2vw,4.1rem)}
 .t-cls img,.cb img{object-position:50% 50%}
 @media (max-width:860px){.brand img{height:46px}.top{height:68px}.hero-logo{width:min(250px,66vw);margin-left:-8px}}/* v15 */
+.mon.blend>img{mix-blend-mode:screen;filter:none;padding:10px 8px 0;object-fit:contain}.mon.blend{background:radial-gradient(ellipse at 50% 38%,#1b2040 0,#0c0e17 66%)}/* v16 */
