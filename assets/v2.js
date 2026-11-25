@@ -11,10 +11,24 @@
   function show(id, push) {
     var found = cards.some(function (c) { return c.dataset.c === id; });
     if (!found) return;
-    cards.forEach(function (c) { c.hidden = c.dataset.c !== id; });
+    cards.forEach(function (c) {
+      var on = c.dataset.c === id;
+      if (on && c.hidden) { c.classList.remove('entra'); void c.offsetWidth; c.classList.add('entra'); }   // o selo novo se forma
+      c.hidden = !on;
+    });
     btns.forEach(function (b) { b.classList.toggle('on', b.dataset.c === id); });
     if (push && history.replaceState) history.replaceState(null, '', '#' + id);
   }
+  // homem × mulher: troca a imagem grande e o avatar da classe
+  $$('.gsw button[data-g]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var art = b.closest('.cl'), g = b.dataset.g, id = art.dataset.c;
+      art.dataset.g = g;
+      $$('.gsw button[data-g]', art).forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      $$('.hero-img', art).forEach(function (im) { im.classList.toggle('off', !im.classList.contains('g-' + g)); });
+      $$('.cb[data-c="' + id + '"] .av').forEach(function (im) { im.classList.toggle('off', !im.classList.contains('g-' + g)); });
+    });
+  });
   if (cards.length) {
     btns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.c, true); if (window.innerWidth < 1100) { var w = $('.cl-wrap'); window.scrollTo({ top: w.getBoundingClientRect().top + window.scrollY - 76, behavior: 'smooth' }); } }); });
     show((location.hash || '').slice(1) || cards[0].dataset.c, false);
