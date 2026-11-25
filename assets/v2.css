@@ -309,3 +309,5 @@ background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,#a3762c);border:1
 .mbs{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.mb>img{height:130px}.mb .mon-t small{flex-direction:column;gap:2px}.ficha{padding:0}.ficha-in{max-height:100svh;height:100svh;border:0}
 .fh{grid-template-columns:1fr;padding:54px 18px 18px;gap:10px}.fa{min-height:160px}.fa img{max-height:210px}.ficha-c>section{padding:18px}.fst{grid-template-columns:repeat(2,minmax(0,1fr))}.fdr{grid-template-columns:1fr}.fsp li{grid-template-columns:92px 1fr 52px;gap:8px}}/* v19 */
 /* v20 */
+/* v21 */
+.g.tall span{background:none}/* v22 */
