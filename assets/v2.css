@@ -228,3 +228,5 @@ background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,#a3762c);border:1
 @media (max-width:860px){.t-cls span,.cb span,.tribe .t-cls span{font-size:12px}.g span{font:600 12px/1.2 var(--ff-b);text-transform:none;letter-spacing:0;padding:14px 4px 6px}.gal.two .g span{font-family:var(--ff-t);text-transform:uppercase}
 .lu b{font-size:12px;letter-spacing:.04em}.lu i{font-size:12px}.snd-b b{font-size:13px}.mon-t small,.mon-t small i{font-size:12px;letter-spacing:.04em}.wip span{font-size:12px}}/* v8 */
 /* v9 */
+.split{align-items:start}.split .frame{align-self:center}
+@media (max-width:860px){.nav{min-height:calc(100svh - 68px)}.nav .cta{display:none}}/* v10 */
