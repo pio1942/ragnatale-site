@@ -29,6 +29,16 @@
       $$('.cb[data-c="' + id + '"] .av').forEach(function (im) { im.classList.toggle('off', !im.classList.contains('g-' + g)); });
     });
   });
+  // abas do painel da classe: História, Habilidades, Evoluções, Visual por nível (a mesma aba vale ao trocar de classe)
+  $$('.tabs [data-tab]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.dataset.tab;
+      cards.forEach(function (c) {
+        c.dataset.tab = t;
+        $$('.tabs [data-tab]', c).forEach(function (x) { x.setAttribute('aria-selected', x.dataset.tab === t ? 'true' : 'false'); });
+      });
+    });
+  });
   if (cards.length) {
     btns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.c, true); if (window.innerWidth < 1100) { var w = $('.cl-wrap'); window.scrollTo({ top: w.getBoundingClientRect().top + window.scrollY - 76, behavior: 'smooth' }); } }); });
     show((location.hash || '').slice(1) || cards[0].dataset.c, false);
