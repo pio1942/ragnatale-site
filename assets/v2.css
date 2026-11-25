@@ -219,3 +219,11 @@ background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,#a3762c);border:1
 .vid video{filter:none}.vid .playing video{filter:brightness(1.3) contrast(1.06) saturate(1.2)}.cl-txt{min-height:600px}.story{font-size:.93rem}@media (max-width:860px){.cl-txt{min-height:0}}/* v6 */
 .cl-meta li{align-content:start}
 @media (max-width:860px){.cb span,.tribe .t-cls span,.t-cls span{font:600 11.5px/1.2 var(--ff-b);text-transform:none;letter-spacing:0;white-space:nowrap}}/* v7 */
+/* ---- crivo v7: piso de 12 px em todo rótulo; legenda abaixo da captura ---- */
+.t-cls span,.cb span,.tribe .t-cls span{font:600 12px/1.2 var(--ff-b);text-transform:none;letter-spacing:0;white-space:nowrap}
+.chip,.seal,.tag,.cl-meta i,.news time,.mon-t small,.mon-t small i,.wip span,.lu i,.g span,.ct-h i,.soon b,.more,.grp,.kicker,.t-sub,.foot nav a,.f-legal,.note,.ver{font-size:max(12px,.72rem)}
+.lu b{font-size:max(12px,1.05vw)}.snd-b b{font-size:14px}.vid figcaption span,.wk p,.wk-item p,.hist em,.caps em,.city i{font-size:max(13px,.88rem)}
+.gal.two .g{aspect-ratio:auto;display:flex;flex-direction:column;border:0;background:none;overflow:visible}.gal.two .g img{aspect-ratio:16/9;height:auto;border:1px solid var(--line)}
+.gal.two .g span{position:static;background:none;padding:10px 2px 4px;opacity:1;color:var(--gold2);font-size:max(13px,.8rem);letter-spacing:.08em}.gal.two .g:hover img{transform:none;border-color:var(--gold)}
+@media (max-width:860px){.t-cls span,.cb span,.tribe .t-cls span{font-size:12px}.g span{font:600 12px/1.2 var(--ff-b);text-transform:none;letter-spacing:0;padding:14px 4px 6px}.gal.two .g span{font-family:var(--ff-t);text-transform:uppercase}
+.lu b{font-size:12px;letter-spacing:.04em}.lu i{font-size:12px}.snd-b b{font-size:13px}.mon-t small,.mon-t small i{font-size:12px;letter-spacing:.04em}.wip span{font-size:12px}}/* v8 */
