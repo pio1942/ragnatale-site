@@ -98,7 +98,7 @@
     var h = '<header class="fh' + (m.ok ? '' : ' prod') + (m.b ? ' blend' : '') + '">' +
       '<div class="fa">' + (m.a ? '<img src="' + R + m.a + '" alt="' + esc(m.n) + '">' : '<i class="mp-x big"></i>') + (m.ok ? '' : '<span class="fprod">Arte em produção</span>') + '</div>' +
       '<div class="fi"><p class="kicker">' + esc(m.t) + (m.jogo ? ' · já no jogo' : '') + '</p><h2>' + esc(m.n) + '</h2><p class="fchips">' +
-      '<span>Nível ' + m.lv + '</span>' + (m.e ? '<span class="el el-' + m.e + '">' + EL[m.e] + ' ' + m.el + '</span>' : '') + (m.r ? '<span>' + esc(m.r) + '</span>' : '') + (m.s ? '<span>' + esc(m.s) + '</span>' : '') + '</p>' +
+      '<span>Nível ' + m.lv + '</span>' + (m.alem ? '<span class="alem-f">Além do nível 60 · chega nas próximas expansões</span>' : '') + (m.e ? '<span class="el el-' + m.e + '">' + EL[m.e] + ' ' + m.el + '</span>' : '') + (m.r ? '<span>' + esc(m.r) + '</span>' : '') + (m.s ? '<span>' + esc(m.s) + '</span>' : '') + '</p>' +
       (m.zn ? '<p class="freg">Vive em <a href="' + R + 'mundo/#mapa">' + esc(m.zn) + '</a>' + (m.zr ? ' (níveis ' + esc(m.zr) + ')' : '') + '</p>' : '') +
       (m.aparencia ? '<p class="flore">' + esc(m.aparencia) + '</p>' : '') + '</div></header>';
     h += '<section><h3>Status</h3><ul class="fst">' + stat('Vida', m.hp) + stat('Ataque', m.atk) + stat('Defesa', m.def) + stat('XP', m.xp) +
@@ -142,13 +142,13 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !box.hidden) close(); });
   if (location.hash.length > 1 && !/^#z-/.test(location.hash)) open(location.hash.slice(1));
 
-  var zb = document.getElementById('bf-z'), bs = document.getElementById('bf-b'), cnt = document.getElementById('bf-n'), els = {}, zv = '', onlyB = false;
+  var zb = document.getElementById('bf-z'), bs = document.getElementById('bf-b'), cnt = document.getElementById('bf-n'), els = {}, zv = '', onlyB = false, upTo60 = false;
   function apply() {
     var anyE = Object.keys(els).some(function (k) { return els[k]; }), n = 0;
     $$('.bz').forEach(function (s) {
       var vis = 0;
       $$('[data-m]', s).forEach(function (c) {
-        var ok = (!zv || s.dataset.z === zv) && (!onlyB || c.dataset.t === 'Chefe') && (!anyE || els[c.dataset.e]);
+        var ok = (!zv || s.dataset.z === zv) && (!onlyB || c.dataset.t === 'Chefe') && (!upTo60 || c.dataset.l !== '1') && (!anyE || els[c.dataset.e]);
         c.hidden = !ok; if (ok) vis++;
       });
       $$('.mps', s).forEach(function (p) { p.hidden = !$$('[data-m]:not([hidden])', p).length; });
@@ -178,6 +178,7 @@
     });
     document.addEventListener('click', function (e) { if (!e.target.closest('.rsel')) toggle(false); });
     bs.addEventListener('click', function () { onlyB = !onlyB; bs.setAttribute('aria-pressed', onlyB ? 'true' : 'false'); apply(); });
+    $$('.blv button').forEach(function (b) { b.addEventListener('click', function () { upTo60 = b.dataset.lv === '60'; $$('.blv button').forEach(function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on ? 'true' : 'false'); }); apply(); }); });
     $$('.ef').forEach(function (b) { b.addEventListener('click', function () { els[b.dataset.e] = !els[b.dataset.e]; b.setAttribute('aria-pressed', els[b.dataset.e] ? 'true' : 'false'); apply(); }); });
   }
 })();
