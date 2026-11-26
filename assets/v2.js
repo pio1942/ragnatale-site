@@ -75,9 +75,9 @@
   // ampliar imagem
   var lb = $('.lb');
   if (lb) {
-    var im = $('img', lb), cap = $('figcaption', lb);
-    function close() { lb.hidden = true; im.removeAttribute('src'); }
-    $$('a.zoom').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); im.src = a.href; cap.textContent = a.dataset.cap || ''; lb.hidden = false; }); });
+    var im = document.createElement('img'), cap = $('figcaption', lb); im.alt = ''; $('figure', lb).insertBefore(im, cap);
+    function close() { lb.hidden = true; if (im.parentNode) im.parentNode.removeChild(im); }
+    $$('a.zoom').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); im.src = a.href; if (!im.parentNode) $('figure', lb).insertBefore(im, cap); cap.textContent = a.dataset.cap || ''; lb.hidden = false; }); });
     lb.addEventListener('click', function (e) { if (e.target !== im) close(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   }
@@ -88,7 +88,7 @@
   var box = document.querySelector('.ficha');
   if (!box) return;
   var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
-  var R = document.querySelector('link[href$="assets/v2.css"]').getAttribute('href').replace('assets/v2.css', '');
+  var R = document.querySelector('link[href*="assets/v2.css"]').getAttribute('href').replace(/assets\/v2\.css.*$/, '');
   var EL = { neutral: 'Neutro', flame: 'Brasa', tide: 'Maré', gale: 'Vendaval', stone: 'Rocha', sap: 'Seiva', crystal: 'Cristal', dawn: 'Aurora', dusk: 'Crepúsculo' };
   var data = null, cont = box.querySelector('.ficha-c'), last = null;
   function esc(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
