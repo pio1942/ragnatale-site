@@ -455,3 +455,6 @@ html{scroll-padding-top:92px}
 
 /* v27: vitrine sobe ate o topo dos quadros (pedido do criador 26/11) */
 @media (min-width:1101px){.cl-art{align-self:start;align-items:start}}
+
+/* v28: respiro lateral na vitrine de Classes */
+@media (min-width:1101px){.stage .wrap{max-width:calc(var(--w) + 80px)}}
