@@ -181,3 +181,11 @@
     $$('.ef').forEach(function (b) { b.addEventListener('click', function () { els[b.dataset.e] = !els[b.dataset.e]; b.setAttribute('aria-pressed', els[b.dataset.e] ? 'true' : 'false'); apply(); }); });
   }
 })();
+
+/* filtro sticky do Bestiario acompanha a altura real do menu fixo */
+(function () {
+  var t = document.querySelector('.top');
+  if (!t) return;
+  function s() { document.documentElement.style.setProperty('--topH', t.offsetHeight + 'px'); }
+  s(); window.addEventListener('resize', s); window.addEventListener('load', s);
+})();

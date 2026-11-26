@@ -267,7 +267,7 @@ background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,#a3762c);border:1
 /* ---- bestiário completo e ficha técnica (26/11) ---- */
 :root{--el-neutral:#c9c3b3;--el-flame:#ff7a45;--el-tide:#4aa8ff;--el-gale:#8fe0c0;--el-stone:#c39a66;--el-sap:#86c85e;--el-crystal:#62d6ff;--el-dawn:#ffd86b;--el-dusk:#a77bff}
 .el-neutral{--e:var(--el-neutral)}.el-flame{--e:var(--el-flame)}.el-tide{--e:var(--el-tide)}.el-gale{--e:var(--el-gale)}.el-stone{--e:var(--el-stone)}.el-sap{--e:var(--el-sap)}.el-crystal{--e:var(--el-crystal)}.el-dawn{--e:var(--el-dawn)}.el-dusk{--e:var(--el-dusk)}
-.bfilt{position:sticky;top:72px;z-index:20;background:rgba(7,8,13,.96);border-block:1px solid var(--line);padding:12px 0}.bfilt .wrap{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center}
+.bfilt{position:sticky;top:var(--topH,72px);z-index:20;background:rgba(7,8,13,.96);border-block:1px solid var(--line);padding:12px 0}.bfilt .wrap{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center}
 .bfilt label{display:flex;align-items:center;gap:10px;font:700 12px var(--ff-t);letter-spacing:.14em;text-transform:uppercase;color:var(--gold2)}
 .bfilt select{background:#11141f;color:var(--ink);border:1px solid var(--gold);padding:9px 12px;font:16px var(--ff-b);max-width:260px}.bfilt .chk input{width:18px;height:18px;accent-color:var(--gold)}
 .efs{display:flex;flex-wrap:wrap;gap:6px}.ef{all:unset;cursor:pointer;padding:6px 11px;font:700 12px var(--ff-t);letter-spacing:.08em;text-transform:uppercase;color:var(--e);border:1px solid color-mix(in srgb,var(--e) 55%,transparent);background:rgba(7,8,13,.6)}
