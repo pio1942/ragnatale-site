@@ -93,13 +93,13 @@
   var data = null, cont = box.querySelector('.ficha-c'), last = null;
   function esc(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function val(v, suf) { return (v === null || v === undefined || v === '') ? '<span class="nd">a definir</span>' : esc(String(v).replace('.', ',')) + (suf || ''); }
-  function stat(l, v, suf) { return '<li><i>' + l + '</i><b>' + val(v, suf) + '</b></li>'; }
+  function stat(l, v, suf) { return (v === null || v === undefined || v === '') ? '' : '<li><i>' + l + '</i><b>' + val(v, suf) + '</b></li>'; }
   function render(m) {
     var h = '<header class="fh' + (m.ok ? '' : ' prod') + (m.b ? ' blend' : '') + '">' +
       '<div class="fa">' + (m.a ? '<img src="' + R + m.a + '" alt="' + esc(m.n) + '">' : '<i class="mp-x big"></i>') + (m.ok ? '' : '<span class="fprod">Arte em produção</span>') + '</div>' +
       '<div class="fi"><p class="kicker">' + esc(m.t) + (m.jogo ? ' · já no jogo' : '') + '</p><h2>' + esc(m.n) + '</h2><p class="fchips">' +
       '<span>Nível ' + m.lv + '</span>' + (m.e ? '<span class="el el-' + m.e + '">' + EL[m.e] + ' ' + m.el + '</span>' : '') + (m.r ? '<span>' + esc(m.r) + '</span>' : '') + (m.s ? '<span>' + esc(m.s) + '</span>' : '') + '</p>' +
-      '<p class="freg">' + (m.zn ? 'Vive em <a href="' + R + 'mundo/#mapa">' + esc(m.zn) + '</a>' + (m.zr ? ' (níveis ' + esc(m.zr) + ')' : '') : 'Região a definir') + '</p>' +
+      (m.zn ? '<p class="freg">Vive em <a href="' + R + 'mundo/#mapa">' + esc(m.zn) + '</a>' + (m.zr ? ' (níveis ' + esc(m.zr) + ')' : '') + '</p>' : '') +
       (m.aparencia ? '<p class="flore">' + esc(m.aparencia) + '</p>' : '') + '</div></header>';
     h += '<section><h3>Status</h3><ul class="fst">' + stat('Vida', m.hp) + stat('Ataque', m.atk) + stat('Defesa', m.def) + stat('XP', m.xp) +
       stat('Velocidade', m.vel, ' m/s') + stat('Alcance', m.alc, ' m') + stat('Intervalo de ataque', m.int, ' s') + stat('Percepção', m.perc, ' m') + '</ul></section>';
@@ -109,21 +109,20 @@
         (m.golpes ? '<p>' + esc(m.golpes) + '</p>' : '') +
         (m.fases && m.fases.length ? '<ol class="ffases">' + m.fases.map(function (f) { return '<li><b>A partir de ' + esc(f.vida) + ' de vida</b>' + esc(f.licao) + '</li>'; }).join('') + '</ol>' : '') + '</section>';
     }
-    h += '<section><h3>Espectro elemental</h3>';
     if (m.sp) {
-      h += '<p class="fnote">Quanto de dano cada elemento causa nesta criatura (' + EL[m.e] + ' nível ' + m.el + ').</p><ul class="fsp">' + m.sp.map(function (r) {
+      h += '<section><h3>Espectro elemental</h3><p class="fnote">Quanto de dano cada elemento causa nesta criatura (' + EL[m.e] + ' nível ' + m.el + ').</p><ul class="fsp">' + m.sp.map(function (r) {
         var v = r[1], cls = v > 1 ? 'fraco' : v < 1 ? 'res' : 'neu', w = Math.min(100, v * 50);
         return '<li class="' + cls + '"><i class="el el-' + r[0] + '">' + EL[r[0]] + '</i><span class="bar2"><b style="width:' + w + '%"></b><u></u></span><em>×' + String(v).replace('.', ',') + '</em></li>';
       }).join('') + '</ul><p class="fleg"><span class="fraco">fraqueza</span><span class="res">resistência</span></p>';
-    } else h += '<p class="nd">Elemento a definir.</p>';
-    h += '</section><section><h3>Drops</h3>';
+      h += '</section>';
+    }
     if (m.d && m.d.length) {
+      h += '<section><h3>Drops</h3>';
       h += '<ul class="fdr">' + m.d.map(function (d) {
         return '<li class="k-' + d.k + '">' + (d.i ? '<img src="' + R + d.i + '" alt="" loading="lazy">' : '<i class="dico"></i>') + '<span><b>' + esc(d.n) + '</b><small>' + (d.k === 'carta' ? 'Carta da criatura' : d.k === 'mitico' ? 'Mítico' : d.k === 'epico' ? 'Épico' : d.k === 'raro' ? 'Raro' : 'Comum') + '</small></span><em>' + esc(d.c) + '</em><u>×' + esc(d.q) + '</u></li>';
-      }).join('') + '</ul>';
-    } else if (m.previsto) h += '<p class="fnote">Previsto no design; chances a definir.</p><p>' + esc(m.previsto) + '</p>';
-    else h += '<p class="nd">A definir.</p>';
-    h += '</section><section><h3>Onde aparece</h3><p>' + (m.zn ? esc(m.zn) + (m.zr ? ', níveis ' + esc(m.zr) : '') + '.' : '<span class="nd">A definir.</span>') + '</p></section>';
+      }).join('') + '</ul></section>';
+    } else if (m.previsto) h += '<section><h3>Drops</h3><p class="fnote">Previsto no design; chances em ajuste.</p><p>' + esc(m.previsto) + '</p></section>';
+    if (m.zn) h += '<section><h3>Onde aparece</h3><p>' + esc(m.zn) + (m.zr ? ', níveis ' + esc(m.zr) : '') + '.</p></section>';
     if (m.par && m.par.length) {
       h += '<section><h3>Criaturas parecidas</h3><p class="fpar">' + m.par.map(function (id) { var x = data[id]; return x ? '<a href="#' + id + '" data-m="' + id + '">' + esc(x.n) + '<small>nível ' + x.lv + '</small></a>' : ''; }).join('') + '</p></section>';
     }
