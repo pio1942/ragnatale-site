@@ -117,11 +117,11 @@
     h += '</section><section><h3>Drops</h3>';
     if (m.d && m.d.length) {
       h += '<ul class="fdr">' + m.d.map(function (d) {
-        return '<li class="k-' + d.k + '">' + (d.i ? '<img src="' + R + d.i + '" alt="" loading="lazy">' : '<i class="dico"></i>') + '<span><b>' + esc(d.n) + '</b><small>' + (d.k === 'carta' ? 'Carta da criatura' : d.k === 'ultra' ? 'Ultra raro' : d.k === 'raro' ? 'Raro' : 'Comum') + '</small></span><em>' + esc(d.c) + '</em><u>×' + esc(d.q) + '</u></li>';
+        return '<li class="k-' + d.k + '">' + (d.i ? '<img src="' + R + d.i + '" alt="" loading="lazy">' : '<i class="dico"></i>') + '<span><b>' + esc(d.n) + '</b><small>' + (d.k === 'carta' ? 'Carta da criatura' : d.k === 'mitico' ? 'Mítico' : d.k === 'epico' ? 'Épico' : d.k === 'raro' ? 'Raro' : 'Comum') + '</small></span><em>' + esc(d.c) + '</em><u>×' + esc(d.q) + '</u></li>';
       }).join('') + '</ul>';
     } else if (m.previsto) h += '<p class="fnote">Previsto no design; chances a definir.</p><p>' + esc(m.previsto) + '</p>';
     else h += '<p class="nd">A definir.</p>';
-    h += '</section><section><h3>Onde aparece</h3><p>' + (m.zn ? esc(m.zn) + (m.zr ? ', níveis ' + esc(m.zr) : '') + '.' : '<span class="nd">A definir.</span>') + ' Horário e condição: <span class="nd">a definir</span>.</p></section>';
+    h += '</section><section><h3>Onde aparece</h3><p>' + (m.zn ? esc(m.zn) + (m.zr ? ', níveis ' + esc(m.zr) : '') + '.' : '<span class="nd">A definir.</span>') + '</p></section>';
     if (m.par && m.par.length) {
       h += '<section><h3>Criaturas parecidas</h3><p class="fpar">' + m.par.map(function (id) { var x = data[id]; return x ? '<a href="#' + id + '" data-m="' + id + '">' + esc(x.n) + '<small>nível ' + x.lv + '</small></a>' : ''; }).join('') + '</p></section>';
     }
@@ -154,6 +154,7 @@
       s.hidden = !vis; n += vis;
     });
     cnt.textContent = n;
+    var ok = document.getElementById('bf-ok'); if (ok) ok.textContent = $$('.bz:not([hidden]) .mon[data-m]:not([hidden])').length;
   }
   if (zb) {
     var list = zb.parentNode.querySelector('.rsel-l'), opts = $$('li', list);
