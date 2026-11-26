@@ -452,3 +452,6 @@ html{scroll-padding-top:92px}
 .pv-login[hidden],#pv-app[hidden]{display:none}.hero.priv-hero{min-height:0;padding-bottom:36px}.sec.priv{padding-top:24px}
 @media (max-width:860px){.hero.priv-hero{min-height:0!important;padding:100px 0 24px}}
 .mvps{padding:46px 0 10px;background:#0d0a07}.mvp-i{display:grid;gap:6px;padding:0 12px 12px;font:600 .78rem var(--ff-b,inherit);color:#e8e2d2}.mvp-i small{display:block;color:var(--gold2);font:700 10px var(--ff-t);letter-spacing:.14em;text-transform:uppercase}.mvps .mbs{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}.mvps .mb>img{height:190px}
+
+/* v27: vitrine sobe ate o topo dos quadros (pedido do criador 26/11) */
+@media (min-width:1101px){.cl-art{align-self:start;align-items:start}}
