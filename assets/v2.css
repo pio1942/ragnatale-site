@@ -398,3 +398,18 @@ background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,#a3762c);border:1
 .vt-fig{display:flex;justify-content:center;align-items:flex-end;overflow:hidden;padding:18px 20px 0}.vt-f{height:100%;width:auto;max-width:100%;min-height:0;object-fit:contain;object-position:50% 100%}
 .tabs button{padding:11px 8px 10px;letter-spacing:.03em}
 @media (max-width:860px){.tabs{-webkit-mask-image:linear-gradient(90deg,#000 86%,transparent);mask-image:linear-gradient(90deg,#000 86%,transparent);padding-right:18px}}
+
+/* v13 acabamento (25/11) */
+html{scroll-padding-top:92px}
+:target,[id]{scroll-margin-top:92px}
+.lu[href$="#necromante"] img:not(.lu-emb){filter:brightness(1.75) contrast(.92) saturate(1.15) drop-shadow(0 0 10px rgba(160,230,200,.45)) drop-shadow(0 14px 18px rgba(0,0,0,.7))}
+.lu[href$="#necromante"]{background:radial-gradient(ellipse at 50% 62%,color-mix(in srgb,var(--c) 42%,transparent),transparent 66%),#0b0d15}
+@media (max-width:860px){
+.tabs{flex-wrap:wrap;overflow:visible;-webkit-mask-image:none;mask-image:none;padding-right:0}
+.tabs button{white-space:normal;flex:0 1 auto}
+.fsp li{grid-template-columns:minmax(76px,auto) 1fr 52px}.fsp i{letter-spacing:.02em;font-size:11px;overflow:visible;white-space:nowrap}
+}
+.burger{z-index:60}
+.burger[aria-expanded=true] span{background:transparent}
+.burger[aria-expanded=true] span:before,.burger[aria-expanded=true] span:after{background:var(--gold2);left:0;right:0;top:0;transform:rotate(45deg)}
+.burger[aria-expanded=true] span:after{transform:rotate(-45deg)}

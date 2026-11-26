@@ -103,10 +103,12 @@
       (m.aparencia ? '<p class="flore">' + esc(m.aparencia) + '</p>' : '') + '</div></header>';
     h += '<section><h3>Status</h3><ul class="fst">' + stat('Vida', m.hp) + stat('Ataque', m.atk) + stat('Defesa', m.def) + stat('XP', m.xp) +
       stat('Velocidade', m.vel, ' m/s') + stat('Alcance', m.alc, ' m') + stat('Intervalo de ataque', m.int, ' s') + stat('Percepção', m.perc, ' m') + '</ul></section>';
-    h += '<section><h3>Comportamento e golpes</h3>' +
-      '<p>' + (m.arq ? '<b>' + esc(m.arq) + '.</b> ' : '') + (m.comp && m.comp.length ? esc(m.comp.join('. ')) + '.' : (m.arq ? '' : '<span class="nd">Comportamento a definir.</span>')) + '</p>' +
-      (m.golpes ? '<p>' + esc(m.golpes) + '</p>' : '') +
-      (m.fases && m.fases.length ? '<ol class="ffases">' + m.fases.map(function (f) { return '<li><b>A partir de ' + esc(f.vida) + ' de vida</b>' + esc(f.licao) + '</li>'; }).join('') + '</ol>' : '') + '</section>';
+    var beh = (m.arq ? '<b>' + esc(m.arq) + '.</b> ' : '') + (m.comp && m.comp.length ? esc(m.comp.join('. ')) + '.' : '');
+    if (beh || m.golpes || (m.fases && m.fases.length)) {
+      h += '<section><h3>Comportamento e golpes</h3>' + (beh ? '<p>' + beh + '</p>' : '') +
+        (m.golpes ? '<p>' + esc(m.golpes) + '</p>' : '') +
+        (m.fases && m.fases.length ? '<ol class="ffases">' + m.fases.map(function (f) { return '<li><b>A partir de ' + esc(f.vida) + ' de vida</b>' + esc(f.licao) + '</li>'; }).join('') + '</ol>' : '') + '</section>';
+    }
     h += '<section><h3>Espectro elemental</h3>';
     if (m.sp) {
       h += '<p class="fnote">Quanto de dano cada elemento causa nesta criatura (' + EL[m.e] + ' nível ' + m.el + ').</p><ul class="fsp">' + m.sp.map(function (r) {
